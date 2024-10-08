@@ -31,6 +31,7 @@ function App() {
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
+        <p>Ray Fischer.</p>
         <a
           className="App-link"
           href="https://reactjs.org"
@@ -38,7 +39,6 @@ function App() {
           rel="noopener noreferrer"
         >
           Learn React
-          Testing one two
         </a>
       </header>
       <Form>
