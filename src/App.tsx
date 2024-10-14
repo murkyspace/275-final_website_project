@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import {Basic} from './Basic';
 import logo from './logo.svg';
 import './App.css';
 import { Button, Form } from 'react-bootstrap';
+
+
 
 //local storage and API Key: key should be entered in by the user and will be stored in local storage (NOT session storage)
 let keyData = "";
@@ -50,6 +54,11 @@ function App() {
         <br></br>
         <Button className="Submit-Button" onClick={handleSubmit}>Submit</Button>
       </Form>
+      <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Basic />} />
+        </Routes>
+        </BrowserRouter>
     </div>
   );
 }
