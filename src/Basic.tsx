@@ -4,8 +4,10 @@ import App from './App';
 import './Basic.css';
 import { Button, Form } from 'react-bootstrap';
 
-export {}
 
+  
+
+  
 
 function Basic() {
     return (
@@ -18,3 +20,5 @@ function Basic() {
         </div>
       );
 }
+
+export default Basic;

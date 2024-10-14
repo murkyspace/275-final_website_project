@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import {Basic} from './Basic';
+import { Outlet, Link } from "react-router-dom";
 import logo from './logo.svg';
 import './App.css';
 import { Button, Form } from 'react-bootstrap';
-
+import ReactDOM from "react-dom/client";
+import 'index.tsx';
 
 
 //local storage and API Key: key should be entered in by the user and will be stored in local storage (NOT session storage)
@@ -54,11 +54,13 @@ function App() {
         <br></br>
         <Button className="Submit-Button" onClick={handleSubmit}>Submit</Button>
       </Form>
-      <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Basic />} />
-        </Routes>
-        </BrowserRouter>
+      <nav>
+        <ul>
+          <li>
+            <Link to="/">Home</Link>
+          </li>
+        </ul>
+      </nav>
     </div>
   );
 }
