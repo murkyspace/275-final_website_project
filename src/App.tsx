@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { Outlet, Link } from "react-router-dom";
+import { useNavigate, Routes, Route, HashRouter } from "react-router-dom";
 import logo from './logo.svg';
+import Basic from './Basic';
 import './App.css';
 import { Button, Form } from 'react-bootstrap';
 import ReactDOM from "react-dom/client";
 import 'index.tsx';
+
 
 
 //local storage and API Key: key should be entered in by the user and will be stored in local storage (NOT session storage)
@@ -17,6 +19,13 @@ if (prevKey !== null) {
 
 function App() {
   const [key, setKey] = useState<string>(keyData); //for api key input
+
+  const navigate = useNavigate();
+
+  const goToBasic = () => {
+    // This will navigate to first component
+    navigate('/Basic');
+  };
   
   //sets the local storage item to the api key the user inputed
   function handleSubmit() {
@@ -52,13 +61,16 @@ function App() {
         <br></br>
         <Button className="Submit-Button" onClick={handleSubmit}>Submit</Button>
       </Form>
-      <nav>
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-        </ul>
-      </nav>
+
+      <HashRouter>
+        <Routes>
+          <Route path="/" element={<App />}>
+          <Route path="/Basic" element={<Basic />}/>
+          </Route>
+        </Routes>
+      </HashRouter>
+
+      <Button onClick={goToBasic}>Click me!</Button>
     </div>
   );
 }
