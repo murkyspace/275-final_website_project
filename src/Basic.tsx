@@ -11,15 +11,15 @@ import { Button, Form } from 'react-bootstrap';
 function Basic() {
   const navigate = useNavigate();
 
-  const goToApp = () => {
+  const goToHome = () => {
     // This will navigate to first component
-    navigate('/App');
+    navigate('/Home');
   };
 
 
   return (
     <div className="Basic">
-      <Button onClick={goToApp}>Click me!</Button>
+      <Button onClick={goToHome}>Home</Button>
     </div>
   );
 }

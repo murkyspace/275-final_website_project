@@ -1,13 +1,10 @@
 import React, { useState } from 'react';
-import { useNavigate, Routes, Route, HashRouter } from "react-router-dom";
+import { useNavigate, createBrowserRouter, createRoutesFromElements, Route, RouterProvider, HashRouter, Routes } from "react-router-dom";
 import logo from './logo.svg';
-import Basic from './Basic';
 import './App.css';
+import { HomePage } from './Home';
+import { BasicPage } from './Basic';
 import { Button, Form } from 'react-bootstrap';
-import ReactDOM from "react-dom/client";
-import 'index.tsx';
-
-
 
 //local storage and API Key: key should be entered in by the user and will be stored in local storage (NOT session storage)
 let keyData = "";
@@ -19,13 +16,7 @@ if (prevKey !== null) {
 
 function App() {
   const [key, setKey] = useState<string>(keyData); //for api key input
-
-  const navigate = useNavigate();
-
-  const goToBasic = () => {
-    // This will navigate to first component
-    navigate('/Basic');
-  };
+  const [currPage, setPage] = useState<number>(0);
   
   //sets the local storage item to the api key the user inputed
   function handleSubmit() {
@@ -61,16 +52,8 @@ function App() {
         <br></br>
         <Button className="Submit-Button" onClick={handleSubmit}>Submit</Button>
       </Form>
-
-      <HashRouter>
-        <Routes>
-          <Route path="/" element={<App />}>
-          <Route path="/Basic" element={<Basic />}/>
-          </Route>
-        </Routes>
-      </HashRouter>
-
-      <Button onClick={goToBasic}>Click me!</Button>
+      <div>{currPage === 0 && <HomePage setCurrPage={setPage}></HomePage>}</div>
+      <div>{currPage === 1 && <BasicPage setCurrPage={setPage}></BasicPage>}</div>
     </div>
   );
 }
