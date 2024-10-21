@@ -1,27 +1,32 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import App from './App';
 import './Basic.css';
-import { Button, Form } from 'react-bootstrap';
+import {SwitchOne} from './Switch';
+import { BasicInterface } from './BasicInt';
+
+//import { Link } from 'react-router-dom';
+//import App from './App';
+
+//import { Button, Form } from 'react-bootstrap';
 
 
-
-  
-
-function Basic() {
-  const navigate = useNavigate();
+/*const navigate = useNavigate();
 
   const goToHome = () => {
     // This will navigate to first component
-    navigate('/Home');
-  };
+    navigate('/Home');<Button onClick={goToHome}>Home</Button>
+  };*/
+  
+
+function BasicPage({setCurrPage}: BasicInterface) {
+  
 
 
   return (
-    <div className="Basic">
-      <Button onClick={goToHome}>Home</Button>
-    </div>
+    <p className="Basic">
+      <h1>Basic questions page</h1>
+      <SwitchOne setCurrPage={setCurrPage} newCurrPage={0} type={"button"}></SwitchOne>
+    </p>
   );
 }
 
-export default Basic;
+export default BasicPage;

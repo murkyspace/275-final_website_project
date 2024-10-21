@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { useNavigate, createBrowserRouter, createRoutesFromElements, Route, RouterProvider, HashRouter, Routes } from "react-router-dom";
+import { useNavigate, Route, Routes } from "react-router-dom";
 import logo from './logo.svg';
 import './App.css';
-import { HomePage } from './Home';
-import { BasicPage } from './Basic';
+import {HomePage} from './Home';
+import BasicPage from './Basic';
 import { Button, Form } from 'react-bootstrap';
 
 //local storage and API Key: key should be entered in by the user and will be stored in local storage (NOT session storage)
@@ -56,6 +56,7 @@ function App() {
       </Form>
       <div>{currPage === 0 && <HomePage setCurrPage={setPage}></HomePage>}</div>
       <div>{currPage === 1 && <BasicPage setCurrPage={setPage}></BasicPage>}</div>
+
     </div>
   );
 }
