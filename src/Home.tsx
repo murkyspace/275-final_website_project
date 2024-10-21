@@ -1,30 +1,33 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { homePage } from './Home.ts';
-import {switchOne} from './Switch.tsx';
+import {  Link } from 'react-router-dom';
+import { HomePage } from './HomeInt';
+import {SwitchOne} from './Switch';
 import App from './App';
 import './Home.css';
 import { Button, Form } from 'react-bootstrap';
 
 
 
-export function Homey({setCurrPage}: homePage) {
-    //const navigate = useNavigate();
+export function Home({setCurrPage}: HomePage) {
+    /*const navigate = useNavigate();
 
-    //const gotoBasic = () => {
-        // This will navigate to first component
-   //     navigate('/Basic');
-   // };
+    const gotoBasic = () => {
+        //This will navigate to first component
+        navigate('/Basic');
+    };*/
 
 
     return (
-        <p className="Homey">
+        <p className="Home">
+
+            <h1>Home page</h1>
+            <Link to="/Basic">Basic</Link>
            
-            <switchOne setCurrPage={setCurrPage} newCurrPage={1} type={"button"}></switchOne>
+            <SwitchOne setCurrPage={setCurrPage} newCurrPage={1} type={"button"}></SwitchOne>
             <Button>Basic Questions</Button>
         </p>
     );
 }
 
-//export default Home;
+export default Home;
 
