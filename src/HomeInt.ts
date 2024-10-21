@@ -1,4 +1,4 @@
-export interface HomePage{
+export interface HomeInterface{
     setCurrPage:(newpage: number) => void;
     
 }
