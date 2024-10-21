@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { useNavigate, createBrowserRouter, createRoutesFromElements, Route, RouterProvider, HashRouter, Routes } from "react-router-dom";
+//import {  Route, Routes } from "react-router-dom";
 import logo from './logo.svg';
+import Home from './Home';
+import Basic from './Basic';
+import HomePage from './Home';
+import BasicPage from './Basic';
 import './App.css';
-import { HomePage } from './Home';
-import { BasicPage } from './Basic';
 import { Button, Form } from 'react-bootstrap';
 
 //local storage and API Key: key should be entered in by the user and will be stored in local storage (NOT session storage)
@@ -51,9 +53,9 @@ function App() {
         <Form.Control type="password" placeholder="Insert API Key Here" onChange={changeKey}></Form.Control>
         <br></br>
         <Button className="Submit-Button" onClick={handleSubmit}>Submit</Button>
+        
       </Form>
-      <div>{currPage === 0 && <HomePage setCurrPage={setPage}></HomePage>}</div>
-      <div>{currPage === 1 && <BasicPage setCurrPage={setPage}></BasicPage>}</div>
+
     </div>
   );
 }
