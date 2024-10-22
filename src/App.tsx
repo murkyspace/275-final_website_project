@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate, Route, Routes } from "react-router-dom";
+import { useNavigate, Route, Routes} from "react-router-dom";
 import logo from './logo.svg';
 import './App.css';
 import {HomePage} from './Home';
@@ -19,7 +19,10 @@ if (prevKey !== null) {
 function App() {
   const [key, setKey] = useState<string>(keyData); //for api key input
   const [currPage, setPage] = useState<number>(0);
-  
+  const navigate = useNavigate();
+  const goToQuizPage = () => {
+    navigate('/quiz'); 
+  };
   //sets the local storage item to the api key the user inputed
   function handleSubmit() {
     localStorage.setItem(saveKeyData, JSON.stringify(key));
@@ -37,8 +40,10 @@ function App() {
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
+        <p>ZhihuaSun</p>
         <p>Ray Fischer</p>
         <p>Connor Chipoletti</p>
+
         <a
           className="App-link"
           href="https://reactjs.org"
@@ -58,7 +63,11 @@ function App() {
       <div>{currPage === 1 && <BasicPage setCurrPage={setPage}></BasicPage>}</div>
       <div>{currPage === 2 && <DetailedPage setCurrPage={setPage}></DetailedPage>}</div>
       <div>{currPage === 3 && <ResultPage setCurrPage={setPage}></ResultPage>}</div>
+      <h1>Welcome to the Personality Test</h1>
+      <button onClick={goToQuizPage}>Start Quiz</button>
     </div>
+    
+    
   );
 }
 
