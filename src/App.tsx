@@ -4,6 +4,8 @@ import logo from './logo.svg';
 import './App.css';
 import {HomePage} from './Home';
 import BasicPage from './Basic';
+import DetailedPage from './Detailed';
+import ResultPage from './Result';
 import { Button, Form } from 'react-bootstrap';
 
 //local storage and API Key: key should be entered in by the user and will be stored in local storage (NOT session storage)
@@ -54,7 +56,8 @@ function App() {
       </Form>
       <div>{currPage === 0 && <HomePage setCurrPage={setPage}></HomePage>}</div>
       <div>{currPage === 1 && <BasicPage setCurrPage={setPage}></BasicPage>}</div>
-
+      <div>{currPage === 2 && <DetailedPage setCurrPage={setPage}></DetailedPage>}</div>
+      <div>{currPage === 3 && <ResultPage setCurrPage={setPage}></ResultPage>}</div>
     </div>
   );
 }
