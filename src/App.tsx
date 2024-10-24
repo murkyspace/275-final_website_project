@@ -63,8 +63,6 @@ function App() {
       <div>{currPage === 1 && <BasicPage setCurrPage={setPage}></BasicPage>}</div>
       <div>{currPage === 2 && <DetailedPage setCurrPage={setPage}></DetailedPage>}</div>
       <div>{currPage === 3 && <ResultPage setCurrPage={setPage}></ResultPage>}</div>
-      <h1>Welcome to the Personality Test</h1>
-      <button onClick={goToQuizPage}>Start Quiz</button>
     </div>
     
     
