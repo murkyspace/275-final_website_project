@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import './Basic.css';
-import {SwitchOne} from './Switch';
+import { SwitchOne } from './Switch';
 import { BasicInterface } from './BasicInt';
 
-
-function BasicPage({setCurrPage}: BasicInterface) {
-  
+function BasicPage({ setCurrPage }: BasicInterface) {
   const [responses, setResponses] = useState({
     organized: '',
     extroverted: '',
@@ -17,6 +15,7 @@ function BasicPage({setCurrPage}: BasicInterface) {
     logicalVsEmotional: ''
   });
 
+ 
   const handleResponse = (question: string, response: string) => {
     setResponses(prevState => ({
       ...prevState,
@@ -24,15 +23,20 @@ function BasicPage({setCurrPage}: BasicInterface) {
     }));
   };
 
+  const handleComplete = () => {
+    setCurrPage(2); 
+
+  };
+
   return (
-    <p className="Basic">
+    <div className="Basic">
       <h1>Basic questions page</h1>
       <div>
         <p>You consider yourself to be a well-organized person. (Tests for organization)</p>
         <button onClick={() => handleResponse('organized', 'Agree')}>Agree</button>
         <button onClick={() => handleResponse('organized', 'Disagree')}>Disagree</button>
       </div>
-      
+
       <div>
         <p>You make new friends often. (Tests for extrovertedness)</p>
         <button onClick={() => handleResponse('extroverted', 'Agree')}>Agree</button>
@@ -74,13 +78,15 @@ function BasicPage({setCurrPage}: BasicInterface) {
         <button onClick={() => handleResponse('logicalVsEmotional', 'Agree')}>Agree</button>
         <button onClick={() => handleResponse('logicalVsEmotional', 'Disagree')}>Disagree</button>
       </div>
+
       <div>
-      <h3>Your Responses:</h3>
-      <pre>{JSON.stringify(responses, null, 2)}</pre>
+        <h3>Your Responses:</h3>
+        <pre>{JSON.stringify(responses, null, 2)}</pre>
       </div>
 
-      <SwitchOne setCurrPage={setCurrPage} newCurrPage={0} type={"button"}></SwitchOne>
-    </p>
+      <SwitchOne setCurrPage={setCurrPage} newCurrPage={0} type="button" />
+      <button onClick={handleComplete}>Complete</button>
+    </div>
   );
 }
 
