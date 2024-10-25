@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate, Route, Routes} from "react-router-dom";
-import logo from './logo.svg';
+/*import { useNavigate, Route, Routes} from "react-router-dom";*/
 import './App.css';
 import {HomePage} from './Home';
 import BasicPage from './Basic';
@@ -19,10 +18,10 @@ if (prevKey !== null) {
 function App() {
   const [key, setKey] = useState<string>(keyData); //for api key input
   const [currPage, setPage] = useState<number>(0);
-  const navigate = useNavigate();
+  /*const navigate = useNavigate();
   const goToQuizPage = () => {
     navigate('/quiz'); 
-  };
+  };*/
   //sets the local storage item to the api key the user inputed
   function handleSubmit() {
     localStorage.setItem(saveKeyData, JSON.stringify(key));
@@ -36,22 +35,12 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <p>ZhihuaSun</p>
-        <p>Ray Fischer</p>
-        <p>Connor Chipoletti</p>
-
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+      <Form>
+        <Form.Label>API Key:</Form.Label>
+        <Form.Control type="password" placeholder="Insert API Key Here" onChange={changeKey}></Form.Control>
+        <br></br>
+        <Button className="Submit-Button" onClick={handleSubmit}>Submit</Button>
+      </Form>
       </header>
       <Form>
         <Form.Label>API Key:</Form.Label>

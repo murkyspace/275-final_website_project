@@ -14,10 +14,6 @@ export function HomePage({setCurrPage}: HomeInterface) {
             <div><SwitchOne setCurrPage={setCurrPage} newCurrPage={1} type={"button"}></SwitchOne>
             <SwitchOne setCurrPage={setCurrPage} newCurrPage={2} type={"button"}></SwitchOne>
             <SwitchOne setCurrPage={setCurrPage} newCurrPage={3} type={"button"}></SwitchOne></div>
-            
-            <p>
-                Edit <code>src/App.tsx</code> and save to reload.
-            </p>
             <p>ZhihuaSun</p>
             <p>Ray Fischer</p>
             <p>Connor Chipoletti</p>
