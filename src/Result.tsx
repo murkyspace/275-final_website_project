@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+/*import React, { useState } from 'react';*/
 import './Result.css';
 import {SwitchOne} from './Switch';
 import { ResultInterface } from './ResultInt';
