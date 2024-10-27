@@ -1,0 +1,19 @@
+.detailed-page {
+  padding: 20px;
+}
+
+.question-block {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.response-box {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+}
