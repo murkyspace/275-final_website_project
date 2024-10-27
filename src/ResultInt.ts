@@ -1,4 +1,4 @@
-export interface ResultInterface{
-    setCurrPage:(newpage: number) => void;
-}
-export {}
+export interface ResultInterface {
+    setCurrPage: React.Dispatch<React.SetStateAction<number>>;
+    apiResponse: string;
+  }

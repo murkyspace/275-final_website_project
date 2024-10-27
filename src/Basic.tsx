@@ -3,7 +3,7 @@ import './Basic.css';
 import { SwitchOne } from './Switch';
 import { BasicInterface } from './BasicInt';
 
-function BasicPage({ setCurrPage }: BasicInterface) {
+function BasicPage({ setCurrPage, setApiResponse }: BasicInterface) {
   const [responses, setResponses] = useState({
     organized: '',
     extroverted: '',
@@ -15,7 +15,6 @@ function BasicPage({ setCurrPage }: BasicInterface) {
     logicalVsEmotional: ''
   });
 
-  const [apiResponse, setApiResponse] = useState(null);
   const [loading, setLoading] = useState(false);
 
   const totalQuestions = 8;
@@ -31,27 +30,47 @@ function BasicPage({ setCurrPage }: BasicInterface) {
   const progress = (answeredQuestions / totalQuestions) * 100;
 
   const handleGetAnswer = async () => {
-
     const prompt = generatePrompt(responses);
-
     setLoading(true);
+  
+    const apiKey = JSON.parse(localStorage.getItem('MYKEY') || '""');
+
+    if (!apiKey) {
+      alert('API key not found, make sure you have entered and submitted your API key on the homepage.');
+      setLoading(false);
+      return;
+    }
 
     try {
-      const response = await fetch('https://api.openai.com/v1/engines/davinci/completions', {
+      const response = await fetch('https://api.openai.com/v1/chat/completions', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': ''
+          'Authorization': `Bearer ${apiKey}`,
         },
         body: JSON.stringify({
-          prompt: prompt,
-          max_tokens: 150
-        })
+          model: 'gpt-3.5-turbo',
+          messages: [
+            { role: 'system', content: 'You are a helpful assistant.' },
+            { role: 'user', content: prompt },
+          ],
+          max_tokens: 150,
+        }),
       });
+
       const data = await response.json();
-      setApiResponse(data.choices[0].text);
+
+      if (response.ok) {
+        console.log('API response data:', data); 
+        setApiResponse(data.choices[0].message.content); 
+        setCurrPage(3); 
+      } else {
+        console.error('Error:', data);
+        alert(`Error: ${data.error.message}`);
+      }
     } catch (error) {
       console.error('Error:', error);
+      alert('An error occurred while fetching the API response.');
     }
 
     setLoading(false);
@@ -129,17 +148,9 @@ function BasicPage({ setCurrPage }: BasicInterface) {
         </button>
       )}
 
-      {apiResponse && (
-        <div>
-          <h3>AI Response:</h3>
-          <p>{apiResponse}</p>
-        </div>
-      )}
-
       <SwitchOne setCurrPage={setCurrPage} newCurrPage={0} type="button" />
     </div>
   );
 }
 
 export default BasicPage;
-
