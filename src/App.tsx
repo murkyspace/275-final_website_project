@@ -19,6 +19,7 @@ if (prevKey !== null) {
 function App() {
   const [key, setKey] = useState<string>(keyData); //for api key input
   const [currPage, setPage] = useState<number>(0);
+  const [apiResponse, setApiResponse] = useState<string>('');
   const navigate = useNavigate();
   const goToQuizPage = () => {
     navigate('/quiz'); 
@@ -60,9 +61,9 @@ function App() {
         <Button className="Submit-Button" onClick={handleSubmit}>Submit</Button>
       </Form>
       <div>{currPage === 0 && <HomePage setCurrPage={setPage}></HomePage>}</div>
-      <div>{currPage === 1 && <BasicPage setCurrPage={setPage}></BasicPage>}</div>
+      <div>{currPage === 1 && <BasicPage setCurrPage={setPage} setApiResponse={setApiResponse}></BasicPage>}</div>
       <div>{currPage === 2 && <DetailedPage setCurrPage={setPage}></DetailedPage>}</div>
-      <div>{currPage === 3 && <ResultPage setCurrPage={setPage}></ResultPage>}</div>
+      <div>{currPage === 3 && <ResultPage setCurrPage={setPage} apiResponse={apiResponse}></ResultPage>}</div>
     </div>
     
     
