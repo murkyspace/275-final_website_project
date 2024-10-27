@@ -16,3 +16,17 @@
   .App-link {
     color: #61dafb;
 }
+.progress-bar {
+  width: 100%;
+  background-color: #e0e0df;
+  border-radius: 13px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+.progress-bar-fill {
+  height: 20px;
+  background-color: #76c7c0;
+  width: 0%;
+  transition: width 0.5s;
+}
