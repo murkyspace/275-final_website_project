@@ -1,4 +1,5 @@
-export interface DetailedInterface{
-    setCurrPage:(newpage: number) => void;
-}
+export interface DetailedInterface {
+    setCurrPage: React.Dispatch<React.SetStateAction<number>>;
+  }
 export {}
+

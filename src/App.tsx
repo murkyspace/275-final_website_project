@@ -4,7 +4,7 @@ import {HomePage} from './Home';
 import BasicPage from './Basic';
 import DetailedPage from './Detailed';
 import ResultPage from './Result';
-import { Button, Form } from 'react-bootstrap';
+import { Button, Form} from 'react-bootstrap';
 
 //local storage and API Key: key should be entered in by the user and will be stored in local storage (NOT session storage)
 let keyData = "";
@@ -18,16 +18,60 @@ function App() {
   const [key, setKey] = useState<string>(keyData); //for api key input
   const [currPage, setPage] = useState<number>(0);
   const [apiResponse, setApiResponse] = useState<string>('');
+  const [isApiKeyValid, setIsApiKeyValid] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>('');
   //sets the local storage item to the api key the user inputed
-  function handleSubmit() {
+//  function handleSubmit() {
+//    localStorage.setItem(saveKeyData, JSON.stringify(key));
+//    window.location.reload(); //when making a mistake and changing the key again, I found that I have to reload the whole site before openai refreshes what it has stores for the local storage variable
+//  }
+//Processing API key submissions
+async function handleSubmit(event: React.FormEvent) {
+  event.preventDefault();
+  setIsLoading(true);
+  setErrorMessage('');
+  try {
     localStorage.setItem(saveKeyData, JSON.stringify(key));
-    window.location.reload(); //when making a mistake and changing the key again, I found that I have to reload the whole site before openai refreshes what it has stores for the local storage variable
+    const isValid = await validateApiKey(key);
+    if (isValid) {
+      setIsApiKeyValid(true);
+      setPage(0); 
+    } else {
+      setIsApiKeyValid(false);
+      setErrorMessage('Invalid API Key. Please enter a valid API Key.');
+      localStorage.removeItem(saveKeyData);
+    }
+  } catch (error) {
+    console.error('Error during API Key validation:', error);
+    setErrorMessage('An error occurred during API Key validation. Please try again.');
+    setIsApiKeyValid(false);
   }
+
+  setIsLoading(false);
+}
+
 
   //whenever there's a change it'll store the api key in a local state called key but it won't be set in the local storage until the user clicks the submit button
   function changeKey(event: React.ChangeEvent<HTMLInputElement>) {
     setKey(event.target.value);
   }
+
+  async function validateApiKey(apiKey: string): Promise<boolean> {
+    try {
+      const response = await fetch('https://api.openai.com/v1/models', {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${apiKey}`,
+        },
+      });
+      return response.ok;
+    } catch (error) {
+      console.error('Error validating API Key:', error);
+      return false;
+    }
+  }
+
   return (
     <div className="App">
       <header className="App-header">
