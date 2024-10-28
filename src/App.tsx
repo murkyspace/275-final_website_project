@@ -38,12 +38,7 @@ function App() {
         <Button className="Submit-Button" onClick={handleSubmit}>Submit</Button>
       </Form>
       </header>
-      <Form>
-        <Form.Label>API Key:</Form.Label>
-        <Form.Control type="password" placeholder="Insert API Key Here" onChange={changeKey}></Form.Control>
-        <br></br>
-        <Button className="Submit-Button" onClick={handleSubmit}>Submit</Button>
-      </Form>
+
       <div>{currPage === 0 && <HomePage setCurrPage={setPage}></HomePage>}</div>
       <div>{currPage === 1 && <BasicPage setCurrPage={setPage} setApiResponse={setApiResponse}></BasicPage>}</div>
       <div>{currPage === 2 && <DetailedPage setCurrPage={setPage}></DetailedPage>}</div>
