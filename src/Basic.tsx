@@ -27,11 +27,7 @@ function BasicPage({ setCurrPage, setApiResponse }: BasicInterface) {
     }));
   };
 
-
-  const handleComplete = () => {
-    setCurrPage(2); 
-
-=======
+  
   const answeredQuestions = Object.values(responses).filter(response => response !== '').length;
   const progress = (answeredQuestions / totalQuestions) * 100;
 
@@ -84,16 +80,11 @@ function BasicPage({ setCurrPage, setApiResponse }: BasicInterface) {
 
   const generatePrompt = (responses: any) => {
     return `Based on the following responses, provide a summary:\n${JSON.stringify(responses, null, 2)}`;
->>>>>>> 4ab228455a2fa14a4568cddb26ce19ca5a28fcb9
   };
 
   return (
     <div className="Basic">
-<<<<<<< HEAD
-      <h1>Basic questions page</h1>
-      <div>
-        <p>You consider yourself to be a well-organized person. (Tests for organization)</p>
-=======
+
       <h1>Basic Questions Page</h1>
 
       <div className="progress-bar">
