@@ -27,7 +27,6 @@ function DetailedPage({ setCurrPage }: DetailedInterface) {
 
   return (
     <div className="detailed-page">
-
       <h1>Detail Questions</h1>
       <form onSubmit={handleSubmit}>
         <div className="question-block">
