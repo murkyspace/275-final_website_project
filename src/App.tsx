@@ -18,10 +18,6 @@ function App() {
   const [key, setKey] = useState<string>(keyData); //for api key input
   const [currPage, setPage] = useState<number>(0);
   const [apiResponse, setApiResponse] = useState<string>('');
-  const navigate = useNavigate();
-  const goToQuizPage = () => {
-    navigate('/quiz'); 
-  };
   //sets the local storage item to the api key the user inputed
   function handleSubmit() {
     localStorage.setItem(saveKeyData, JSON.stringify(key));

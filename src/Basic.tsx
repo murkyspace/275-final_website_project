@@ -3,7 +3,6 @@ import './Basic.css';
 import { SwitchOne } from './Switch';
 import { BasicInterface } from './BasicInt';
 
-
 function BasicPage({ setCurrPage, setApiResponse }: BasicInterface) {
   const [responses, setResponses] = useState({
     organized: '',
@@ -27,7 +26,6 @@ function BasicPage({ setCurrPage, setApiResponse }: BasicInterface) {
     }));
   };
 
-  
   const answeredQuestions = Object.values(responses).filter(response => response !== '').length;
   const progress = (answeredQuestions / totalQuestions) * 100;
 
@@ -84,7 +82,6 @@ function BasicPage({ setCurrPage, setApiResponse }: BasicInterface) {
 
   return (
     <div className="Basic">
-
       <h1>Basic Questions Page</h1>
 
       <div className="progress-bar">
@@ -144,7 +141,6 @@ function BasicPage({ setCurrPage, setApiResponse }: BasicInterface) {
         <h3>Your Responses:</h3>
         <pre>{JSON.stringify(responses, null, 2)}</pre>
       </div>
-
 
       {answeredQuestions === totalQuestions && (
         <button onClick={handleGetAnswer} disabled={loading}>
