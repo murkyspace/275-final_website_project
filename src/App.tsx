@@ -1,5 +1,10 @@
 import React, { useState } from 'react';
+<<<<<<< HEAD
 /*import { useNavigate, Route, Routes} from "react-router-dom";*/
+=======
+import { useNavigate, Route, Routes} from "react-router-dom";
+import logo from './logo.svg';
+>>>>>>> 4ab228455a2fa14a4568cddb26ce19ca5a28fcb9
 import './App.css';
 import {HomePage} from './Home';
 import BasicPage from './Basic';
@@ -18,10 +23,18 @@ if (prevKey !== null) {
 function App() {
   const [key, setKey] = useState<string>(keyData); //for api key input
   const [currPage, setPage] = useState<number>(0);
+<<<<<<< HEAD
   /*const navigate = useNavigate();
   const goToQuizPage = () => {
     navigate('/quiz'); 
   };*/
+=======
+  const [apiResponse, setApiResponse] = useState<string>('');
+  const navigate = useNavigate();
+  const goToQuizPage = () => {
+    navigate('/quiz'); 
+  };
+>>>>>>> 4ab228455a2fa14a4568cddb26ce19ca5a28fcb9
   //sets the local storage item to the api key the user inputed
   function handleSubmit() {
     localStorage.setItem(saveKeyData, JSON.stringify(key));
@@ -35,12 +48,31 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
+<<<<<<< HEAD
       <Form>
         <Form.Label>API Key:</Form.Label>
         <Form.Control type="password" placeholder="Insert API Key Here" onChange={changeKey}></Form.Control>
         <br></br>
         <Button className="Submit-Button" onClick={handleSubmit}>Submit</Button>
       </Form>
+=======
+        <img src={logo} className="App-logo" alt="logo" />
+        <p>
+          Edit <code>src/App.tsx</code> and save to reload.
+        </p>
+        <p>ZhihuaSun</p>
+        <p>Ray Fischer</p>
+        <p>Connor Chipoletti</p>
+
+        <a
+          className="App-link"
+          href="https://reactjs.org"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Learn React
+        </a>
+>>>>>>> 4ab228455a2fa14a4568cddb26ce19ca5a28fcb9
       </header>
       <Form>
         <Form.Label>API Key:</Form.Label>
@@ -49,9 +81,15 @@ function App() {
         <Button className="Submit-Button" onClick={handleSubmit}>Submit</Button>
       </Form>
       <div>{currPage === 0 && <HomePage setCurrPage={setPage}></HomePage>}</div>
+<<<<<<< HEAD
       <div>{currPage === 1 && <BasicPage setCurrPage={setPage}></BasicPage>}</div>
       <div>{currPage === 2 && <DetailedPage setCurrPage={setPage}></DetailedPage>}</div>
       <div>{currPage === 3 && <ResultPage setCurrPage={setPage}></ResultPage>}</div>
+=======
+      <div>{currPage === 1 && <BasicPage setCurrPage={setPage} setApiResponse={setApiResponse}></BasicPage>}</div>
+      <div>{currPage === 2 && <DetailedPage setCurrPage={setPage}></DetailedPage>}</div>
+      <div>{currPage === 3 && <ResultPage setCurrPage={setPage} apiResponse={apiResponse}></ResultPage>}</div>
+>>>>>>> 4ab228455a2fa14a4568cddb26ce19ca5a28fcb9
     </div>
     
     

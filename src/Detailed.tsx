@@ -27,7 +27,11 @@ function DetailedPage({ setCurrPage }: DetailedInterface) {
 
   return (
     <div className="detailed-page">
+<<<<<<< HEAD
       <h1>Additional Questions</h1>
+=======
+      <h1>Detail Questions</h1>
+>>>>>>> 4ab228455a2fa14a4568cddb26ce19ca5a28fcb9
       <form onSubmit={handleSubmit}>
         <div className="question-block">
           <label>
