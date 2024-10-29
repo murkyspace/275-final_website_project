@@ -47,7 +47,8 @@
       "last 1 safari version"
     ]
   },
-  "devDependencies": {
-    "gh-pages": "^6.2.0"
+  "devDependencies": 
+  {
+    "@babel/plugin-proposal-private-property-in-object": "^7.18.6"
   }
 }
