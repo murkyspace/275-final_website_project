@@ -77,7 +77,7 @@ function BasicPage({ setCurrPage, setApiResponse }: BasicInterface) {
   };
 
   const generatePrompt = (responses: any) => {
-    return `Based on the following responses, provide a summary:\n${JSON.stringify(responses, null, 2)}`;
+    return `Generate a personalized career report for the basic career assessment based on the responses below.\n${JSON.stringify(responses, null, 2)}`;
   };
 
   return (
