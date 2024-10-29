@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import {HomePage} from './Home';
 import BasicPage from './Basic';
 import DetailedPage from './Detailed';
 import ResultPage from './Result';
-import { Button, Form} from 'react-bootstrap';
+import { Button, Form, Container, Row, Col, Alert, Spinner } from 'react-bootstrap';
 
 //local storage and API Key: key should be entered in by the user and will be stored in local storage (NOT session storage)
 let keyData = "";
@@ -39,12 +39,12 @@ async function handleSubmit(event: React.FormEvent) {
       setPage(0); 
     } else {
       setIsApiKeyValid(false);
-      setErrorMessage('Invalid API Key. Please enter a valid API Key.');
+      setErrorMessage('Invalid API Key.');
       localStorage.removeItem(saveKeyData);
     }
   } catch (error) {
-    console.error('Error during API Key validation:', error);
-    setErrorMessage('An error occurred during API Key validation. Please try again.');
+    console.error('Error API Key:', error);
+    setErrorMessage('Please try again.');
     setIsApiKeyValid(false);
   }
 
@@ -72,24 +72,83 @@ async function handleSubmit(event: React.FormEvent) {
     }
   }
 
+  useEffect(() => {
+    const storedKey = localStorage.getItem(saveKeyData);
+    if (storedKey) {
+      const parsedKey = JSON.parse(storedKey);
+      setKey(parsedKey);
+      validateApiKey(parsedKey);
+    }
+  }, []);
+  
+
   return (
     <div className="App">
-      <header className="App-header">
-      <Form>
-        <Form.Label>API Key:</Form.Label>
-        <Form.Control type="password" placeholder="Insert API Key Here" onChange={changeKey}></Form.Control>
-        <br></br>
-        <Button className="Submit-Button" onClick={handleSubmit}>Submit</Button>
-      </Form>
-      </header>
+      <Container>
+        <Row className="justify-content-md-center mt-4">
+          <Col md={6}>
+            {(!isApiKeyValid) && (
+              <header className="App-header">
+                <Form onSubmit={handleSubmit}>
+                  <Form.Group controlId="formApiKey">
+                    <Form.Label>API Key:</Form.Label>
+                    <Form.Control
+                      type="password"
+                      placeholder="Insert API Key Here"
+                      value={key}
+                      onChange={changeKey}
+                      required
+                    />
+                  </Form.Group>
+                  {errorMessage && <Alert variant="danger" className="mt-3">{errorMessage}</Alert>}
+                  <Button variant="primary" type="submit" className="mt-3" disabled={isLoading}>
+                    {isLoading ? (
+                      <>
+                        <Spinner
+                          as="span"
+                          animation="border"
+                          size="sm"
+                          role="status"
+                          aria-hidden="true"
+                        /> Validating...
+                      </>
+                    ) : (
+                      'Submit'
+                    )}
+                  </Button>
+                </Form>
+              </header>
+            )}
+          </Col>
+        </Row>
+        {isApiKeyValid && (
+          <>
+            <Row className="justify-content-md-center mt-4">
+              <Col md={8}>
+                {currPage === 0 && <HomePage setCurrPage={setPage} />}
+                {currPage === 1 && <BasicPage setCurrPage={setPage} setApiResponse={setApiResponse} />}
+                {currPage === 2 && <DetailedPage setCurrPage={setPage} />}
+                {currPage === 3 && <ResultPage setCurrPage={setPage} apiResponse={apiResponse} />}
+              </Col>
+            </Row>
+          </>
+        )}
 
-      <div>{currPage === 0 && <HomePage setCurrPage={setPage}></HomePage>}</div>
-      <div>{currPage === 1 && <BasicPage setCurrPage={setPage} setApiResponse={setApiResponse}></BasicPage>}</div>
-      <div>{currPage === 2 && <DetailedPage setCurrPage={setPage}></DetailedPage>}</div>
-      <div>{currPage === 3 && <ResultPage setCurrPage={setPage} apiResponse={apiResponse}></ResultPage>}</div>
+        {!isApiKeyValid && (
+          <Row className="justify-content-md-center mt-4">
+            <Col md={6}>
+              {currPage !== 0 && (
+                <Alert variant="danger">
+                  <Alert.Heading>Access Denied</Alert.Heading>
+                  <p>Please enter a valid API Key.</p>
+                  <Button onClick={() => setPage(0)}>Go to API Key Input</Button>
+                </Alert>
+              )}
+            </Col>
+          </Row>
+        )}
+      </Container>
     </div>
-    
-    
   );
 }
 
