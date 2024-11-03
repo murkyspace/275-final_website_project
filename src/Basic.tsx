@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
 import './Basic.css';
 import { SwitchOne } from './Switch';
 import { BasicInterface } from './BasicInt';
+import { Form } from 'react-bootstrap';
+import { useState } from 'react';
 
 function BasicPage({ setCurrPage, setApiResponse }: BasicInterface) {
   const [responses, setResponses] = useState({
@@ -25,7 +26,6 @@ function BasicPage({ setCurrPage, setApiResponse }: BasicInterface) {
       [question]: response
     }));
   };
-
   const answeredQuestions = Object.values(responses).filter(response => response !== '').length;
   const progress = (answeredQuestions / totalQuestions) * 100;
 
@@ -91,74 +91,399 @@ function BasicPage({ setCurrPage, setApiResponse }: BasicInterface) {
 
       <div>
         <p>You consider yourself to be a well-organized person.</p>
-        <button onClick={() => handleResponse('organized', 'Strongly Agree,')}>Strongly Agree</button>
-        <button onClick={() => handleResponse('organized', 'Agree')}>Agree</button>
-        <button onClick={() => handleResponse('organized', 'Middle')}>Middle</button>
-        <button onClick={() => handleResponse('organized', 'Disagree')}>Disagree</button>
-        <button onClick={() => handleResponse('organized', 'Strongly Disgree')}>Strongly Disgree</button>
+        <Form.Check
+        inline
+        type="radio"
+        name="organized"
+        onClick={() => handleResponse('organized', 'Strongly Agree')}
+        id="response-org-strongagree"
+        label="Strongly Agree"
+        value="strongly agree"
+        />
+        <Form.Check
+        inline
+        type="radio"
+        name="organized"
+        onClick={() => handleResponse('organized', 'Agree')}
+        id="response-org-agree"
+        label="Agree"
+        value="agree"
+        />
+        <Form.Check
+        inline
+        type="radio"
+        name="organized"
+        onClick={() => handleResponse('organized', 'Neutral')}
+        id="response-org-neutral"
+        label="Neutral"
+        value="neutral"
+        />
+        <Form.Check
+        inline
+        type="radio"
+        name="organized"
+        onClick={() => handleResponse('organized', 'Disagree')}
+        id="response-org-disagree"
+        label="Disagree"
+        value="disagree"
+        />
+        <Form.Check
+        inline
+        type="radio"
+        name="organized"
+        onClick={() => handleResponse('organized', 'Strongly Disagree')}
+        id="response-org-strongdisagree"
+        label="Strongly Disagree"
+        value="strongly disagree"
+        />
+
       </div>
 
       <div>
         <p>You make new friends often.</p>
-        <button onClick={() => handleResponse('extroverted', 'Strongly Agree')}>Strongly Agree</button>
-        <button onClick={() => handleResponse('extroverted', 'Agree')}>Agree</button>
-        <button onClick={() => handleResponse('extroverted', 'Middle')}>Middle</button>
-        <button onClick={() => handleResponse('extroverted', 'Disagree')}>Disagree</button>
-        <button onClick={() => handleResponse('extroverted', 'Strongly Disgree')}>Strongly Disgree</button>
+
+        <Form.Check
+        inline
+        type="radio"
+        name="extroverted"
+        onClick={() => handleResponse('extroverted', 'Strongly Agree')}
+        id="response-ext-strongagree"
+        label="Strongly Agree"
+        value="strongly agree"
+        />
+        <Form.Check
+        inline
+        type="radio"
+        name="extroverted"
+        onClick={() => handleResponse('extroverted', 'Agree')}
+        id="response-ext-agree"
+        label="Agree"
+        value="agree"
+        />
+        <Form.Check
+        inline
+        type="radio"
+        name="extroverted"
+        onClick={() => handleResponse('extroverted', 'Neutral')}
+        id="response-ext-neutral"
+        label="Neutral"
+        value="neutral"
+        />
+        <Form.Check
+        inline
+        type="radio"
+        name="extroverted"
+        onClick={() => handleResponse('extroverted', 'Disagree')}
+        id="response-ext-disagree"
+        label="Disagree"
+        value="disagree"
+        />
+        <Form.Check
+        inline
+        type="radio"
+        name="extroverted"
+        onClick={() => handleResponse('extroverted', 'Strongly Disagree')}
+        id="response-ext-strongdisagree"
+        label="Strongly Disagree"
+        value="strongly disagree"
+        />
       </div>
 
       <div>
         <p>You prefer to come up with your own solutions to problems instead of taking suggestions from others.</p>
-        <button onClick={() => handleResponse('creativity', 'Strongly Agree')}>Strongly Agree</button>
-        <button onClick={() => handleResponse('creativity', 'Agree')}>Agree</button>
-        <button onClick={() => handleResponse('creativity', 'Middle')}>Middle</button>
-        <button onClick={() => handleResponse('creativity', 'Disagree')}>Disagree</button>
-        <button onClick={() => handleResponse('creativity', 'Strongly Disgree')}>Strongly Disgree</button>
+        <Form.Check
+        inline
+        type="radio"
+        name="creativity"
+        onClick={() => handleResponse('creativity', 'Strongly Agree')}
+        id="response-cre-strongagree"
+        label="Strongly Agree"
+        value="strongly agree"
+        />
+        <Form.Check
+        inline
+        type="radio"
+        name="creativity"
+        onClick={() => handleResponse('creativity', 'Agree')}
+        id="response-cre-agree"
+        label="Agree"
+        value="agree"
+        />
+        <Form.Check
+        inline
+        type="radio"
+        name="creativity"
+        onClick={() => handleResponse('creativity', 'Neutral')}
+        id="response-cre-neutral"
+        label="Neutral"
+        value="neutral"
+        />
+        <Form.Check
+        inline
+        type="radio"
+        name="creativity"
+        onClick={() => handleResponse('creativity', 'Disagree')}
+        id="response-cre-disagree"
+        label="Disagree"
+        value="disagree"
+        />
+        <Form.Check
+        inline
+        type="radio"
+        name="creativity"
+        onClick={() => handleResponse('creativity', 'Strongly Disagree')}
+        id="response-cre-strongdisagree"
+        label="Strongly Disagree"
+        value="strongly disagree"
+        />
+
       </div>
 
       <div>
         <p>You watch news channels often.</p>
-        <button onClick={() => handleResponse('awareness', 'Strongly Agree')}>Strongly Agree</button>
-        <button onClick={() => handleResponse('awareness', 'Agree')}>Agree</button>
-        <button onClick={() => handleResponse('awareness', 'Middle')}>Middle</button>
-        <button onClick={() => handleResponse('awareness', 'Disagree')}>Disagree</button>
-        <button onClick={() => handleResponse('awareness', 'Strongly Disgree')}>Strongly Disgree</button>
+        <Form.Check
+        inline
+        type="radio"
+        name="awareness"
+        onClick={() => handleResponse('awareness', 'Strongly Agree')}
+        id="response-awa-strongagree"
+        label="Strongly Agree"
+        value="strongly agree"
+        />
+        <Form.Check
+        inline
+        type="radio"
+        name="awareness"
+        onClick={() => handleResponse('awareness', 'Agree')}
+        id="response-awa-agree"
+        label="Agree"
+        value="agree"
+        />
+        <Form.Check
+        inline
+        type="radio"
+        name="awareness"
+        onClick={() => handleResponse('awareness', 'Neutral')}
+        id="response-awa-neutral"
+        label="Neutral"
+        value="neutral"
+        />
+        <Form.Check
+        inline
+        type="radio"
+        name="awareness"
+        onClick={() => handleResponse('awareness', 'Disagree')}
+        id="response-awa-disagree"
+        label="Disagree"
+        value="disagree"
+        />
+        <Form.Check
+        inline
+        type="radio"
+        name="awareness"
+        onClick={() => handleResponse('awareness', 'Strongly Disagree')}
+        id="response-awa-strongdisagree"
+        label="Strongly Disagree"
+        value="strongly disagree"
+        />
       </div>
 
       <div>
         <p>You adapt easily to new changes.</p>
-        <button onClick={() => handleResponse('adaptiveness', 'Strongly Agree')}>Strongly Agree</button>
-        <button onClick={() => handleResponse('adaptiveness', 'Agree')}>Agree</button>
-        <button onClick={() => handleResponse('adaptiveness', 'Middle')}>Middle</button>
-        <button onClick={() => handleResponse('adaptiveness', 'Disagree')}>Disagree</button>
-        <button onClick={() => handleResponse('adaptiveness', 'Strongly Disgree')}>Strongly Disgree</button>
+        <Form.Check
+        inline
+        type="radio"
+        name="adaptiveness"
+        onClick={() => handleResponse('adaptiveness', 'Strongly Agree')}
+        id="response-ada-strongagree"
+        label="Strongly Agree"
+        value="strongly agree"
+        />
+        <Form.Check
+        inline
+        type="radio"
+        name="adaptiveness"
+        onClick={() => handleResponse('adaptiveness', 'Agree')}
+        id="response-ada-agree"
+        label="Agree"
+        value="agree"
+        />
+        <Form.Check
+        inline
+        type="radio"
+        name="adaptiveness"
+        onClick={() => handleResponse('adaptiveness', 'Neutral')}
+        id="response-ada-neutral"
+        label="Neutral"
+        value="neutral"
+        />
+        <Form.Check
+        inline
+        type="radio"
+        name="adaptiveness"
+        onClick={() => handleResponse('adaptiveness', 'Disagree')}
+        id="response-ada-disagree"
+        label="Disagree"
+        value="disagree"
+        />
+        <Form.Check
+        inline
+        type="radio"
+        name="adaptiveness"
+        onClick={() => handleResponse('adaptiveness', 'Strongly Disagree')}
+        id="response-ada-strongdisagree"
+        label="Strongly Disagree"
+        value="strongly disagree"
+        />
       </div>
 
       <div>
         <p>You work well by building off of what already exists.</p>
-        <button onClick={() => handleResponse('innovative', 'Strongly Agree')}>Strongly Agree</button>
-        <button onClick={() => handleResponse('innovative', 'Agree')}>Agree</button>
-        <button onClick={() => handleResponse('innovative', 'Middle')}>Middle</button>
-        <button onClick={() => handleResponse('innovative', 'Disagree')}>Disagree</button>
-        <button onClick={() => handleResponse('innovative', 'Strongly Disgree')}>Strongly Disgree</button>
+        <Form.Check
+        inline
+        type="radio"
+        name="innovative"
+        onClick={() => handleResponse('innovative', 'Strongly Agree')}
+        id="response-ino-strongagree"
+        label="Strongly Agree"
+        value="strongly agree"
+        />
+        <Form.Check
+        inline
+        type="radio"
+        name="innovative"
+        onClick={() => handleResponse('innovative', 'Agree')}
+        id="response-ino-agree"
+        label="Agree"
+        value="agree"
+        />
+        <Form.Check
+        inline
+        type="radio"
+        name="innovative"
+        onClick={() => handleResponse('innovative', 'Neutral')}
+        id="response-ino-neutral"
+        label="Neutral"
+        value="neutral"
+        />
+        <Form.Check
+        inline
+        type="radio"
+        name="innovative"
+        onClick={() => handleResponse('innovative', 'Disagree')}
+        id="response-ino-disagree"
+        label="Disagree"
+        value="disagree"
+        />
+        <Form.Check
+        inline
+        type="radio"
+        name="innovative"
+        onClick={() => handleResponse('innovative', 'Strongly Disagree')}
+        id="response-ino-strongdisagree"
+        label="Strongly Disagree"
+        value="strongly disagree"
+        />
+
       </div>
 
       <div>
         <p>You are fine with waiting for other people.</p>
-        <button onClick={() => handleResponse('patience', 'Strongly Agree')}>Strongly Agree</button>
-        <button onClick={() => handleResponse('patience', 'Agree')}>Agree</button>
-        <button onClick={() => handleResponse('patience', 'Middle')}>Middle</button>
-        <button onClick={() => handleResponse('patience', 'Disagree')}>Disagree</button>
-        <button onClick={() => handleResponse('patience', 'Strongly Disgree')}>Strongly Disgree</button>
+        <Form.Check
+        inline
+        type="radio"
+        name="patience"
+        onClick={() => handleResponse('patience', 'Strongly Agree')}
+        id="response-pat-strongagree"
+        label="Strongly Agree"
+        value="strongly agree"
+        />
+        <Form.Check
+        inline
+        type="radio"
+        name="patience"
+        onClick={() => handleResponse('patience', 'Agree')}
+        id="response-pat-agree"
+        label="Agree"
+        value="agree"
+        />
+        <Form.Check
+        inline
+        type="radio"
+        name="patience"
+        onClick={() => handleResponse('patience', 'Neutral')}
+        id="response-pat-neutral"
+        label="Neutral"
+        value="neutral"
+        />
+        <Form.Check
+        inline
+        type="radio"
+        name="patience"
+        onClick={() => handleResponse('patience', 'Disagree')}
+        id="response-pat-disagree"
+        label="Disagree"
+        value="disagree"
+        />
+        <Form.Check
+        inline
+        type="radio"
+        name="patience"
+        onClick={() => handleResponse('patience', 'Strongly Disagree')}
+        id="response-pat-strongdisagree"
+        label="Strongly Disagree"
+        value="strongly disagree"
+        />
       </div>
 
       <div>
         <p>You would rather make the right decision, even if it risks losing a friend.</p>
-        <button onClick={() => handleResponse('logicalVsEmotional', 'Strongly Agree')}>Strongly Agree</button>
-        <button onClick={() => handleResponse('logicalVsEmotional', 'Agree')}>Agree</button>
-        <button onClick={() => handleResponse('logicalVsEmotional', 'Middle')}>Middle</button>
-        <button onClick={() => handleResponse('logicalVsEmotional', 'Disagree')}>Disagree</button>
-        <button onClick={() => handleResponse('logicalVsEmotional', 'Strongly Disgree')}>Strongly Disgree</button>
+        <Form.Check
+        inline
+        type="radio"
+        name="logicalVsEmotional"
+        onClick={() => handleResponse('logicalVsEmotional', 'Strongly Agree')}
+        id="response-lve-strongagree"
+        label="Strongly Agree"
+        value="strongly agree"
+        />
+        <Form.Check
+        inline
+        type="radio"
+        name="logicalVsEmotional"
+        onClick={() => handleResponse('logicalVsEmotional', 'Agree')}
+        id="response-lve-agree"
+        label="Agree"
+        value="agree"
+        />
+        <Form.Check
+        inline
+        type="radio"
+        name="logicalVsEmotional"
+        onClick={() => handleResponse('logicalVsEmotional', 'Neutral')}
+        id="response-lve-neutral"
+        label="Neutral"
+        value="neutral"
+        />
+        <Form.Check
+        inline
+        type="radio"
+        name="logicalVsEmotional"
+        onClick={() => handleResponse('logicalVsEmotional', 'Disagree')}
+        id="response-lve-disagree"
+        label="Disagree"
+        value="disagree"
+        />
+        <Form.Check
+        inline
+        type="radio"
+        name="logicalVsEmotional"
+        onClick={() => handleResponse('logicalVsEmotional', 'Strongly Disagree')}
+        id="response-lve-strongdisagree"
+        label="Strongly Disagree"
+        value="strongly disagree"
+        />
+
       </div>
 
       <div>
