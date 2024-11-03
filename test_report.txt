@@ -3,7 +3,7 @@
 > react-scripts test --coverage
 
 FAIL src/App.test.tsx
-  ✕ renders learn react link (39 ms)
+  ✕ renders learn react link (55 ms)
 
   ● renders learn react link
 
@@ -41,7 +41,6 @@ FAIL src/App.test.tsx
                         [33mclass[39m=[32m"form-control"[39m
                         [33mid[39m=[32m"formApiKey"[39m
                         [33mplaceholder[39m=[32m"Insert API Key Here"[39m
-                        [33mrequired[39m=[32m""[39m
                         [33mtype[39m=[32m"password"[39m
                         [33mvalue[39m=[32m""[39m
                       [36m/>[39m
@@ -89,15 +88,15 @@ FAIL src/App.test.tsx
 --------------------|---------|----------|---------|---------|--------------------
 File                | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s  
 --------------------|---------|----------|---------|---------|--------------------
-All files           |    9.79 |    19.23 |    3.22 |      10 |                    
- App.tsx            |   34.14 |    38.46 |   33.33 |   34.14 | 14,31-71,78-80,144 
- Basic.tsx          |       0 |        0 |       0 |       0 | 8-481              
+All files           |    8.79 |     6.49 |     2.7 |    9.09 |                    
+ App.tsx            |   35.71 |    38.46 |   33.33 |   35.71 | 14,32-72,79-81,144 
+ Basic.tsx          |       0 |        0 |       0 |       0 | 7-411              
  BasicInt.ts        |       0 |        0 |       0 |       0 |                    
- Detailed.tsx       |       0 |      100 |       0 |       0 | 7-28               
+ Detailed.tsx       |       0 |        0 |       0 |       0 | 7-227              
  DetailedInt.ts     |       0 |        0 |       0 |       0 |                    
  Home.tsx           |       0 |      100 |       0 |       0 | 10                 
  HomeInt.ts         |       0 |        0 |       0 |       0 |                    
- Result.tsx         |       0 |      100 |       0 |       0 | 7-9                
+ Result.tsx         |   33.33 |        0 |       0 |   33.33 | 6-37               
  ResultInt.ts       |       0 |        0 |       0 |       0 |                    
  Switch.tsx         |       0 |        0 |       0 |       0 | 5-16               
  index.tsx          |       0 |      100 |     100 |       0 | 8-24               
@@ -107,5 +106,5 @@ All files           |    9.79 |    19.23 |    3.22 |      10 |
 Test Suites: 1 failed, 1 total
 Tests:       1 failed, 1 total
 Snapshots:   0 total
-Time:        2.697 s
+Time:        2.863 s
 Ran all test suites.
