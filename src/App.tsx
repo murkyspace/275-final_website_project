@@ -5,7 +5,7 @@ import BasicPage from './Basic';
 import DetailedPage from './Detailed';
 import ResultPage from './Result';
 import { Button, Form, Container, Row, Col, Alert, Spinner } from 'react-bootstrap';
-
+import 'bootstrap/dist/css/bootstrap.min.css';
 //local storage and API Key: key should be entered in by the user and will be stored in local storage (NOT session storage)
 let keyData = "";
 const saveKeyData = "MYKEY";
@@ -17,7 +17,8 @@ if (prevKey !== null) {
 function App() {
   const [key, setKey] = useState<string>(keyData); //for api key input
   const [currPage, setPage] = useState<number>(0);
-  const [apiResponse, setApiResponse] = useState<string>('');
+  const [basicApiResponse, setBasicApiResponse] = useState<string>('');
+  const [detailedApiResponse, setDetailedApiResponse] = useState<string>('');
   const [isApiKeyValid, setIsApiKeyValid] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
@@ -97,7 +98,6 @@ async function handleSubmit(event: React.FormEvent) {
                       placeholder="Insert API Key Here"
                       value={key}
                       onChange={changeKey}
-                      required
                     />
                   </Form.Group>
                   {errorMessage && <Alert variant="danger" className="mt-3">{errorMessage}</Alert>}
@@ -125,10 +125,10 @@ async function handleSubmit(event: React.FormEvent) {
           <>
             <Row className="justify-content-md-center mt-4">
               <Col md={8}>
-                {currPage === 0 && <HomePage setCurrPage={setPage} />}
-                {currPage === 1 && <BasicPage setCurrPage={setPage} setApiResponse={setApiResponse} />}
-                {currPage === 2 && <DetailedPage setCurrPage={setPage} />}
-                {currPage === 3 && <ResultPage setCurrPage={setPage} apiResponse={apiResponse} />}
+              {currPage === 0 && <HomePage setCurrPage={setPage} />}
+                {currPage === 1 && <BasicPage setCurrPage={setPage} setApiResponse={setBasicApiResponse} />}
+                {currPage === 2 && <DetailedPage setCurrPage={setPage} setApiResponse={setDetailedApiResponse} />}
+                {currPage === 3 && <ResultPage setCurrPage={setPage} basicApiResponse={basicApiResponse} detailedApiResponse={detailedApiResponse} />}
               </Col>
             </Row>
           </>
