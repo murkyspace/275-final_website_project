@@ -1,8 +1,7 @@
+import React, { useState } from 'react';
 import './Basic.css';
 import { Button, Form, ProgressBar, Alert, Spinner, Container, Row, Col } from 'react-bootstrap';
 import { BasicInterface } from './BasicInt';
-import { Form } from 'react-bootstrap';
-import { useState } from 'react';
 
 function BasicPage({ setCurrPage, setApiResponse }: BasicInterface) {
   const [responses, setResponses] = useState({
@@ -28,6 +27,7 @@ function BasicPage({ setCurrPage, setApiResponse }: BasicInterface) {
     }));
     if (errorMessage) setErrorMessage('');
   };
+
   const answeredQuestions = Object.values(responses).filter(response => response !== '').length;
   const progress = Math.round((answeredQuestions / totalQuestions) * 100);
 
@@ -83,7 +83,6 @@ function BasicPage({ setCurrPage, setApiResponse }: BasicInterface) {
   };
 
   return (
-
     <Container className="mt-4">
       <Row className="justify-content-md-center">
         <Col md={8}>
@@ -417,3 +416,8 @@ function BasicPage({ setCurrPage, setApiResponse }: BasicInterface) {
         </Col>
       </Row>
     </Container>
+  );
+}
+
+export default BasicPage;
+
