@@ -33,6 +33,19 @@ width: 0%;
 transition: width 0.5s;
 }
 
+.form-check.text-muted .form-check-label {
+  color: #6c757d;
+}
 
+.form-label.text-dark {
+  color: #212529; 
+}
 
+.form-check.text-muted .form-check-label {
+  font-weight: normal;
+}
+
+.form-check.text-muted .form-check-label {
+  font-size: 0.85rem;
+}
 
