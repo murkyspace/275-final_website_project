@@ -114,7 +114,7 @@ function BasicPage({ setCurrPage, setApiResponse }: BasicInterface) {
                   label="Strongly Agree"
                   value="Strongly Agree"
                   checked={responses.organized === 'Strongly Agree'}
-                  className="text-muted me-3"
+                  className="text-muted me-3 custom-radio"
                 />
                 <Form.Check
                   inline
@@ -125,7 +125,7 @@ function BasicPage({ setCurrPage, setApiResponse }: BasicInterface) {
                   label="Agree"
                   value="Agree"
                   checked={responses.organized === 'Agree'}
-                  className="text-muted me-3"
+                  className="text-muted me-3 custom-radio"
                 />
                 <Form.Check
                   inline
@@ -136,7 +136,7 @@ function BasicPage({ setCurrPage, setApiResponse }: BasicInterface) {
                   label="Neutral"
                   value="Neutral"
                   checked={responses.organized === 'Neutral'}
-                  className="text-muted me-3"
+                  className="text-muted me-3 custom-radio"
                 />
                 <Form.Check
                   inline
@@ -147,7 +147,7 @@ function BasicPage({ setCurrPage, setApiResponse }: BasicInterface) {
                   label="Disagree"
                   value="Disagree"
                   checked={responses.organized === 'Disagree'}
-                  className="text-muted me-3"
+                  className="text-muted me-3 custom-radio"
                 />
                 <Form.Check
                   inline
@@ -158,7 +158,7 @@ function BasicPage({ setCurrPage, setApiResponse }: BasicInterface) {
                   label="Strongly Disagree"
                   value="Strongly Disagree"
                   checked={responses.organized === 'Strongly Disagree'}
-                  className="text-muted"
+                  className="text-muted custom-radio"
                 />
               </div>
             </Form.Group>
@@ -177,7 +177,7 @@ function BasicPage({ setCurrPage, setApiResponse }: BasicInterface) {
                   label="Strongly Agree"
                   value="Strongly Agree"
                   checked={responses.extroverted === 'Strongly Agree'}
-                  className="text-muted me-3"
+                  className="text-muted me-3 custom-radio"
                 />
                 <Form.Check
                   inline
@@ -188,7 +188,7 @@ function BasicPage({ setCurrPage, setApiResponse }: BasicInterface) {
                   label="Agree"
                   value="Agree"
                   checked={responses.extroverted === 'Agree'}
-                  className="text-muted me-3"
+                  className="text-muted me-3 custom-radio"
                 />
                 <Form.Check
                   inline
@@ -199,7 +199,7 @@ function BasicPage({ setCurrPage, setApiResponse }: BasicInterface) {
                   label="Neutral"
                   value="Neutral"
                   checked={responses.extroverted === 'Neutral'}
-                  className="text-muted me-3"
+                  className="text-muted me-3 custom-radio"
                 />
                 <Form.Check
                   inline
@@ -210,7 +210,7 @@ function BasicPage({ setCurrPage, setApiResponse }: BasicInterface) {
                   label="Disagree"
                   value="Disagree"
                   checked={responses.extroverted === 'Disagree'}
-                  className="text-muted me-3"
+                  className="text-muted me-3 custom-radio"
                 />
                 <Form.Check
                   inline
@@ -221,7 +221,7 @@ function BasicPage({ setCurrPage, setApiResponse }: BasicInterface) {
                   label="Strongly Disagree"
                   value="Strongly Disagree"
                   checked={responses.extroverted === 'Strongly Disagree'}
-                  className="text-muted"
+                  className="text-muted custom-radio"
                 />
               </div>
             </Form.Group>
@@ -240,7 +240,7 @@ function BasicPage({ setCurrPage, setApiResponse }: BasicInterface) {
                   label="Strongly Agree"
                   value="Strongly Agree"
                   checked={responses.creativity === 'Strongly Agree'}
-                  className="text-muted me-3"
+                  className="text-muted me-3 custom-radio"
                 />
                 <Form.Check
                   inline
@@ -251,7 +251,7 @@ function BasicPage({ setCurrPage, setApiResponse }: BasicInterface) {
                   label="Agree"
                   value="Agree"
                   checked={responses.creativity === 'Agree'}
-                  className="text-muted me-3"
+                  className="text-muted me-3 custom-radio"
                 />
                 <Form.Check
                   inline
@@ -262,7 +262,7 @@ function BasicPage({ setCurrPage, setApiResponse }: BasicInterface) {
                   label="Neutral"
                   value="Neutral"
                   checked={responses.creativity === 'Neutral'}
-                  className="text-muted me-3"
+                  className="text-muted me-3 custom-radio"
                 />
                 <Form.Check
                   inline
@@ -273,7 +273,7 @@ function BasicPage({ setCurrPage, setApiResponse }: BasicInterface) {
                   label="Disagree"
                   value="Disagree"
                   checked={responses.creativity === 'Disagree'}
-                  className="text-muted me-3"
+                  className="text-muted me-3 custom-radio"
                 />
                 <Form.Check
                   inline
@@ -284,7 +284,7 @@ function BasicPage({ setCurrPage, setApiResponse }: BasicInterface) {
                   label="Strongly Disagree"
                   value="Strongly Disagree"
                   checked={responses.creativity === 'Strongly Disagree'}
-                  className="text-muted"
+                  className="text-muted custom-radio"
                 />
               </div>
             </Form.Group>
@@ -303,7 +303,7 @@ function BasicPage({ setCurrPage, setApiResponse }: BasicInterface) {
                   label="Strongly Agree"
                   value="Strongly Agree"
                   checked={responses.awareness === 'Strongly Agree'}
-                  className="text-muted me-3"
+                  className="text-muted me-3 custom-radio"
                 />
                 <Form.Check
                   inline
@@ -314,7 +314,7 @@ function BasicPage({ setCurrPage, setApiResponse }: BasicInterface) {
                   label="Agree"
                   value="Agree"
                   checked={responses.awareness === 'Agree'}
-                  className="text-muted me-3"
+                  className="text-muted me-3 custom-radio"
                 />
                 <Form.Check
                   inline
@@ -325,7 +325,7 @@ function BasicPage({ setCurrPage, setApiResponse }: BasicInterface) {
                   label="Neutral"
                   value="Neutral"
                   checked={responses.awareness === 'Neutral'}
-                  className="text-muted me-3"
+                  className="text-muted me-3 custom-radio"
                 />
                 <Form.Check
                   inline
@@ -336,7 +336,7 @@ function BasicPage({ setCurrPage, setApiResponse }: BasicInterface) {
                   label="Disagree"
                   value="Disagree"
                   checked={responses.awareness === 'Disagree'}
-                  className="text-muted me-3"
+                  className="text-muted me-3 custom-radio"
                 />
                 <Form.Check
                   inline
@@ -347,7 +347,7 @@ function BasicPage({ setCurrPage, setApiResponse }: BasicInterface) {
                   label="Strongly Disagree"
                   value="Strongly Disagree"
                   checked={responses.awareness === 'Strongly Disagree'}
-                  className="text-muted"
+                  className="text-muted custom-radio"
                 />
               </div>
             </Form.Group>
@@ -366,7 +366,7 @@ function BasicPage({ setCurrPage, setApiResponse }: BasicInterface) {
                   label="Strongly Agree"
                   value="Strongly Agree"
                   checked={responses.adaptiveness === 'Strongly Agree'}
-                  className="text-muted me-3"
+                  className="text-muted me-3 custom-radio"
                 />
                 <Form.Check
                   inline
@@ -377,7 +377,7 @@ function BasicPage({ setCurrPage, setApiResponse }: BasicInterface) {
                   label="Agree"
                   value="Agree"
                   checked={responses.adaptiveness === 'Agree'}
-                  className="text-muted me-3"
+                  className="text-muted me-3 custom-radio"
                 />
                 <Form.Check
                   inline
@@ -388,7 +388,7 @@ function BasicPage({ setCurrPage, setApiResponse }: BasicInterface) {
                   label="Neutral"
                   value="Neutral"
                   checked={responses.adaptiveness === 'Neutral'}
-                  className="text-muted me-3"
+                  className="text-muted me-3 custom-radio"
                 />
                 <Form.Check
                   inline
@@ -399,7 +399,7 @@ function BasicPage({ setCurrPage, setApiResponse }: BasicInterface) {
                   label="Disagree"
                   value="Disagree"
                   checked={responses.adaptiveness === 'Disagree'}
-                  className="text-muted me-3"
+                  className="text-muted me-3 custom-radio"
                 />
                 <Form.Check
                   inline
@@ -410,7 +410,7 @@ function BasicPage({ setCurrPage, setApiResponse }: BasicInterface) {
                   label="Strongly Disagree"
                   value="Strongly Disagree"
                   checked={responses.adaptiveness === 'Strongly Disagree'}
-                  className="text-muted"
+                  className="text-muted custom-radio"
                 />
               </div>
             </Form.Group>
@@ -429,7 +429,7 @@ function BasicPage({ setCurrPage, setApiResponse }: BasicInterface) {
                   label="Strongly Agree"
                   value="Strongly Agree"
                   checked={responses.innovative === 'Strongly Agree'}
-                  className="text-muted me-3"
+                  className="text-muted me-3 custom-radio"
                 />
                 <Form.Check
                   inline
@@ -440,7 +440,7 @@ function BasicPage({ setCurrPage, setApiResponse }: BasicInterface) {
                   label="Agree"
                   value="Agree"
                   checked={responses.innovative === 'Agree'}
-                  className="text-muted me-3"
+                  className="text-muted me-3 custom-radio"
                 />
                 <Form.Check
                   inline
@@ -451,7 +451,7 @@ function BasicPage({ setCurrPage, setApiResponse }: BasicInterface) {
                   label="Neutral"
                   value="Neutral"
                   checked={responses.innovative === 'Neutral'}
-                  className="text-muted me-3"
+                  className="text-muted me-3 custom-radio"
                 />
                 <Form.Check
                   inline
@@ -462,7 +462,7 @@ function BasicPage({ setCurrPage, setApiResponse }: BasicInterface) {
                   label="Disagree"
                   value="Disagree"
                   checked={responses.innovative === 'Disagree'}
-                  className="text-muted me-3"
+                  className="text-muted me-3 custom-radio"
                 />
                 <Form.Check
                   inline
@@ -473,7 +473,7 @@ function BasicPage({ setCurrPage, setApiResponse }: BasicInterface) {
                   label="Strongly Disagree"
                   value="Strongly Disagree"
                   checked={responses.innovative === 'Strongly Disagree'}
-                  className="text-muted"
+                  className="text-muted custom-radio"
                 />
               </div>
             </Form.Group>
@@ -492,7 +492,7 @@ function BasicPage({ setCurrPage, setApiResponse }: BasicInterface) {
                   label="Strongly Agree"
                   value="Strongly Agree"
                   checked={responses.patience === 'Strongly Agree'}
-                  className="text-muted me-3"
+                  className="text-muted me-3 custom-radio"
                 />
                 <Form.Check
                   inline
@@ -503,7 +503,7 @@ function BasicPage({ setCurrPage, setApiResponse }: BasicInterface) {
                   label="Agree"
                   value="Agree"
                   checked={responses.patience === 'Agree'}
-                  className="text-muted me-3"
+                  className="text-muted me-3 custom-radio"
                 />
                 <Form.Check
                   inline
@@ -514,7 +514,7 @@ function BasicPage({ setCurrPage, setApiResponse }: BasicInterface) {
                   label="Neutral"
                   value="Neutral"
                   checked={responses.patience === 'Neutral'}
-                  className="text-muted me-3"
+                  className="text-muted me-3 custom-radio"
                 />
                 <Form.Check
                   inline
@@ -525,7 +525,7 @@ function BasicPage({ setCurrPage, setApiResponse }: BasicInterface) {
                   label="Disagree"
                   value="Disagree"
                   checked={responses.patience === 'Disagree'}
-                  className="text-muted me-3"
+                  className="text-muted me-3 custom-radio"
                 />
                 <Form.Check
                   inline
@@ -536,7 +536,7 @@ function BasicPage({ setCurrPage, setApiResponse }: BasicInterface) {
                   label="Strongly Disagree"
                   value="Strongly Disagree"
                   checked={responses.patience === 'Strongly Disagree'}
-                  className="text-muted"
+                  className="text-muted custom-radio"
                 />
               </div>
             </Form.Group>
@@ -555,7 +555,7 @@ function BasicPage({ setCurrPage, setApiResponse }: BasicInterface) {
                   label="Strongly Agree"
                   value="Strongly Agree"
                   checked={responses.logicalVsEmotional === 'Strongly Agree'}
-                  className="text-muted me-3"
+                  className="text-muted me-3 custom-radio"
                 />
                 <Form.Check
                   inline
@@ -566,7 +566,7 @@ function BasicPage({ setCurrPage, setApiResponse }: BasicInterface) {
                   label="Agree"
                   value="Agree"
                   checked={responses.logicalVsEmotional === 'Agree'}
-                  className="text-muted me-3"
+                  className="text-muted me-3 custom-radio"
                 />
                 <Form.Check
                   inline
@@ -577,7 +577,7 @@ function BasicPage({ setCurrPage, setApiResponse }: BasicInterface) {
                   label="Neutral"
                   value="Neutral"
                   checked={responses.logicalVsEmotional === 'Neutral'}
-                  className="text-muted me-3"
+                  className="text-muted me-3 custom-radio"
                 />
                 <Form.Check
                   inline
@@ -588,7 +588,7 @@ function BasicPage({ setCurrPage, setApiResponse }: BasicInterface) {
                   label="Disagree"
                   value="Disagree"
                   checked={responses.logicalVsEmotional === 'Disagree'}
-                  className="text-muted me-3"
+                  className="text-muted me-3 custom-radio"
                 />
                 <Form.Check
                   inline
@@ -599,10 +599,11 @@ function BasicPage({ setCurrPage, setApiResponse }: BasicInterface) {
                   label="Strongly Disagree"
                   value="Strongly Disagree"
                   checked={responses.logicalVsEmotional === 'Strongly Disagree'}
-                  className="text-muted"
+                  className="text-muted custom-radio"
                 />
               </div>
             </Form.Group>
+
             {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
             {answeredQuestions === totalQuestions && (
               <Button variant="primary" onClick={handleGetAnswer} disabled={loading} className="mb-3">
