@@ -54,7 +54,7 @@ function BasicPage({ setCurrPage, setApiResponse }: BasicInterface) {
             { role: 'system', content: 'You are a helpful assistant.' },
             { role: 'user', content: prompt },
           ],
-          max_tokens: 150,
+          max_tokens: 300,
         }),
       });
 
@@ -77,7 +77,7 @@ function BasicPage({ setCurrPage, setApiResponse }: BasicInterface) {
   };
 
   const generatePrompt = (responses: any) => {
-    return `Generate a personalized career report for the basic career assessment based on the responses below.\n${JSON.stringify(responses, null, 2)}`;
+    return `Generate a personalized career report for the basic career assessment based on the responses below.(Please limit replies to 300 characters)\n${JSON.stringify(responses, null, 2)}`;
   };
 
   return (
@@ -136,10 +136,12 @@ function BasicPage({ setCurrPage, setApiResponse }: BasicInterface) {
         label="Strongly Disagree"
         value="strongly disagree"
         />
+
       </div>
 
       <div>
         <p>You make new friends often.</p>
+
         <Form.Check
         inline
         type="radio"
@@ -234,6 +236,7 @@ function BasicPage({ setCurrPage, setApiResponse }: BasicInterface) {
         label="Strongly Disagree"
         value="strongly disagree"
         />
+
       </div>
 
       <div>
@@ -381,6 +384,7 @@ function BasicPage({ setCurrPage, setApiResponse }: BasicInterface) {
         label="Strongly Disagree"
         value="strongly disagree"
         />
+
       </div>
 
       <div>
@@ -479,6 +483,7 @@ function BasicPage({ setCurrPage, setApiResponse }: BasicInterface) {
         label="Strongly Disagree"
         value="strongly disagree"
         />
+
       </div>
 
       <div>
