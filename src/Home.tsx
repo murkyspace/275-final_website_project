@@ -9,9 +9,23 @@ export function HomePage({setCurrPage}: HomeInterface) {
 
     return (
         <p className="Home">
-            <h1>Home page</h1>
-            <div><SwitchOne setCurrPage={setCurrPage} newCurrPage={1} type={"button"}></SwitchOne>
-            <SwitchOne setCurrPage={setCurrPage} newCurrPage={2} type={"button"}></SwitchOne>
+            <div className="container-fluid">
+                <h1>Home page</h1>
+                <div className="row">
+                    <div className="col-sm-6" style= {{color: "pomp and power" }}>
+                        <h3>Basic Questions</h3>
+                        <p>This button will take you to a page with Agree/Disagree questions to learn about your personality type</p>
+                        <div><SwitchOne setCurrPage={setCurrPage} newCurrPage={1} type={"button"}></SwitchOne></div>
+                    </div>
+                    <div className="col-sm-6" style= {{color: "celadon" }}>
+                        <h3>Basic Questions</h3>
+                        <p>This button will take you to a page with Agree/Disagree questions to learn about your personality type</p>
+                        <div><SwitchOne setCurrPage={setCurrPage} newCurrPage={2} type={"button"}></SwitchOne></div>
+                    </div>
+                </div>
+            </div>
+            <div>
+            
             <SwitchOne setCurrPage={setCurrPage} newCurrPage={3} type={"button"}></SwitchOne></div>
         </p>
     );
