@@ -1,28 +1,146 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import './App.css';
 import {HomePage} from './Home';
 import BasicPage from './Basic';
 import DetailedPage from './Detailed';
 import ResultPage from './Result';
-import CoverPage from './Cover';
-import { Button, Form } from 'react-bootstrap';
-import {ApiKey} from './ApiKey';
-
-
+import { Button, Form, Container, Row, Col, Alert, Spinner } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
+//local storage and API Key: key should be entered in by the user and will be stored in local storage (NOT session storage)
+let keyData = "";
+const saveKeyData = "MYKEY";
+const prevKey = localStorage.getItem(saveKeyData); //so it'll look like: MYKEY: <api_key_value here> in the local storage when you inspect
+if (prevKey !== null) {
+  keyData = JSON.parse(prevKey);
+}
 function App() {
-  const [currPage, setPage] = useState<number>(4);
+  const [key, setKey] = useState<string>(keyData); //for api key input
+  const [currPage, setPage] = useState<number>(0);
+  const [basicApiResponse, setBasicApiResponse] = useState<string>('');
+  const [detailedApiResponse, setDetailedApiResponse] = useState<string>('');
+  const [isApiKeyValid, setIsApiKeyValid] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>('');
+  //sets the local storage item to the api key the user inputed
+//  function handleSubmit() {
+//    localStorage.setItem(saveKeyData, JSON.stringify(key));
+//    window.location.reload(); //when making a mistake and changing the key again, I found that I have to reload the whole site before openai refreshes what it has stores for the local storage variable
+//  }
+//Processing API key submissions
+async function handleSubmit(event: React.FormEvent) {
+  event.preventDefault();
+  setIsLoading(true);
+  setErrorMessage('');
+  try {
+    localStorage.setItem(saveKeyData, JSON.stringify(key));
+    const isValid = await validateApiKey(key);
+    if (isValid) {
+      setIsApiKeyValid(true);
+      setPage(0); 
+    } else {
+      setIsApiKeyValid(false);
+      setErrorMessage('Invalid API Key.');
+      localStorage.removeItem(saveKeyData);
+    }
+  } catch (error) {
+    console.error('Error API Key:', error);
+    setErrorMessage('Please try again.');
+    setIsApiKeyValid(false);
+  }
+  setIsLoading(false);
+}
+  //whenever there's a change it'll store the api key in a local state called key but it won't be set in the local storage until the user clicks the submit button
+  function changeKey(event: React.ChangeEvent<HTMLInputElement>) {
+    setKey(event.target.value);
+  }
+  async function validateApiKey(apiKey: string): Promise<boolean> {
+    try {
+      const response = await fetch('https://api.openai.com/v1/models', {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${apiKey}`,
+        },
+      });
+      return response.ok;
+    } catch (error) {
+      console.error('Error validating API Key:', error);
+      return false;
+    }
+  }
+  useEffect(() => {
+    const storedKey = localStorage.getItem(saveKeyData);
+    if (storedKey) {
+      const parsedKey = JSON.parse(storedKey);
+      setKey(parsedKey);
+      validateApiKey(parsedKey);
+    }
+  }, []);
+
   return (
     <div className="App">
-      <div>{currPage === 0 && <HomePage setCurrPage={setPage}></HomePage>}</div>
-      <div>{currPage === 1 && <BasicPage setCurrPage={setPage} setApiResponse={function (value: React.SetStateAction<string>): void {
-        throw new Error('Function not implemented.');
-      } }></BasicPage>}</div>
-      <div>{currPage === 2 && <DetailedPage setCurrPage={setPage}></DetailedPage>}</div>
-      <div>{currPage === 3 && <ResultPage setCurrPage={setPage} apiResponse={''}></ResultPage>}</div>
-      <div>{currPage === 4 && <CoverPage setCurrPage={setPage}></CoverPage>}</div>
-      
-
+            <Container>
+        <Row className="justify-content-md-center mt-4">
+          <Col md={6}>
+            {(!isApiKeyValid) && (
+              <header className="App-header">
+                <Form onSubmit={handleSubmit}>
+                  <Form.Group controlId="formApiKey">
+                    <Form.Label>API Key:</Form.Label>
+                    <Form.Control
+                      type="password"
+                      placeholder="Insert API Key Here"
+                      value={key}
+                      onChange={changeKey}
+                    />
+                  </Form.Group>
+                  {errorMessage && <Alert variant="danger" className="mt-3">{errorMessage}</Alert>}
+                  <Button variant="primary" type="submit" className="mt-3" disabled={isLoading}>
+                    {isLoading ? (
+                      <>
+                        <Spinner
+                          as="span"
+                          animation="border"
+                          size="sm"
+                          role="status"
+                          aria-hidden="true"
+                        /> Validating...
+                      </>
+                    ) : (
+                      'Submit'
+                    )}
+                  </Button>
+                </Form>
+              </header>
+            )}
+          </Col>
+        </Row>
+        {isApiKeyValid && (
+          <>
+            <Row className="justify-content-md-center mt-4">
+              <Col md={8}>
+              {currPage === 0 && <HomePage setCurrPage={setPage} />}
+                {currPage === 1 && <BasicPage setCurrPage={setPage} setApiResponse={setBasicApiResponse} />}
+                {currPage === 2 && <DetailedPage setCurrPage={setPage} setApiResponse={setDetailedApiResponse} />}
+                {currPage === 3 && <ResultPage setCurrPage={setPage} basicApiResponse={basicApiResponse} detailedApiResponse={detailedApiResponse} />}
+              </Col>
+            </Row>
+          </>
+        )}
+            {!isApiKeyValid && (
+          <Row className="justify-content-md-center mt-4">
+            <Col md={6}>
+              {currPage !== 0 && (
+                <Alert variant="danger">
+                  <Alert.Heading>Access Denied</Alert.Heading>
+                  <p>Please enter a valid API Key.</p>
+                  <Button onClick={() => setPage(0)}>Go to API Key Input</Button>
+                </Alert>
+              )}
+            </Col>
+          </Row>
+        )}
+      </Container>
     </div>
   );
 }
