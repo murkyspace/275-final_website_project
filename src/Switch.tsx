@@ -2,7 +2,7 @@ import { switchpages } from './switchpage';
 import { Button } from 'react-bootstrap';
 
 export function SwitchOne({setCurrPage, newCurrPage, type}: switchpages) {
-    const buttonName: string[]=["Home Page", "Basic Page", "Detailed Page", "Results Page"];
+    const buttonName: string[]=["Home Page", "Basic Page", "Detailed Page", "Results Page", "Cover Page"];
 
     function changePage() {
         if((setCurrPage && newCurrPage) || (setCurrPage && newCurrPage === 0)){
