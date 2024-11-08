@@ -1,9 +1,11 @@
 .Home {
     text-align: center;
+    background-color: #B8EBD0;
+    min-height: 100vh;
 }
   
 .Home-header {
-    background-color: #282c34;
+    background-color: #8D5A97;
     min-height: 100vh;
     display: flex;
     flex-direction: column;

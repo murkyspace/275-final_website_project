@@ -8,7 +8,7 @@ export function HomePage({setCurrPage}: HomeInterface) {
 
 
     return (
-        <p className="Home">
+        <div style={{backgroundColor:"#8D5A97"}}><p className="Home" style={{marginLeft:"20%", marginRight:"20%"}}>
             <div className="container-fluid">
                 <h1>Home page</h1>
                 <div className="row">
@@ -27,7 +27,8 @@ export function HomePage({setCurrPage}: HomeInterface) {
             <div>
             
             <SwitchOne setCurrPage={setCurrPage} newCurrPage={3} type={"button"}></SwitchOne></div>
-        </p>
+        </p></div>
+        
     );
 }
 
