@@ -22,6 +22,7 @@ function App() {
       <div>{currPage === 3 && <ResultPage setCurrPage={setPage} apiResponse={''}></ResultPage>}</div>
       <div>{currPage === 4 && <CoverPage setCurrPage={setPage}></CoverPage>}</div>
       
+
     </div>
   );
 }
