@@ -1,7 +1,6 @@
 import { CoverInterface } from './CoverInt';
 import {SwitchOne} from './Switch';
 import './Cover.css';
-import { Form, Button } from 'react-bootstrap';
 import {ApiKey} from './ApiKey';
 
 export function CoverPage({setCurrPage}: CoverInterface) {
