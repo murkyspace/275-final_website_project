@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from 'react';
-
 import './App.css';
 import {HomePage} from './Home';
 import BasicPage from './Basic';
 import DetailedPage from './Detailed';
 import ResultPage from './Result';
-import { Button, Form, Container, Row, Col, Alert, Spinner } from 'react-bootstrap';
+import { Button, Form,Alert, Spinner } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 //local storage and API Key: key should be entered in by the user and will be stored in local storage (NOT session storage)
 let keyData = "";
 const saveKeyData = "MYKEY";
-const prevKey = localStorage.getItem(saveKeyData); //so it'll look like: MYKEY: <api_key_value here> in the local storage when you inspect
+const prevKey = localStorage.getItem(saveKeyData);
 if (prevKey !== null) {
   keyData = JSON.parse(prevKey);
 }
@@ -50,6 +49,7 @@ async function handleSubmit(event: React.FormEvent) {
   }
   setIsLoading(false);
 }
+
   //whenever there's a change it'll store the api key in a local state called key but it won't be set in the local storage until the user clicks the submit button
   function changeKey(event: React.ChangeEvent<HTMLInputElement>) {
     setKey(event.target.value);
@@ -79,68 +79,45 @@ async function handleSubmit(event: React.FormEvent) {
 
   return (
     <div className="App">
-            <Container>
-        <Row className="justify-content-md-center mt-4">
-          <Col md={6}>
-            {(!isApiKeyValid) && (
-              <header className="App-header">
-                <Form onSubmit={handleSubmit}>
-                  <Form.Group controlId="formApiKey">
-                    <Form.Label>API Key:</Form.Label>
-                    <Form.Control
-                      type="password"
-                      placeholder="Insert API Key Here"
-                      value={key}
-                      onChange={changeKey}
-                    />
-                  </Form.Group>
-                  {errorMessage && <Alert variant="danger" className="mt-3">{errorMessage}</Alert>}
-                  <Button variant="primary" type="submit" className="mt-3" disabled={isLoading}>
-                    {isLoading ? (
-                      <>
-                        <Spinner
-                          as="span"
-                          animation="border"
-                          size="sm"
-                          role="status"
-                          aria-hidden="true"
-                        /> Validating...
-                      </>
-                    ) : (
-                      'Submit'
-                    )}
-                  </Button>
-                </Form>
-              </header>
-            )}
-          </Col>
-        </Row>
-        {isApiKeyValid && (
-          <>
-            <Row className="justify-content-md-center mt-4">
-              <Col md={8}>
-              {currPage === 0 && <HomePage setCurrPage={setPage} />}
-                {currPage === 1 && <BasicPage setCurrPage={setPage} setApiResponse={setBasicApiResponse} />}
-                {currPage === 2 && <DetailedPage setCurrPage={setPage} setApiResponse={setDetailedApiResponse} />}
-                {currPage === 3 && <ResultPage setCurrPage={setPage} basicApiResponse={basicApiResponse} detailedApiResponse={detailedApiResponse} />}
-              </Col>
-            </Row>
-          </>
-        )}
-            {!isApiKeyValid && (
-          <Row className="justify-content-md-center mt-4">
-            <Col md={6}>
-              {currPage !== 0 && (
-                <Alert variant="danger">
-                  <Alert.Heading>Access Denied</Alert.Heading>
-                  <p>Please enter a valid API Key.</p>
-                  <Button onClick={() => setPage(0)}>Go to API Key Input</Button>
-                </Alert>
+      {!isApiKeyValid && (
+        <header className="App-header">
+          <Form onSubmit={handleSubmit}>
+            <Form.Group controlId="formApiKey">
+              <Form.Label>API Key:</Form.Label>
+              <Form.Control
+                type="password"
+                placeholder="Insert API Key Here"
+                value={key}
+                onChange={changeKey}
+              />
+            </Form.Group>
+            {errorMessage && <Alert variant="danger" className="mt-3">{errorMessage}</Alert>}
+            <Button variant="primary" type="submit" className="mt-3" disabled={isLoading}>
+              {isLoading ? (
+                <>
+                  <Spinner
+                    as="span"
+                    animation="border"
+                    size="sm"
+                    role="status"
+                    aria-hidden="true"
+                  /> Validating...
+                </>
+              ) : (
+                'Submit'
               )}
-            </Col>
-          </Row>
-        )}
-      </Container>
+            </Button>
+          </Form>
+        </header>
+      )}
+      {isApiKeyValid && (
+        <>
+          {currPage === 0 && <HomePage setCurrPage={setPage} />}
+          {currPage === 1 && <BasicPage setCurrPage={setPage} setApiResponse={setBasicApiResponse} />}
+          {currPage === 2 && <DetailedPage setCurrPage={setPage} setApiResponse={setDetailedApiResponse} />}
+          {currPage === 3 && <ResultPage setCurrPage={setPage} basicApiResponse={basicApiResponse} detailedApiResponse={detailedApiResponse} />}
+        </>
+      )}
     </div>
   );
 }
