@@ -1,18 +1,61 @@
-.Result {
-    text-align: center;
+.result-page {
+  background-color: #a3c9f8;
+  color: #2b3a67;
+  text-align: center;
+  padding-top: 10px; 
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
 }
-  
-.Result-header {
-    background-color: #282c34;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
-  }
-  
-  .App-link {
-    color: #61dafb;
+
+.result-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #2b3a67;
+  margin-bottom: 5px; 
+}
+
+.result-subtitle {
+  font-size: 1.2rem;
+  color: #2b3a67;
+  margin-bottom: 10px; 
+}
+
+.result-box {
+  background-color: #3a4a7d;
+  padding: 20px;
+  border-radius: 8px;
+  color: white;
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  font-weight: bold;
+}
+
+.basic-result {
+  background-color: #2b3a67;
+  margin-right: 15px; 
+}
+
+.detailed-result {
+  background-color: #63c7b2;
+  margin-left: 15px;
+}
+
+.result-content {
+  font-size: 1rem;
+  white-space: pre-wrap;
+}
+
+.result-placeholder {
+  font-size: 1rem;
+  color: #ffffffa0;
+}
+
+button {
+  margin-top: 20px;
 }

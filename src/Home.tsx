@@ -1,34 +1,30 @@
 import { HomeInterface } from './HomeInt';
-import {SwitchOne} from './Switch';
+import { SwitchOne } from './Switch';
 import './Home.css';
 
-
-export function HomePage({setCurrPage}: HomeInterface) {
-    
-
-
+export function HomePage({ setCurrPage }: HomeInterface) {
     return (
-        <div style={{backgroundColor:"#8D5A97"}}><p className="Home" style={{marginLeft:"20%", marginRight:"20%"}}>
-            <div className="container-fluid">
-                <h1>Home page</h1>
-                <div className="row">
-                    <div className="col-sm-6" style= {{color: "pomp and power" }}>
-                        <h3>Basic Questions</h3>
-                        <p>This button will take you to a page with Agree/Disagree questions to learn about your personality type</p>
-                        <div><SwitchOne setCurrPage={setCurrPage} newCurrPage={1} type={"button"}></SwitchOne></div>
-                    </div>
-                    <div className="col-sm-6" style= {{color: "celadon" }}>
-                        <h3>Basic Questions</h3>
-                        <p>This button will take you to a page with Agree/Disagree questions to learn about your personality type</p>
-                        <div><SwitchOne setCurrPage={setCurrPage} newCurrPage={2} type={"button"}></SwitchOne></div>
-                    </div>
+        <div style={{ backgroundColor: "#2B3A67", color: "#EAEAEA", padding: "20px", minHeight: "100vh" }}>
+            <div className="container text-center">
+                <h1 style={{ fontSize: "2.5rem", fontWeight: "bold", marginBottom: "20px" }}>Research Website Title</h1>
+                
+                <div className="nav-buttons" style={{ display: "flex", justifyContent: "center", gap: "10px", marginBottom: "40px" }}>
+                    <button onClick={() => setCurrPage(1)} style={{ backgroundColor: "#F2A65A", color: "#2B3A67", borderRadius: "20px", padding: "10px 20px", border: "none", fontSize: "1rem" }}>
+                        Basic Question
+                    </button>
+                    <button onClick={() => setCurrPage(3)} style={{ backgroundColor: "#63C7B2", color: "#2B3A67", borderRadius: "20px", padding: "10px 20px", border: "none", fontSize: "1rem" }}>
+                       Result 
+                    </button>
+                    <button onClick={() => setCurrPage(2)} style={{ backgroundColor: "#F2A65A", color: "#2B3A67", borderRadius: "20px", padding: "10px 20px", border: "none", fontSize: "1rem" }}>
+                        Detailed Question
+                    </button>
+                </div>
+
+                <div className="inspired-by" style={{ textAlign: "right", fontStyle: "italic", marginTop: "20px" }}>
+                    Page by <span style={{ fontWeight: "bold" }}>ZHIHUA,CONNOR,RAY</span>
                 </div>
             </div>
-            <div>
-            
-            <SwitchOne setCurrPage={setCurrPage} newCurrPage={3} type={"button"}></SwitchOne></div>
-        </p></div>
-        
+        </div>
     );
 }
 

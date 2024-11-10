@@ -65,7 +65,7 @@ function BasicPage({ setCurrPage, setApiResponse }: BasicInterface) {
       if (response.ok) {
         console.log('API response data:', data); 
         setApiResponse(data.choices[0].message.content); 
-        setCurrPage(3); 
+        setCurrPage(2); 
       } else {
         console.error('Error:', data);
         setErrorMessage(`Error: ${data.error.message}`);
