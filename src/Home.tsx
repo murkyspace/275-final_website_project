@@ -1,5 +1,4 @@
 import { HomeInterface } from './HomeInt';
-import { SwitchOne } from './Switch';
 import './Home.css';
 
 export function HomePage({ setCurrPage }: HomeInterface) {
