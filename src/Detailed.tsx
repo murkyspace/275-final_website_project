@@ -121,99 +121,96 @@ const DetailedPage: React.FC<DetailedInterface> = ({ setCurrPage, setApiResponse
   const getCurrentQuestionKey = () => questionKeys[activeStep];
   const getCurrentQuestion = () => steps[activeStep];
   const isLastStep = activeStep === steps.length - 1;
-  const progressPercentage = ((activeStep + 1) / steps.length) * 100;
+  const progressPercentage = (activeStep / steps.length) * 100;
 
   return (
-    <Container maxWidth="sm" className="detailed-page-container">
+    <Container maxWidth={false} className="detailed-page-container">
       <Paper elevation={3} className="detailed-page-paper">
         <Box display="flex" flexDirection="column" height="100%">
-          <Box display="flex" flexDirection="column" alignItems="center" flexGrow={1}>
+          <FaClipboardList size={50} color="#28a745" className="detailed-page-icon" />
 
-            <FaClipboardList size={50} color="#28a745" className="detailed-page-icon" />
+          <Typography variant="h4" align="center" gutterBottom>
+            Detailed Career Assessment
+          </Typography>
 
-            <Typography variant="h4" align="center" gutterBottom>
-              Detailed Career Assessment
+          <Stepper activeStep={activeStep} alternativeLabel className="detailed-page-stepper">
+            {steps.map((label, index) => (
+              <Step key={label}>
+                <StepLabel></StepLabel>
+              </Step>
+            ))}
+          </Stepper>
+
+          <Box className="detailed-page-question-container" width="100%">
+            <Typography variant="h6" gutterBottom>
+              {getCurrentQuestion()}
             </Typography>
+            <TextField
+              multiline
+              rows={4}
+              variant="outlined"
+              fullWidth
+              placeholder="Enter your answer..."
+              value={responses[getCurrentQuestionKey()]}
+              onChange={(e) => handleResponseChange(getCurrentQuestionKey(), e.target.value)}
+              aria-label={getCurrentQuestion()}
+              className="detailed-page-text-field"
+            />
 
-            <Stepper activeStep={activeStep} alternativeLabel className="detailed-page-stepper">
-              {steps.map((label, index) => (
-                <Step key={label}>
-                  <StepLabel></StepLabel>
-                </Step>
-              ))}
-            </Stepper>
+            {errorMessage && (
+              <Alert severity="error" className="detailed-page-alert">
+                {errorMessage}
+              </Alert>
+            )}
 
-            <Box className="detailed-page-question-container" width="100%">
-              <Typography variant="h6" gutterBottom>
-                {getCurrentQuestion()}
-              </Typography>
-              <TextField
-                multiline
-                rows={4}
-                variant="outlined"
-                fullWidth
-                placeholder="Enter your answer..."
-                value={responses[getCurrentQuestionKey()]}
-                onChange={(e) => handleResponseChange(getCurrentQuestionKey(), e.target.value)}
-                aria-label={getCurrentQuestion()}
-                className="detailed-page-text-field"
-              />
+            <Box display="flex" justifyContent="space-between" className="detailed-page-button-group">
+              <Button
+                variant="contained"
+                color="secondary"
+                startIcon={<FaHome />}
+                onClick={() => setCurrPage(0)}
+                className="detailed-page-home-button"
+              >
+                Go to Home
+              </Button>
 
-              {errorMessage && (
-                <Alert severity="error" className="detailed-page-alert">
-                  {errorMessage}
-                </Alert>
-              )}
-
-              <Box display="flex" justifyContent="space-between" className="detailed-page-button-group">
+              <Box>
                 <Button
                   variant="contained"
-                  color="secondary"
-                  startIcon={<FaHome />}
-                  onClick={() => setCurrPage(0)}
-                  className="detailed-page-home-button"
+                  color="inherit"
+                  onClick={handleBack}
+                  disabled={activeStep === 0}
+                  className="detailed-page-nav-button"
                 >
-                  Go to Home
+                  Back
                 </Button>
 
-                <Box>
+                {!isLastStep ? (
                   <Button
                     variant="contained"
-                    color="inherit"
-                    onClick={handleBack}
-                    disabled={activeStep === 0}
+                    color="primary"
+                    onClick={handleNext}
+                    disabled={responses[getCurrentQuestionKey()].trim() === ''}
                     className="detailed-page-nav-button"
                   >
-                    BACK
+                    Next
                   </Button>
-
-                  {!isLastStep ? (
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={handleNext}
-                      disabled={responses[getCurrentQuestionKey()].trim() === ''}
-                      className="detailed-page-nav-button"
-                    >
-                      Next
-                    </Button>
-                  ) : (
-                    <Button
-                      variant="contained"
-                      color="success"
-                      onClick={handleGetAnswer}
-                      disabled={responses[getCurrentQuestionKey()].trim() === '' || loading}
-                      className="detailed-page-get-answer-button"
-                      startIcon={loading && <CircularProgress size={20} color="inherit" />}
-                    >
-                      {loading ? 'Getting Answer...' : 'Get Answer'}
-                    </Button>
-                  )}
-                </Box>
+                ) : (
+                  <Button
+                    variant="contained"
+                    color="success"
+                    onClick={handleGetAnswer}
+                    disabled={responses[getCurrentQuestionKey()].trim() === '' || loading}
+                    className="detailed-page-get-answer-button"
+                    startIcon={loading && <CircularProgress size={20} color="inherit" />}
+                  >
+                    {loading ? 'Getting Answer...' : 'Get Answer'}
+                  </Button>
+                )}
               </Box>
             </Box>
-
           </Box>
+
           <Box className="detailed-page-progress-bar">
             <Typography variant="body2" color="textSecondary" align="center" gutterBottom>
               Progress: {Math.round(progressPercentage)}%
