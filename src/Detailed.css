@@ -1,5 +1,5 @@
 .detailed-page-container {
-  background: url('275-final_website_project/src/detailed1.jpg') no-repeat center center fixed; 
+  background: url('/detailed1.jpg') no-repeat center center fixed; 
   background-size: cover;
   width: 100%;
   height: 100vh;
