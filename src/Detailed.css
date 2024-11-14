@@ -1,21 +1,22 @@
 .detailed-page-container {
-  background: linear-gradient(135deg, #f0f4f8 0%, #d9e2ec 100%);
-  min-height: 100vh;
+  background: url('C:\Users\42352\275-final_website_project\src\detailed1.jpg') no-repeat center center fixed; /* 相对于 public 文件夹 */
+  background-size: cover;
+  width: 100%;
+  height: 100vh;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: stretch; 
+  justify-content: center; 
 }
 
 .detailed-page-paper {
   width: 100%;
-  max-width: 600px;
+  max-width: 800px; 
   padding: 40px;
   border-radius: 15px;
-  background-color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.2) !important; 
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
-  height: 90vh;
 }
 
 .detailed-page-icon {
@@ -49,6 +50,7 @@
 
 .detailed-page-question-container {
   animation: fadeIn 0.5s ease-in-out;
+  flex-grow: 1; 
 }
 
 @keyframes fadeIn {
@@ -57,10 +59,13 @@
 }
 
 .detailed-page-text-field {
-  background-color: #f8f9fa;
+  background-color: transparent;
   border-radius: 8px;
   height: 150px; 
   overflow: auto; 
+  border: 1px solid #ced4da;
+  padding: 10px;
+  color: #000;
 }
 
 .detailed-page-alert {
@@ -97,7 +102,7 @@
 
 .detailed-page-progress-bar {
   width: 100%;
-  margin-top: auto;
+  margin-top: auto; 
   padding-top: 20px;
   border-top: 1px solid #e0e0e0;
 }
@@ -109,12 +114,13 @@
 @media (max-width: 600px) {
   .detailed-page-paper {
     padding: 20px;
-    height: auto;
+    width: 95%;
+    max-width: 90%;
   }
 
   .detailed-page-text-field {
     font-size: 0.9rem;
-    height: 120px; 
+    height: 120px;
   }
 
   .detailed-page-button-group {
@@ -132,4 +138,3 @@
     padding-top: 10px;
   }
 }
-
