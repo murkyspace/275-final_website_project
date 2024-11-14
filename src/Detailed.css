@@ -1,5 +1,5 @@
 .detailed-page-container {
-  background: url('C:\Users\42352\275-final_website_project\src\detailed1.jpg') no-repeat center center fixed; /* 相对于 public 文件夹 */
+  background: url('public/detailed1.jpg') no-repeat center center fixed;
   background-size: cover;
   width: 100%;
   height: 100vh;
