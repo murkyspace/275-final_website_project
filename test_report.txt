@@ -3,7 +3,7 @@
 > react-scripts test --coverage
 
 FAIL src/App.test.tsx
-  ✕ renders learn react link (43 ms)
+  ✕ renders learn react link (30 ms)
 
   ● renders learn react link
 
@@ -66,26 +66,26 @@ FAIL src/App.test.tsx
       at _run10000 (node_modules/@jest/core/build/cli/index.js:320:7)
       at runCLI (node_modules/@jest/core/build/cli/index.js:173:3)
 
---------------------|---------|----------|---------|---------|-------------------
-File                | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
---------------------|---------|----------|---------|---------|-------------------
-All files           |    8.69 |       10 |    2.63 |    8.98 |                   
- App.tsx            |   36.58 |    31.81 |      40 |   36.58 | 14,31-68,74-76    
- Basic.tsx          |       0 |        0 |       0 |       0 | 7-627             
- BasicInt.ts        |       0 |        0 |       0 |       0 |                   
- Detailed.tsx       |       0 |        0 |       0 |       0 | 7-227             
- DetailedInt.ts     |       0 |        0 |       0 |       0 |                   
- Home.tsx           |       0 |      100 |       0 |       0 | 5-17              
- HomeInt.ts         |       0 |        0 |       0 |       0 |                   
- Result.tsx         |   33.33 |        0 |       0 |   33.33 | 7-32              
- ResultInt.ts       |       0 |        0 |       0 |       0 |                   
- Switch.tsx         |       0 |        0 |       0 |       0 | 5-16              
- index.tsx          |       0 |      100 |     100 |       0 | 8-24              
- reportWebVitals.ts |       0 |        0 |       0 |       0 | 3-10              
- switchpage.ts      |       0 |        0 |       0 |       0 |                   
---------------------|---------|----------|---------|---------|-------------------
+--------------------|---------|----------|---------|---------|----------------------
+File                | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s    
+--------------------|---------|----------|---------|---------|----------------------
+All files           |    9.32 |      8.1 |    2.59 |    9.78 |                      
+ App.tsx            |   34.88 |    27.27 |   33.33 |   34.88 | 22-41,45,49-59,66-71 
+ Basic.tsx          |       0 |        0 |       0 |       0 | 7-627                
+ BasicInt.ts        |       0 |        0 |       0 |       0 |                      
+ Detailed.tsx       |       4 |        0 |       0 |    4.54 | 31-173               
+ DetailedInt.ts     |       0 |        0 |       0 |       0 |                      
+ Home.tsx           |       0 |      100 |       0 |       0 | 5-17                 
+ HomeInt.ts         |       0 |        0 |       0 |       0 |                      
+ Result.tsx         |   33.33 |        0 |       0 |   33.33 | 7-32                 
+ ResultInt.ts       |       0 |        0 |       0 |       0 |                      
+ Switch.tsx         |       0 |        0 |       0 |       0 | 5-16                 
+ index.tsx          |       0 |      100 |     100 |       0 | 8-24                 
+ reportWebVitals.ts |       0 |        0 |       0 |       0 | 3-10                 
+ switchpage.ts      |       0 |        0 |       0 |       0 |                      
+--------------------|---------|----------|---------|---------|----------------------
 Test Suites: 1 failed, 1 total
 Tests:       1 failed, 1 total
 Snapshots:   0 total
-Time:        2.85 s
+Time:        3.636 s
 Ran all test suites.
