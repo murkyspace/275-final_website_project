@@ -73,7 +73,7 @@ All files           |    9.32 |      8.1 |    2.59 |    9.78 |
  App.tsx            |   34.88 |    27.27 |   33.33 |   34.88 | 22-41,45,49-59,66-71 
  Basic.tsx          |       0 |        0 |       0 |       0 | 7-627                
  BasicInt.ts        |       0 |        0 |       0 |       0 |                      
- Detailed.tsx       |       4 |        0 |       0 |    4.54 | 31-173               
+ Detailed.tsx       |       4 |        0 |       0 |    4.54 | 31-171               
  DetailedInt.ts     |       0 |        0 |       0 |       0 |                      
  Home.tsx           |       0 |      100 |       0 |       0 | 5-17                 
  HomeInt.ts         |       0 |        0 |       0 |       0 |                      
@@ -87,5 +87,5 @@ All files           |    9.32 |      8.1 |    2.59 |    9.78 |
 Test Suites: 1 failed, 1 total
 Tests:       1 failed, 1 total
 Snapshots:   0 total
-Time:        3.636 s
+Time:        3.526 s
 Ran all test suites.
