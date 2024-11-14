@@ -1,5 +1,5 @@
 .detailed-page-container {
-  background: url('detailed1.jpg') no-repeat center center fixed;
+  background: url('../public/detailed1.jpg') no-repeat center center fixed;
   background-size: cover;
   width: 100%;
   height: 100vh;
@@ -50,7 +50,7 @@
 
 .detailed-page-question-container {
   animation: fadeIn 0.5s ease-in-out;
-  flex-grow: 1; 
+  flex-grow: 1;
 }
 
 @keyframes fadeIn {
@@ -78,6 +78,7 @@
   justify-content: space-between;
   align-items: center;
   margin-top: 20px;
+  gap: 20px;
 }
 
 .detailed-page-home-button {
@@ -89,7 +90,6 @@
 }
 
 .detailed-page-nav-button {
-  margin-right: 10px;
 }
 
 .detailed-page-get-answer-button {
@@ -102,7 +102,7 @@
 
 .detailed-page-progress-bar {
   width: 100%;
-  margin-top: auto; 
+  margin-top: auto;
   padding-top: 20px;
   border-top: 1px solid #e0e0e0;
 }
@@ -126,12 +126,13 @@
   .detailed-page-button-group {
     flex-direction: column;
     align-items: stretch;
+    gap: 10px;
   }
 
   .detailed-page-home-button, .detailed-page-nav-button, .detailed-page-get-answer-button {
     width: 100%;
     margin-bottom: 10px;
-    margin-right: 0; 
+    margin-right: 0;
   }
 
   .detailed-page-progress-bar {

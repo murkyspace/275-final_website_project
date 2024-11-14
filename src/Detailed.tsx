@@ -1,3 +1,5 @@
+// DetailedPage.tsx
+
 import React, { useState } from 'react';
 import {
   Box,
@@ -14,7 +16,7 @@ import {
   LinearProgress,
 } from '@mui/material';
 import { FaClipboardList, FaHome } from 'react-icons/fa';
-import './Detailed.css'; 
+import './Detailed.css';
 import { DetailedInterface } from './DetailedInt';
 
 const steps = [
@@ -99,15 +101,12 @@ const DetailedPage: React.FC<DetailedInterface> = ({ setCurrPage, setApiResponse
       const data = await response.json();
 
       if (response.ok) {
-        console.log('API response data:', data);
         setApiResponse(data.choices[0].message.content);
         setCurrPage(3);
       } else {
-        console.error('Error:', data);
         setErrorMessage(`Error: ${data.error.message}`);
       }
     } catch (error: any) {
-      console.error('Error:', error);
       setErrorMessage('An error occurred while fetching the answer.');
     }
 
@@ -121,6 +120,7 @@ const DetailedPage: React.FC<DetailedInterface> = ({ setCurrPage, setApiResponse
   const getCurrentQuestionKey = () => questionKeys[activeStep];
   const getCurrentQuestion = () => steps[activeStep];
   const isLastStep = activeStep === steps.length - 1;
+
   const progressPercentage = (activeStep / steps.length) * 100;
 
   return (
@@ -128,19 +128,16 @@ const DetailedPage: React.FC<DetailedInterface> = ({ setCurrPage, setApiResponse
       <Paper elevation={3} className="detailed-page-paper">
         <Box display="flex" flexDirection="column" height="100%">
           <FaClipboardList size={50} color="#28a745" className="detailed-page-icon" />
-
           <Typography variant="h4" align="center" gutterBottom>
             Detailed Career Assessment
           </Typography>
-
           <Stepper activeStep={activeStep} alternativeLabel className="detailed-page-stepper">
-            {steps.map((label, index) => (
+            {steps.map((label) => (
               <Step key={label}>
-                <StepLabel></StepLabel>
+                <StepLabel />
               </Step>
             ))}
           </Stepper>
-
           <Box className="detailed-page-question-container" width="100%">
             <Typography variant="h6" gutterBottom>
               {getCurrentQuestion()}
@@ -156,13 +153,11 @@ const DetailedPage: React.FC<DetailedInterface> = ({ setCurrPage, setApiResponse
               aria-label={getCurrentQuestion()}
               className="detailed-page-text-field"
             />
-
             {errorMessage && (
               <Alert severity="error" className="detailed-page-alert">
                 {errorMessage}
               </Alert>
             )}
-
             <Box display="flex" justifyContent="space-between" className="detailed-page-button-group">
               <Button
                 variant="contained"
@@ -173,8 +168,7 @@ const DetailedPage: React.FC<DetailedInterface> = ({ setCurrPage, setApiResponse
               >
                 Go to Home
               </Button>
-
-              <Box>
+              <Box display="flex" gap="20px">
                 <Button
                   variant="contained"
                   color="inherit"
@@ -184,7 +178,6 @@ const DetailedPage: React.FC<DetailedInterface> = ({ setCurrPage, setApiResponse
                 >
                   Back
                 </Button>
-
                 {!isLastStep ? (
                   <Button
                     variant="contained"
@@ -210,7 +203,6 @@ const DetailedPage: React.FC<DetailedInterface> = ({ setCurrPage, setApiResponse
               </Box>
             </Box>
           </Box>
-
           <Box className="detailed-page-progress-bar">
             <Typography variant="body2" color="textSecondary" align="center" gutterBottom>
               Progress: {Math.round(progressPercentage)}%
