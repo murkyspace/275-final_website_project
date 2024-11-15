@@ -4,7 +4,7 @@
   text-align: center;
   padding: 50px 20px;
   min-height: 100vh;
-  background-image: url('..\public\result1.jpg'); 
+  background-image: url('../public/result1.jpg');
   background-position: center;
 }
 
