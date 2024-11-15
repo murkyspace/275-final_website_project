@@ -1,61 +1,88 @@
 .result-page {
-  background-color: #a3c9f8;
+  background-color: #f5f7fa;
   color: #2b3a67;
   text-align: center;
-  padding-top: 10px; 
+  padding: 50px 20px;
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
+  background-image: url('...\public\result1.jpg');
+  background-size: cover;
+  background-position: center;
 }
 
-.result-title {
-  font-size: 2.5rem;
+.result-page .result-title {
+  font-size: 3rem;
   font-weight: bold;
   color: #2b3a67;
-  margin-bottom: 5px; 
+  margin-bottom: 20px;
 }
 
-.result-subtitle {
-  font-size: 1.2rem;
+.result-page .result-subtitle {
+  font-size: 1.5rem;
   color: #2b3a67;
-  margin-bottom: 10px; 
+  margin-bottom: 40px;
 }
 
-.result-box {
-  background-color: #3a4a7d;
-  padding: 20px;
-  border-radius: 8px;
-  color: white;
-  min-height: 300px;
+.result-page .result-buttons {
   display: flex;
-  flex-direction: column;
   justify-content: center;
-  text-align: center;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+
+.result-page .result-button {
+  background-color: transparent;
+  border: 2px solid #2b3a67;
+  color: #2b3a67;
+  font-size: 1.1rem;
   font-weight: bold;
+  padding: 10px 20px;
+  margin: 5px;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
-.basic-result {
+.result-page .result-button:hover {
   background-color: #2b3a67;
-  margin-right: 15px; 
+  color: white;
 }
 
-.detailed-result {
-  background-color: #63c7b2;
-  margin-left: 15px;
+.result-page .result-button.active {
+  background-color: #2b3a67;
+  color: white;
 }
 
-.result-content {
+.result-page .result-content {
+  background-color: transparent; 
+  padding: 30px;
+  border-radius: 15px;
+  color: #2b3a67;
+  font-size: 1.1rem;
+  text-align: left;
+  margin-bottom: 30px;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.result-page .result-page-home-button {
+  background-color: rgb(164, 83, 164);
+  color: white;
   font-size: 1rem;
-  white-space: pre-wrap;
-}
-
-.result-placeholder {
-  font-size: 1rem;
-  color: #ffffffa0;
-}
-
-button {
   margin-top: 20px;
+}
+
+.result-page .result-page-home-button:hover {
+  background-color: rgb(87, 87, 87);
+}
+
+.result-page .result-page-home-button .MuiButton-startIcon {
+  margin-right: 8px;
 }

@@ -1,5 +1,5 @@
 export interface DetailedInterface {
-  setCurrPage: (page: number) => void;
-  setApiResponse: (response: string) => void;
+  setCurrPage: React.Dispatch<React.SetStateAction<number>>;
+  setApiResponse: React.Dispatch<React.SetStateAction<string>>;
+  setCompletedQuiz: React.Dispatch<React.SetStateAction<'basic' | 'detailed' | null>>;
 }
-
