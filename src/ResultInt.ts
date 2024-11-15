@@ -1,5 +1,5 @@
 export interface ResultInterface {
   setCurrPage: React.Dispatch<React.SetStateAction<number>>;
-  basicApiResponse: string;
-  detailedApiResponse: string;
+  apiResponse: string;
+  completedQuiz: 'basic' | 'detailed';
 }

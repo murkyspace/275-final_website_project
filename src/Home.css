@@ -1,8 +1,7 @@
-body {
-  margin: 0;
-  font-family: 'Arial', sans-serif;
-  background-color: #2B3A67;
-  color: #EAEAEA;
+.home-page {
+  background-color: rgb(219, 219, 169); 
+  padding: 20px;
+  min-height: 100vh;
 }
 
 .container {
@@ -18,6 +17,14 @@ h1 {
   font-size: 2.5rem;
   font-weight: bold;
   margin-bottom: 20px;
+  color: #2B3A67;
+}
+
+.nav-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 40px;
 }
 
 .nav-buttons button {
@@ -51,5 +58,5 @@ h1 {
 
 .inspired-by span {
   font-weight: bold;
-  color: #FFFFFF;
+  color: #2B3A67;
 }

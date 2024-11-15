@@ -27,7 +27,7 @@ const steps = [
   'How do you want to allocate your time and energy in your work-life balance?',
 ];
 
-const DetailedPage: React.FC<DetailedInterface> = ({ setCurrPage, setApiResponse }) => {
+const DetailedPage: React.FC<DetailedInterface> = ({ setCurrPage, setApiResponse, setCompletedQuiz }) => {
   const [activeStep, setActiveStep] = useState<number>(0);
   const [responses, setResponses] = useState<Record<string, string>>({
     tasksEnjoyed: '',
@@ -52,11 +52,17 @@ const DetailedPage: React.FC<DetailedInterface> = ({ setCurrPage, setApiResponse
   ];
 
   const handleNext = () => {
+    if (responses[getCurrentQuestionKey()].trim() === '') {
+      setErrorMessage('Please provide an answer before proceeding.');
+      return;
+    }
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    setErrorMessage('');
   };
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    setErrorMessage('');
   };
 
   const handleResponseChange = (key: string, value: string) => {
@@ -68,6 +74,11 @@ const DetailedPage: React.FC<DetailedInterface> = ({ setCurrPage, setApiResponse
   };
 
   const handleGetAnswer = async () => {
+    if (responses[getCurrentQuestionKey()].trim() === '') {
+      setErrorMessage('Please provide an answer before proceeding.');
+      return;
+    }
+
     const prompt = generatePrompt(responses);
     setLoading(true);
 
@@ -92,7 +103,7 @@ const DetailedPage: React.FC<DetailedInterface> = ({ setCurrPage, setApiResponse
             { role: 'system', content: 'You are a helpful career advisor.' },
             { role: 'user', content: prompt },
           ],
-          max_tokens: 500,
+          max_tokens: 1000,
         }),
       });
 
@@ -100,6 +111,7 @@ const DetailedPage: React.FC<DetailedInterface> = ({ setCurrPage, setApiResponse
 
       if (response.ok) {
         setApiResponse(data.choices[0].message.content);
+        setCompletedQuiz('detailed');
         setCurrPage(3);
       } else {
         setErrorMessage(`Error: ${data.error.message}`);
@@ -112,14 +124,22 @@ const DetailedPage: React.FC<DetailedInterface> = ({ setCurrPage, setApiResponse
   };
 
   const generatePrompt = (responses: Record<string, string>) => {
-    return `Generate a personalized career report for the detailed career assessment based on the responses below. (Please limit replies to 500 tokens)\n${JSON.stringify(responses, null, 2)}`;
+    return `
+      As a professional career advisor, analyze the following user responses and generate a comprehensive career report.
+      The report should be structured with the following sections: Overview, Personality, Consulting, Data Analysis, Non-profit.
+      Each section should provide personalized insights and recommendations based on the user's responses.
+      Important: Output only the JSON object and no additional text.
+      Please format the response as a JSON object with the keys: "Overview", "Personality", "Consulting", "Data Analysis", "Non-profit".
+      User Responses:
+      ${JSON.stringify(responses, null, 2)}
+    `;
   };
 
   const getCurrentQuestionKey = () => questionKeys[activeStep];
   const getCurrentQuestion = () => steps[activeStep];
   const isLastStep = activeStep === steps.length - 1;
 
-  const progressPercentage = (activeStep / steps.length) * 100;
+  const progressPercentage = ((activeStep + 1) / steps.length) * 100;
 
   return (
     <Container maxWidth={false} className="detailed-page-container">

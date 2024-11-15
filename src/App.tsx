@@ -10,10 +10,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 const saveKeyData = "MYKEY";
 
 function App() {
-  const [key, setKey] = useState<string>(""); 
+  const [key, setKey] = useState<string>("");
   const [currPage, setPage] = useState<number>(0);
-  const [basicApiResponse, setBasicApiResponse] = useState<string>('');
-  const [detailedApiResponse, setDetailedApiResponse] = useState<string>('');
+  const [apiResponse, setApiResponse] = useState<string>('');
+  const [completedQuiz, setCompletedQuiz] = useState<'basic' | 'detailed' | null>(null);
   const [isApiKeyValid, setIsApiKeyValid] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
@@ -23,11 +23,11 @@ function App() {
     setIsLoading(true);
     setErrorMessage('');
     try {
-      localStorage.setItem(saveKeyData, key); 
+      localStorage.setItem(saveKeyData, key);
       const isValid = await validateApiKey(key);
       if (isValid) {
         setIsApiKeyValid(true);
-        setPage(0); 
+        setPage(0);
       } else {
         setIsApiKeyValid(false);
         setErrorMessage('Invalid API Key.');
@@ -110,9 +110,9 @@ function App() {
       {isApiKeyValid && (
         <>
           {currPage === 0 && <HomePage setCurrPage={setPage} />}
-          {currPage === 1 && <BasicPage setCurrPage={setPage} setApiResponse={setBasicApiResponse} />}
-          {currPage === 2 && <DetailedPage setCurrPage={setPage} setApiResponse={setDetailedApiResponse} />}
-          {currPage === 3 && <ResultPage setCurrPage={setPage} basicApiResponse={basicApiResponse} detailedApiResponse={detailedApiResponse} />}
+          {currPage === 1 && <BasicPage setCurrPage={setPage} setApiResponse={setApiResponse} setCompletedQuiz={setCompletedQuiz} />}
+          {currPage === 2 && <DetailedPage setCurrPage={setPage} setApiResponse={setApiResponse} setCompletedQuiz={setCompletedQuiz} />}
+          {currPage === 3 && <ResultPage setCurrPage={setPage} apiResponse={apiResponse} completedQuiz={completedQuiz!} />}
         </>
       )}
     </div>
@@ -120,3 +120,4 @@ function App() {
 }
 
 export default App;
+
