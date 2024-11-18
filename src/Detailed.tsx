@@ -1,40 +1,88 @@
 import React, { useState } from 'react';
+import {
+  Box,
+  Button,
+  Step,
+  StepLabel,
+  Stepper,
+  Typography,
+  TextField,
+  Alert,
+  CircularProgress,
+  Container,
+  Paper,
+  LinearProgress,
+} from '@mui/material';
+import { FaClipboardList, FaHome } from 'react-icons/fa';
 import './Detailed.css';
-import { Button, Form, ProgressBar, Alert, Spinner, Container, Row, Col } from 'react-bootstrap';
 import { DetailedInterface } from './DetailedInt';
 
-function DetailedPage({ setCurrPage, setApiResponse }: DetailedInterface) {
-  const [responses, setResponses] = useState({
+const steps = [
+  'What tasks and/or activities have you enjoyed most in the past at work or school?',
+  'How do you want your career to reflect and support your core values?',
+  'What key skills and talents do you have?',
+  'What industries, fields or topics interest you most?',
+  'What do you hope to achieve in your career?',
+  'How do you define success?',
+  'How do you want to allocate your time and energy in your work-life balance?',
+];
+
+const DetailedPage: React.FC<DetailedInterface> = ({ setCurrPage, setApiResponse, setCompletedQuiz }) => {
+  const [activeStep, setActiveStep] = useState<number>(0);
+  const [responses, setResponses] = useState<Record<string, string>>({
     tasksEnjoyed: '',
     coreValues: '',
     skills: '',
     industries: '',
     careerGoals: '',
     successDefinition: '',
-    workLifeBalance: ''
+    workLifeBalance: '',
   });
-
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
 
-  const totalQuestions = 7;
+  const questionKeys = [
+    'tasksEnjoyed',
+    'coreValues',
+    'skills',
+    'industries',
+    'careerGoals',
+    'successDefinition',
+    'workLifeBalance',
+  ];
 
-  const handleResponse = (question: string, response: string) => {
-    setResponses(prevState => ({
-      ...prevState,
-      [question]: response
+  const handleNext = () => {
+    if (responses[getCurrentQuestionKey()].trim() === '') {
+      setErrorMessage('Please provide an answer before proceeding.');
+      return;
+    }
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    setErrorMessage('');
+  };
+
+  const handleBack = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    setErrorMessage('');
+  };
+
+  const handleResponseChange = (key: string, value: string) => {
+    setResponses((prev) => ({
+      ...prev,
+      [key]: value,
     }));
     if (errorMessage) setErrorMessage('');
   };
 
-  const answeredQuestions = Object.values(responses).filter(response => response !== '').length;
-  const progress = Math.round((answeredQuestions / totalQuestions) * 100);
-
   const handleGetAnswer = async () => {
+    if (responses[getCurrentQuestionKey()].trim() === '') {
+      setErrorMessage('Please provide an answer before proceeding.');
+      return;
+    }
+
     const prompt = generatePrompt(responses);
     setLoading(true);
 
-    const apiKey = JSON.parse(localStorage.getItem('MYKEY') || '""');
+    const apiKey = localStorage.getItem('MYKEY') || '';
 
     if (!apiKey) {
       alert('API key not found.');
@@ -55,184 +103,134 @@ function DetailedPage({ setCurrPage, setApiResponse }: DetailedInterface) {
             { role: 'system', content: 'You are a helpful career advisor.' },
             { role: 'user', content: prompt },
           ],
-          max_tokens: 500,
+          max_tokens: 1000,
         }),
       });
 
       const data = await response.json();
 
       if (response.ok) {
-        console.log('API response data:', data); 
-        setApiResponse(data.choices[0].message.content); 
-        setCurrPage(3); 
+        setApiResponse(data.choices[0].message.content);
+        setCompletedQuiz('detailed');
+        setCurrPage(3);
       } else {
-        console.error('Error:', data);
         setErrorMessage(`Error: ${data.error.message}`);
       }
     } catch (error: any) {
-      console.error('Error:', error);
-      setErrorMessage('An error occurred');
+      setErrorMessage('An error occurred while fetching the answer.');
     }
 
     setLoading(false);
   };
 
-  const generatePrompt = (responses: any) => {
-    return `Generate a personalized career report for the detailed career assessment based on the responses below. (Please limit replies to 500 tokens)\n${JSON.stringify(responses, null, 2)}`;
+  const generatePrompt = (responses: Record<string, string>) => {
+    return `
+      As a professional career advisor, analyze the following user responses and generate a comprehensive career report.
+      The report should be structured with the following sections: Overview, Personality, Consulting, Data Analysis, Non-profit.
+      Each section should provide personalized insights and recommendations based on the user's responses.
+      Important: Output only the JSON object and no additional text.
+      Please format the response as a JSON object with the keys: "Overview", "Personality", "Consulting", "Data Analysis", "Non-profit".
+      User Responses:
+      ${JSON.stringify(responses, null, 2)}
+    `;
   };
 
+  const getCurrentQuestionKey = () => questionKeys[activeStep];
+  const getCurrentQuestion = () => steps[activeStep];
+  const isLastStep = activeStep === steps.length - 1;
+
+  const progressPercentage = ((activeStep + 1) / steps.length) * 100;
+
   return (
-    <Container className="mt-4">
-      <Row className="justify-content-md-center">
-        <Col md={8}>
-          <h2>Detailed Questions</h2>
-
-          <ProgressBar 
-            now={progress} 
-            label={`${progress}%`} 
-            variant="primary"  
-            style={{ height: '30px' }} 
-          />
-
-          <p>
-            {answeredQuestions} out of {totalQuestions} questions answered
-          </p>
-
-          <Form>
-            <Row className="mb-3">
-              <Col md={12}>
-                <Form.Group controlId="tasksEnjoyed">
-                  <Form.Label>What tasks and/or activities have you enjoyed most in the past at work or school?</Form.Label>
-                  <Form.Control
-                    as="textarea"
-                    rows={3}
-                    placeholder="Your answer..."
-                    value={responses.tasksEnjoyed}
-                    onChange={(e) => handleResponse('tasksEnjoyed', e.target.value)}
-                  />
-                </Form.Group>
-              </Col>
-            </Row>
-
-            <Row className="mb-3">
-              <Col md={12}>
-                <Form.Group controlId="coreValues">
-                  <Form.Label>How do you want your career to reflect and support your core values?</Form.Label>
-                  <Form.Control
-                    as="textarea"
-                    rows={3}
-                    placeholder="Your answer..."
-                    value={responses.coreValues}
-                    onChange={(e) => handleResponse('coreValues', e.target.value)}
-                  />
-                </Form.Group>
-              </Col>
-            </Row>
-
-            <Row className="mb-3">
-              <Col md={12}>
-                <Form.Group controlId="skills">
-                  <Form.Label>What key skills and talents do you have?</Form.Label>
-                  <Form.Control
-                    as="textarea"
-                    rows={3}
-                    placeholder="Your answer..."
-                    value={responses.skills}
-                    onChange={(e) => handleResponse('skills', e.target.value)}
-                  />
-                </Form.Group>
-              </Col>
-            </Row>
-
-            <Row className="mb-3">
-              <Col md={12}>
-                <Form.Group controlId="industries">
-                  <Form.Label>What industries, fields or topics interest you most?</Form.Label>
-                  <Form.Control
-                    as="textarea"
-                    rows={3}
-                    placeholder="Your answer..."
-                    value={responses.industries}
-                    onChange={(e) => handleResponse('industries', e.target.value)}
-                  />
-                </Form.Group>
-              </Col>
-            </Row>
-
-            <Row className="mb-3">
-              <Col md={12}>
-                <Form.Group controlId="careerGoals">
-                  <Form.Label>What do you hope to achieve in your career?</Form.Label>
-                  <Form.Control
-                    as="textarea"
-                    rows={3}
-                    placeholder="Your answer..."
-                    value={responses.careerGoals}
-                    onChange={(e) => handleResponse('careerGoals', e.target.value)}
-                  />
-                </Form.Group>
-              </Col>
-            </Row>
-
-            <Row className="mb-3">
-              <Col md={12}>
-                <Form.Group controlId="successDefinition">
-                  <Form.Label>How do you define success?</Form.Label>
-                  <Form.Control
-                    as="textarea"
-                    rows={3}
-                    placeholder="Your answer..."
-                    value={responses.successDefinition}
-                    onChange={(e) => handleResponse('successDefinition', e.target.value)}
-                  />
-                </Form.Group>
-              </Col>
-            </Row>
-
-            <Row className="mb-3">
-              <Col md={12}>
-                <Form.Group controlId="workLifeBalance">
-                  <Form.Label>How do you want to allocate your time and energy in your work-life balance?</Form.Label>
-                  <Form.Control
-                    as="textarea"
-                    rows={3}
-                    placeholder="Your answer..."
-                    value={responses.workLifeBalance}
-                    onChange={(e) => handleResponse('workLifeBalance', e.target.value)}
-                  />
-                </Form.Group>
-              </Col>
-            </Row>
-
-            {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
-            {answeredQuestions === totalQuestions && (
-              <Button variant="primary" onClick={handleGetAnswer} disabled={loading} className="mb-3">
-                {loading ? (
-                  <>
-                    <Spinner
-                      as="span"
-                      animation="border"
-                      size="sm"
-                      role="status"
-                      aria-hidden="true"
-                    />{' '}
-                    Getting Answer...
-                  </>
-                ) : (
-                  'Get Answer'
-                )}
-              </Button>
+    <Container maxWidth={false} className="detailed-page-container">
+      <Paper elevation={3} className="detailed-page-paper">
+        <Box display="flex" flexDirection="column" height="100%">
+          <FaClipboardList size={50} color="#28a745" className="detailed-page-icon" />
+          <Typography variant="h4" align="center" gutterBottom>
+            Detailed Career Assessment
+          </Typography>
+          <Stepper activeStep={activeStep} alternativeLabel className="detailed-page-stepper">
+            {steps.map((label) => (
+              <Step key={label}>
+                <StepLabel />
+              </Step>
+            ))}
+          </Stepper>
+          <Box className="detailed-page-question-container" width="100%">
+            <Typography variant="h6" gutterBottom>
+              {getCurrentQuestion()}
+            </Typography>
+            <TextField
+              multiline
+              rows={4}
+              variant="outlined"
+              fullWidth
+              placeholder="Enter your answer..."
+              value={responses[getCurrentQuestionKey()]}
+              onChange={(e) => handleResponseChange(getCurrentQuestionKey(), e.target.value)}
+              aria-label={getCurrentQuestion()}
+              className="detailed-page-text-field"
+            />
+            {errorMessage && (
+              <Alert severity="error" className="detailed-page-alert">
+                {errorMessage}
+              </Alert>
             )}
-            <div className="mt-3">
-              <Button variant="secondary" onClick={() => setCurrPage(0)}>
+            <Box display="flex" justifyContent="space-between" className="detailed-page-button-group">
+              <Button
+                variant="contained"
+                color="secondary"
+                startIcon={<FaHome />}
+                onClick={() => setCurrPage(0)}
+                className="detailed-page-home-button"
+              >
                 Go to Home
               </Button>
-            </div>
-          </Form>
-        </Col>
-      </Row>
+              <Box display="flex" gap="20px">
+                <Button
+                  variant="contained"
+                  color="inherit"
+                  onClick={handleBack}
+                  disabled={activeStep === 0}
+                  className="detailed-page-nav-button"
+                >
+                  Back
+                </Button>
+                {!isLastStep ? (
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleNext}
+                    disabled={responses[getCurrentQuestionKey()].trim() === ''}
+                    className="detailed-page-nav-button"
+                  >
+                    Next
+                  </Button>
+                ) : (
+                  <Button
+                    variant="contained"
+                    color="success"
+                    onClick={handleGetAnswer}
+                    disabled={responses[getCurrentQuestionKey()].trim() === '' || loading}
+                    className="detailed-page-get-answer-button"
+                    startIcon={loading && <CircularProgress size={20} color="inherit" />}
+                  >
+                    {loading ? 'Getting Answer...' : 'Get Answer'}
+                  </Button>
+                )}
+              </Box>
+            </Box>
+          </Box>
+          <Box className="detailed-page-progress-bar">
+            <Typography variant="body2" color="textSecondary" align="center" gutterBottom>
+              Progress: {Math.round(progressPercentage)}%
+            </Typography>
+            <LinearProgress variant="determinate" value={progressPercentage} />
+          </Box>
+        </Box>
+      </Paper>
     </Container>
   );
-}
+};
 
 export default DetailedPage;

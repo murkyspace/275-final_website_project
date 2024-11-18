@@ -1,43 +1,78 @@
-import React from 'react';
-import { Container, Row, Col, Button } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Container, Button } from '@mui/material';
+import { FaHome } from 'react-icons/fa';
 import { ResultInterface } from './ResultInt';
 import './Result.css';
 
-const ResultPage: React.FC<ResultInterface> = ({ setCurrPage, basicApiResponse, detailedApiResponse }) => {
+const ResultPage: React.FC<ResultInterface> = ({ setCurrPage, apiResponse }) => {
+  const sections = extractSections(apiResponse);
+  const [activeSection, setActiveSection] = useState<string>('Overview');
+
   return (
     <div className="result-page">
-      <h2 className="result-title">Results Page</h2>
-      <p className="result-subtitle">Please receive your career report</p>
       <Container>
-        <Row className="justify-content-center mt-4">
-          <Col md={5} className="result-box basic-result">
-            <h4>Basic Results</h4>
-            {basicApiResponse ? (
-              <p className="result-content">{basicApiResponse}</p>
-            ) : (
-              <p className="result-placeholder">No Basic response available. Please complete the Basic quiz first.</p>
-            )}
-          </Col>
-          <Col md={5} className="result-box detailed-result">
-            <h4>Detailed Results</h4>
-            {detailedApiResponse ? (
-              <p className="result-content">{detailedApiResponse}</p>
-            ) : (
-              <p className="result-placeholder">No Detailed response available. Please complete the Detailed quiz first.</p>
-            )}
-          </Col>
-        </Row>
-        <Row className="mt-4">
-          <Col className="text-center">
-            <Button variant="primary" onClick={() => setCurrPage(0)}>
-              Go to Home
-            </Button>
-          </Col>
-        </Row>
+        <h2 className="result-title">Your Career Report</h2>
+        <p className="result-subtitle">Explore your personalized career</p>
+        <div className="result-buttons">
+          {Object.keys(sections).map((section) => (
+            <button
+              key={section}
+              className={`result-button ${activeSection === section ? 'active' : ''}`}
+              onClick={() => setActiveSection(section)}
+            >
+              {section}
+            </button>
+          ))}
+        </div>
+        <div className="result-content">
+          <p>{sections[activeSection]}</p>
+        </div>
+        <Button
+          variant="contained"
+          startIcon={<FaHome />}
+          onClick={() => setCurrPage(0)}
+          className="result-page-home-button"
+        >
+          Go to Home
+        </Button>
       </Container>
     </div>
   );
 };
 
-export default ResultPage;
+const extractSections = (apiResponse: string) => {
+  try {
+    const jsonStart = apiResponse.indexOf('{');
+    const jsonEnd = apiResponse.lastIndexOf('}') + 1;
+    const jsonString = apiResponse.substring(jsonStart, jsonEnd);
+    const data = JSON.parse(jsonString) as Record<string, any>;
 
+    const flattenedData: { [key: string]: string } = {};
+    for (const [key, value] of Object.entries(data)) {
+      if (value && typeof value === 'object') {
+        if ('text' in value && typeof value.text === 'string') {
+          flattenedData[key] = value.text;
+        } else {
+          flattenedData[key] = JSON.stringify(value);
+        }
+      } else if (typeof value === 'string') {
+        flattenedData[key] = value;
+      } else {
+        flattenedData[key] = String(value);
+      }
+    }
+
+    return flattenedData;
+  } catch (error) {
+    console.error('Failed to parse API response:', error);
+    return {
+      Overview: 'Please answer the question first.',
+      Personality: 'Please answer the question first.',
+      Consulting: 'Please answer the question first.',
+      'Data Analysis': 'Please answer the question first.',
+      'Non-profit': 'Please answer the question first.',
+    };
+  }
+};
+
+export default ResultPage;

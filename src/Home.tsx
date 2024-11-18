@@ -1,5 +1,6 @@
+import React from 'react';
 import { HomeInterface } from './HomeInt';
-import './Home.css';
+import './Home.css'; 
 
 
 export function HomePage({ setCurrPage }: HomeInterface) {

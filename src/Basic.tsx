@@ -3,7 +3,7 @@ import './Basic.css';
 import { Button, Form, ProgressBar, Alert, Spinner, Container, Row, Col } from 'react-bootstrap';
 import { BasicInterface } from './BasicInt';
 
-function BasicPage({ setCurrPage, setApiResponse }: BasicInterface) {
+function BasicPage({ setCurrPage, setApiResponse, setCompletedQuiz }: BasicInterface) {
   const [responses, setResponses] = useState({
     organized: '',
     extroverted: '',
@@ -35,7 +35,7 @@ function BasicPage({ setCurrPage, setApiResponse }: BasicInterface) {
     const prompt = generatePrompt(responses);
     setLoading(true);
 
-    const apiKey = JSON.parse(localStorage.getItem('MYKEY') || '""');
+    const apiKey = localStorage.getItem('MYKEY') || '';
 
     if (!apiKey) {
       alert('API key not found');
@@ -56,16 +56,16 @@ function BasicPage({ setCurrPage, setApiResponse }: BasicInterface) {
             { role: 'system', content: 'You are a helpful assistant.' },
             { role: 'user', content: prompt },
           ],
-          max_tokens: 300,
+          max_tokens: 1000,
         }),
       });
 
       const data = await response.json();
 
       if (response.ok) {
-        console.log('API response data:', data); 
-        setApiResponse(data.choices[0].message.content); 
-        setCurrPage(2); 
+        setApiResponse(data.choices[0].message.content);
+        setCompletedQuiz('basic');
+        setCurrPage(3);
       } else {
         console.error('Error:', data);
         setErrorMessage(`Error: ${data.error.message}`);
@@ -78,9 +78,17 @@ function BasicPage({ setCurrPage, setApiResponse }: BasicInterface) {
     setLoading(false);
   };
 
-  const generatePrompt = (responses: any) => {
-    return `Generate a personalized career report for the basic career assessment based on the responses below. (Please limit replies to 300 tokens)\n${JSON.stringify(responses, null, 2)}`;
-  };
+const generatePrompt = (responses: any) => {
+  return `
+    As a professional career advisor, analyze the following user responses and generate a comprehensive career report.
+    The report should be structured with the following sections: Overview, Personality, Consulting, Data Analysis, Non-profit.
+    Each section should provide personalized insights and recommendations based on the user's responses.
+    **Important:** Output **only** the JSON object and **no additional text**.
+    Please format the response as a JSON object with the keys: "Overview", "Personality", "Consulting", "Data Analysis", "Non-profit".
+    User Responses:
+    ${JSON.stringify(responses, null, 2)}
+  `;
+};
 
   return (
     <Container className="mt-4">

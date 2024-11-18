@@ -1,9 +1,11 @@
+
 body {
   margin: 0;
   font-family: 'Arial', sans-serif;
   
   color: #000000;
   background-image: "logo.svg";
+
 }
 
 .container {
@@ -69,6 +71,7 @@ h1 {
   max-width: 25vh;
   padding: 5vh 5vw;
   width: 50%;
+
 }
 
 .nav-buttons button {
@@ -102,5 +105,5 @@ h1 {
 
 .inspired-by span {
   font-weight: bold;
-  color: #FFFFFF;
+  color: #2B3A67;
 }
