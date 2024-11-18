@@ -3,7 +3,7 @@
 > react-scripts test --coverage
 
 FAIL src/App.test.tsx
-  ✕ renders learn react link (30 ms)
+  ✕ renders learn react link (32 ms)
 
   ● renders learn react link
 
@@ -17,6 +17,7 @@ FAIL src/App.test.tsx
         [36m>[39m
           [36m<header[39m
             [33mclass[39m=[32m"App-header"[39m
+            [33mstyle[39m=[32m"background-size: cover; background-position: center;"[39m
           [36m>[39m
             [36m<form[39m
               [33mclass[39m=[32m""[39m
@@ -70,12 +71,12 @@ FAIL src/App.test.tsx
 File                | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s    
 --------------------|---------|----------|---------|---------|----------------------
 All files           |    8.59 |     6.97 |     2.5 |    8.96 |                      
- App.tsx            |   34.88 |    27.27 |   33.33 |   34.88 | 22-41,45,49-59,66-71 
+ App.tsx            |   34.88 |    27.27 |   33.33 |   34.88 | 26-45,49,53-63,70-75 
  Basic.tsx          |       0 |        0 |       0 |       0 | 7-635                
  BasicInt.ts        |       0 |        0 |       0 |       0 |                      
  Detailed.tsx       |    3.57 |        0 |       0 |       4 | 31-184               
  DetailedInt.ts     |       0 |        0 |       0 |       0 |                      
- Home.tsx           |       0 |      100 |       0 |       0 | 6-18                 
+ Home.tsx           |       0 |      100 |       0 |       0 | 7-45                 
  HomeInt.ts         |       0 |        0 |       0 |       0 |                      
  Result.tsx         |       8 |        0 |       0 |       8 | 8-33,44-68           
  ResultInt.ts       |       0 |        0 |       0 |       0 |                      
@@ -87,5 +88,5 @@ All files           |    8.59 |     6.97 |     2.5 |    8.96 |
 Test Suites: 1 failed, 1 total
 Tests:       1 failed, 1 total
 Snapshots:   0 total
-Time:        3.714 s
+Time:        3.869 s
 Ran all test suites.
