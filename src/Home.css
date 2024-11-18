@@ -1,8 +1,9 @@
 body {
   margin: 0;
   font-family: 'Arial', sans-serif;
-  background-color: #2B3A67;
-  color: #EAEAEA;
+  
+  color: #000000;
+  background-image: "logo.svg";
 }
 
 .container {
@@ -14,14 +15,64 @@ body {
   text-align: center;
 }
 
+.HomeBackground {
+  background-color: #A4A5AE;
+}
+
 h1 {
   font-size: 2.5rem;
   font-weight: bold;
   margin-bottom: 20px;
+  color: #000000;
+}
+
+.quiz_selection_widget {
+  background-color: #B0C7BD;
+  border-radius: 25px;
+  box-shadow: 0 2.98256px 7.4564px 5px #0000001a;
+  margin-block: 5vh;
+  min-height: 30vh;
+  min-width: 125vh;
+  padding: 5vh 5vw;
+  width: 80%;
+}
+
+.text-content {
+  align-items: center;
+  column-gap: 10vw;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.choice-card {
+  border-radius: 25px;
+  box-shadow: 0 2.98256px 7.4564px 5px #0000001a;
+  display: flex;
+  flex-direction: column;
+  height: 50vh;
+  justify-content: center;
+  margin-top: 5%;
+  padding: 1vh;
+  transition: .5s;
+  width: 50vh;
+  max-width: 40vh;
+}
+
+.Results-choice-card {
+  background-color: #B0C7BD;
+  border-radius: 25px;
+  box-shadow: 0 2.98256px 7.4564px 5px #0000001a;
+  margin-block: 5vh;
+  min-height: 25vh;
+  max-width: 25vh;
+  padding: 5vh 5vw;
+  width: 50%;
 }
 
 .nav-buttons button {
-  background-color: #F2A65A;
+  background-color: #B8EBD0;
   color: #2B3A67;
   border-radius: 20px;
   padding: 10px 20px;
@@ -38,7 +89,7 @@ h1 {
 }
 
 .nav-buttons button:hover {
-  background-color: #FFD184; 
+  background-color: #B8EBD0; 
 }
 
 .inspired-by {

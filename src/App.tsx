@@ -6,6 +6,7 @@ import DetailedPage from './Detailed';
 import ResultPage from './Result';
 import { Button, Form,Alert, Spinner } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+
 //local storage and API Key: key should be entered in by the user and will be stored in local storage (NOT session storage)
 let keyData = "";
 const saveKeyData = "MYKEY";
@@ -80,7 +81,7 @@ async function handleSubmit(event: React.FormEvent) {
   return (
     <div className="App">
       {!isApiKeyValid && (
-        <header className="App-header">
+        <header className="App-header" style={{ backgroundSize:"cover", backgroundPosition:"center"}}>
           <Form onSubmit={handleSubmit}>
             <Form.Group controlId="formApiKey">
               <Form.Label>API Key:</Form.Label>
