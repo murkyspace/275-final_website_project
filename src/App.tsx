@@ -6,7 +6,7 @@ import DetailedPage from './Detailed';
 import ResultPage from './Result';
 import { Button, Form, Alert, Spinner } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-{"1111"}
+
 const saveKeyData = "MYKEY";
 function App() {
   const [key, setKey] = useState<string>("");
