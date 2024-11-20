@@ -12,7 +12,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 const saveKeyData = "MYKEY";
-
 function App() {
   const [key, setKey] = useState<string>("");
   const [currPage, setPage] = useState<number>(0);
