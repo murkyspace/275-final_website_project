@@ -70,9 +70,9 @@ FAIL src/App.test.tsx
 --------------------|---------|----------|---------|---------|----------------------
 File                | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s    
 --------------------|---------|----------|---------|---------|----------------------
-All files           |    8.59 |     6.97 |     2.5 |    8.96 |                      
- App.tsx            |   34.88 |    27.27 |   33.33 |   34.88 | 26-45,49,53-63,70-75 
- Basic.tsx          |       0 |        0 |       0 |       0 | 7-635                
+All files           |   10.14 |     6.52 |       4 |    10.6 |                      
+ App.tsx            |   34.88 |    27.27 |   33.33 |   34.88 | 25-44,48,52-62,69-74 
+ Basic.tsx          |    3.22 |        0 |       0 |    3.38 | 43-334               
  BasicInt.ts        |       0 |        0 |       0 |       0 |                      
  Detailed.tsx       |    3.57 |        0 |       0 |       4 | 31-184               
  DetailedInt.ts     |       0 |        0 |       0 |       0 |                      
@@ -88,5 +88,5 @@ All files           |    8.59 |     6.97 |     2.5 |    8.96 |
 Test Suites: 1 failed, 1 total
 Tests:       1 failed, 1 total
 Snapshots:   0 total
-Time:        3.869 s
+Time:        3.653 s
 Ran all test suites.
