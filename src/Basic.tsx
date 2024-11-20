@@ -1,37 +1,124 @@
 import React, { useState } from 'react';
-import './Basic.css';
-import { Button, Form, ProgressBar, Alert, Spinner, Container, Row, Col } from 'react-bootstrap';
+import {
+  Container,
+  Stepper,
+  Step,
+  StepLabel,
+  Button,
+  Typography,
+  Radio,
+  RadioGroup,
+  FormControlLabel,
+  FormControl,
+  FormHelperText,
+  LinearProgress,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Slide,
+  Alert,
+  Box,
+} from '@mui/material';
+import { TransitionProps } from '@mui/material/transitions';
 import { BasicInterface } from './BasicInt';
+import { styled } from '@mui/material/styles';
+
+const ColorButton = styled(Button)(({ theme }) => ({
+  color: '#fff',
+  backgroundColor: '#1976d2',
+  '&:hover': {
+    backgroundColor: '#115293',
+  },
+  '&:disabled': {
+    backgroundColor: '#B0BEC5',
+    color: '#ECEFF1',
+  },
+}));
+
+const Transition = React.forwardRef(function Transition(
+  props: TransitionProps & { children: React.ReactElement },
+  ref: React.Ref<unknown>,
+) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 function BasicPage({ setCurrPage, setApiResponse, setCompletedQuiz }: BasicInterface) {
-  const [responses, setResponses] = useState({
-    organized: '',
-    extroverted: '',
-    creativity: '',
-    awareness: '',
-    adaptiveness: '',
-    innovative: '',
-    patience: '',
-    logicalVsEmotional: ''
-  });
+  const questions = [
+    {
+      id: 'organized',
+      text: 'You consider yourself to be a well-organized person.',
+    },
+    {
+      id: 'extroverted',
+      text: 'You make new friends often.',
+    },
+    {
+      id: 'creativity',
+      text: 'You prefer to come up with your own solutions to problems instead of taking suggestions from others.',
+    },
+    {
+      id: 'awareness',
+      text: 'You watch news channels often.',
+    },
+    {
+      id: 'adaptiveness',
+      text: 'You adapt easily to new changes.',
+    },
+    {
+      id: 'innovative',
+      text: 'You work well by building off of what already exists.',
+    },
+    {
+      id: 'patience',
+      text: 'You are fine with waiting for other people.',
+    },
+    {
+      id: 'logicalVsEmotional',
+      text: 'You would rather make the right decision, even if it risks losing a friend.',
+    },
+  ];
 
-  const [loading, setLoading] = useState(false);
+  const [responses, setResponses] = useState<{ [key: string]: string }>({});
+  const [currentStep, setCurrentStep] = useState(0);
   const [errorMessage, setErrorMessage] = useState<string>('');
+  const [openDialog, setOpenDialog] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const totalQuestions = 8;
+  const totalSteps = questions.length;
 
-  const handleResponse = (question: string, response: string) => {
-    setResponses(prevState => ({
-      ...prevState,
-      [question]: response
-    }));
-    if (errorMessage) setErrorMessage('');
+  const handleNext = () => {
+    if (!responses[questions[currentStep].id]) {
+      setErrorMessage('Please select an option to proceed.');
+      return;
+    }
+    setErrorMessage('');
+    setCurrentStep((prev) => prev + 1);
   };
 
-  const answeredQuestions = Object.values(responses).filter(response => response !== '').length;
-  const progress = Math.round((answeredQuestions / totalQuestions) * 100);
+  const handleBack = () => {
+    setErrorMessage('');
+    setCurrentStep((prev) => prev - 1);
+  };
 
-  const handleGetAnswer = async () => {
+  const handleResponse = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setResponses({
+      ...responses,
+      [questions[currentStep].id]: event.target.value,
+    });
+    setErrorMessage('');
+  };
+
+  const handleReview = () => {
+    if (Object.keys(responses).length !== totalSteps) {
+      setErrorMessage('Please answer all questions before reviewing.');
+      return;
+    }
+    setOpenDialog(true);
+  };
+
+  const handleSubmit = async () => {
+    setOpenDialog(false);
     const prompt = generatePrompt(responses);
     setLoading(true);
 
@@ -78,567 +165,176 @@ function BasicPage({ setCurrPage, setApiResponse, setCompletedQuiz }: BasicInter
     setLoading(false);
   };
 
-const generatePrompt = (responses: any) => {
-  return `
-    As a professional career advisor, analyze the following user responses and generate a comprehensive career report.
-    The report should be structured with the following sections: Overview, Personality, Consulting, Data Analysis, Non-profit.
-    Each section should provide personalized insights and recommendations based on the user's responses.
-    **Important:** Output **only** the JSON object and **no additional text**.
-    Please format the response as a JSON object with the keys: "Overview", "Personality", "Consulting", "Data Analysis", "Non-profit".
-    User Responses:
-    ${JSON.stringify(responses, null, 2)}
-  `;
-};
+  const generatePrompt = (responses: any) => {
+    return `
+      As a professional career advisor, analyze the following user responses and generate a comprehensive career report.
+      The report should be structured with the following sections: Overview, Personality, Consulting, Data Analysis, Non-profit.
+      Each section should provide personalized insights and recommendations based on the user's responses.
+      **Important:** Output **only** the JSON object and **no additional text**.
+      Please format the response as a JSON object with the keys: "Overview", "Personality", "Consulting", "Data Analysis", "Non-profit".
+      User Responses:
+      ${JSON.stringify(responses, null, 2)}
+    `;
+  };
+
+  const currentQuestion = questions[currentStep];
+  const progress = Math.round(
+    ((currentStep + (responses[currentQuestion.id] ? 1 : 0)) / totalSteps) * 100,
+  );
 
   return (
-    <Container className="mt-4">
-      <Row className="justify-content-md-center">
-        <Col md={10} lg={8}>
-          <h2>Basic Questions</h2>
-          <ProgressBar 
-            now={progress} 
-            label={`${progress}%`} 
-            variant="primary"  
-            className="my-3" 
-            style={{ height: '30px' }}  
-          />
+    <Container
+      maxWidth="md"
+      sx={{
+        marginTop: '32px',
+        animation: 'fadeIn 1s ease-in-out',
+        textAlign: 'center',
+      }}
+    >
+      <Typography
+        variant="h4"
+        gutterBottom
+        sx={{ color: '#3f51b5', fontWeight: 'bold', fontSize: '2.5rem' }}
+      >
+        Personality Assessment
+      </Typography>
 
-          <p>
-            {answeredQuestions} out of {totalQuestions} questions answered
-          </p>
+      <Box
+        sx={{
+          position: 'relative',
+          display: 'inline-flex',
+          width: '100%',
+          marginBottom: '16px',
+        }}
+      >
+        <LinearProgress
+          variant="determinate"
+          value={progress}
+          sx={{ height: '10px', borderRadius: '5px', width: '100%' }}
+          color="primary" 
+        />
+        <Box
+          sx={{
+            top: 0,
+            left: 0,
+            bottom: 0,
+            right: 0,
+            position: 'absolute',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <Typography variant="body1" sx={{ fontWeight: 'bold', fontSize: '1rem' }}>
+            {progress}%
+          </Typography>
+        </Box>
+      </Box>
+      <Stepper activeStep={currentStep} alternativeLabel sx={{ backgroundColor: 'transparent' }}>
+        {questions.map((_, index) => (
+          <Step key={index}>
+            <StepLabel></StepLabel>
+          </Step>
+        ))}
+      </Stepper>
 
-          <Form>
-            <Form.Group controlId="organized" className="mb-4">
-              <Form.Label className="fw-normal text-dark">
-                You consider yourself to be a well-organized person.
-              </Form.Label>
-              <div className="d-flex flex-row flex-nowrap overflow-auto">
-                <Form.Check
-                  inline
-                  type="radio"
-                  name="organized"
-                  onChange={(e) => handleResponse('organized', e.target.value)}
-                  id="response-org-strongagree"
-                  label="Strongly Agree"
-                  value="Strongly Agree"
-                  checked={responses.organized === 'Strongly Agree'}
-                  className="text-muted me-3 custom-radio"
-                />
-                <Form.Check
-                  inline
-                  type="radio"
-                  name="organized"
-                  onChange={(e) => handleResponse('organized', e.target.value)}
-                  id="response-org-agree"
-                  label="Agree"
-                  value="Agree"
-                  checked={responses.organized === 'Agree'}
-                  className="text-muted me-3 custom-radio"
-                />
-                <Form.Check
-                  inline
-                  type="radio"
-                  name="organized"
-                  onChange={(e) => handleResponse('organized', e.target.value)}
-                  id="response-org-neutral"
-                  label="Neutral"
-                  value="Neutral"
-                  checked={responses.organized === 'Neutral'}
-                  className="text-muted me-3 custom-radio"
-                />
-                <Form.Check
-                  inline
-                  type="radio"
-                  name="organized"
-                  onChange={(e) => handleResponse('organized', e.target.value)}
-                  id="response-org-disagree"
-                  label="Disagree"
-                  value="Disagree"
-                  checked={responses.organized === 'Disagree'}
-                  className="text-muted me-3 custom-radio"
-                />
-                <Form.Check
-                  inline
-                  type="radio"
-                  name="organized"
-                  onChange={(e) => handleResponse('organized', e.target.value)}
-                  id="response-org-strongdisagree"
-                  label="Strongly Disagree"
-                  value="Strongly Disagree"
-                  checked={responses.organized === 'Strongly Disagree'}
-                  className="text-muted custom-radio"
-                />
-              </div>
-            </Form.Group>
+      <div>
+        <Typography sx={{ fontSize: '1.5rem', fontWeight: 500, color: '#1a237e', marginTop: '20px' }}>
+          {currentQuestion.text}
+        </Typography>
+        <FormControl component="fieldset" error={!!errorMessage} sx={{ marginTop: '20px' }}>
+          <RadioGroup
+            aria-label={currentQuestion.id}
+            name={currentQuestion.id}
+            value={responses[currentQuestion.id] || ''}
+            onChange={handleResponse}
+            sx={{ flexDirection: 'column', alignItems: 'center' }}
+          >
+            {['Strongly Agree', 'Agree', 'Neutral', 'Disagree', 'Strongly Disagree'].map((option) => (
+              <FormControlLabel
+                key={option}
+                value={option}
+                control={<Radio color="primary" />}
+                label={
+                  <Typography sx={{ fontSize: '1.2rem' }}>
+                    {option}
+                  </Typography>
+                }
+                sx={{ marginBottom: '8px' }}
+              />
+            ))}
+          </RadioGroup>
+          <FormHelperText>{errorMessage}</FormHelperText>
+        </FormControl>
+        {currentStep === totalSteps - 1 ? (
+          <Box sx={{ marginTop: '30px' }}>
+            <ColorButton
+              onClick={handleBack}
+              sx={{ marginRight: '16px' }}
+              disabled={currentStep === 0}
+            >
+              Back
+            </ColorButton>
+            <ColorButton variant="contained" onClick={handleReview}>
+              Review & Submit
+            </ColorButton>
+          </Box>
+        ) : (
+          <Box sx={{ marginTop: '30px' }}>
+            <ColorButton
+              onClick={handleBack}
+              sx={{ marginRight: '16px' }}
+              disabled={currentStep === 0}
+            >
+              Back
+            </ColorButton>
+            <ColorButton variant="contained" onClick={handleNext}>
+              Next
+            </ColorButton>
+          </Box>
+        )}
+      </div>
 
-            <Form.Group controlId="extroverted" className="mb-4">
-              <Form.Label className="fw-normal text-dark">
-                You make new friends often.
-              </Form.Label>
-              <div className="d-flex flex-row flex-nowrap overflow-auto">
-                <Form.Check
-                  inline
-                  type="radio"
-                  name="extroverted"
-                  onChange={(e) => handleResponse('extroverted', e.target.value)}
-                  id="response-ext-strongagree"
-                  label="Strongly Agree"
-                  value="Strongly Agree"
-                  checked={responses.extroverted === 'Strongly Agree'}
-                  className="text-muted me-3 custom-radio"
-                />
-                <Form.Check
-                  inline
-                  type="radio"
-                  name="extroverted"
-                  onChange={(e) => handleResponse('extroverted', e.target.value)}
-                  id="response-ext-agree"
-                  label="Agree"
-                  value="Agree"
-                  checked={responses.extroverted === 'Agree'}
-                  className="text-muted me-3 custom-radio"
-                />
-                <Form.Check
-                  inline
-                  type="radio"
-                  name="extroverted"
-                  onChange={(e) => handleResponse('extroverted', e.target.value)}
-                  id="response-ext-neutral"
-                  label="Neutral"
-                  value="Neutral"
-                  checked={responses.extroverted === 'Neutral'}
-                  className="text-muted me-3 custom-radio"
-                />
-                <Form.Check
-                  inline
-                  type="radio"
-                  name="extroverted"
-                  onChange={(e) => handleResponse('extroverted', e.target.value)}
-                  id="response-ext-disagree"
-                  label="Disagree"
-                  value="Disagree"
-                  checked={responses.extroverted === 'Disagree'}
-                  className="text-muted me-3 custom-radio"
-                />
-                <Form.Check
-                  inline
-                  type="radio"
-                  name="extroverted"
-                  onChange={(e) => handleResponse('extroverted', e.target.value)}
-                  id="response-ext-strongdisagree"
-                  label="Strongly Disagree"
-                  value="Strongly Disagree"
-                  checked={responses.extroverted === 'Strongly Disagree'}
-                  className="text-muted custom-radio"
-                />
-              </div>
-            </Form.Group>
-
-            <Form.Group controlId="creativity" className="mb-4">
-              <Form.Label className="fw-normal text-dark">
-                You prefer to come up with your own solutions to problems instead of taking suggestions from others.
-              </Form.Label>
-              <div className="d-flex flex-row flex-nowrap overflow-auto">
-                <Form.Check
-                  inline
-                  type="radio"
-                  name="creativity"
-                  onChange={(e) => handleResponse('creativity', e.target.value)}
-                  id="response-cre-strongagree"
-                  label="Strongly Agree"
-                  value="Strongly Agree"
-                  checked={responses.creativity === 'Strongly Agree'}
-                  className="text-muted me-3 custom-radio"
-                />
-                <Form.Check
-                  inline
-                  type="radio"
-                  name="creativity"
-                  onChange={(e) => handleResponse('creativity', e.target.value)}
-                  id="response-cre-agree"
-                  label="Agree"
-                  value="Agree"
-                  checked={responses.creativity === 'Agree'}
-                  className="text-muted me-3 custom-radio"
-                />
-                <Form.Check
-                  inline
-                  type="radio"
-                  name="creativity"
-                  onChange={(e) => handleResponse('creativity', e.target.value)}
-                  id="response-cre-neutral"
-                  label="Neutral"
-                  value="Neutral"
-                  checked={responses.creativity === 'Neutral'}
-                  className="text-muted me-3 custom-radio"
-                />
-                <Form.Check
-                  inline
-                  type="radio"
-                  name="creativity"
-                  onChange={(e) => handleResponse('creativity', e.target.value)}
-                  id="response-cre-disagree"
-                  label="Disagree"
-                  value="Disagree"
-                  checked={responses.creativity === 'Disagree'}
-                  className="text-muted me-3 custom-radio"
-                />
-                <Form.Check
-                  inline
-                  type="radio"
-                  name="creativity"
-                  onChange={(e) => handleResponse('creativity', e.target.value)}
-                  id="response-cre-strongdisagree"
-                  label="Strongly Disagree"
-                  value="Strongly Disagree"
-                  checked={responses.creativity === 'Strongly Disagree'}
-                  className="text-muted custom-radio"
-                />
-              </div>
-            </Form.Group>
-
-            <Form.Group controlId="awareness" className="mb-4">
-              <Form.Label className="fw-normal text-dark">
-                You watch news channels often.
-              </Form.Label>
-              <div className="d-flex flex-row flex-nowrap overflow-auto">
-                <Form.Check
-                  inline
-                  type="radio"
-                  name="awareness"
-                  onChange={(e) => handleResponse('awareness', e.target.value)}
-                  id="response-awa-strongagree"
-                  label="Strongly Agree"
-                  value="Strongly Agree"
-                  checked={responses.awareness === 'Strongly Agree'}
-                  className="text-muted me-3 custom-radio"
-                />
-                <Form.Check
-                  inline
-                  type="radio"
-                  name="awareness"
-                  onChange={(e) => handleResponse('awareness', e.target.value)}
-                  id="response-awa-agree"
-                  label="Agree"
-                  value="Agree"
-                  checked={responses.awareness === 'Agree'}
-                  className="text-muted me-3 custom-radio"
-                />
-                <Form.Check
-                  inline
-                  type="radio"
-                  name="awareness"
-                  onChange={(e) => handleResponse('awareness', e.target.value)}
-                  id="response-awa-neutral"
-                  label="Neutral"
-                  value="Neutral"
-                  checked={responses.awareness === 'Neutral'}
-                  className="text-muted me-3 custom-radio"
-                />
-                <Form.Check
-                  inline
-                  type="radio"
-                  name="awareness"
-                  onChange={(e) => handleResponse('awareness', e.target.value)}
-                  id="response-awa-disagree"
-                  label="Disagree"
-                  value="Disagree"
-                  checked={responses.awareness === 'Disagree'}
-                  className="text-muted me-3 custom-radio"
-                />
-                <Form.Check
-                  inline
-                  type="radio"
-                  name="awareness"
-                  onChange={(e) => handleResponse('awareness', e.target.value)}
-                  id="response-awa-strongdisagree"
-                  label="Strongly Disagree"
-                  value="Strongly Disagree"
-                  checked={responses.awareness === 'Strongly Disagree'}
-                  className="text-muted custom-radio"
-                />
-              </div>
-            </Form.Group>
-
-            <Form.Group controlId="adaptiveness" className="mb-4">
-              <Form.Label className="fw-normal text-dark">
-                You adapt easily to new changes.
-              </Form.Label>
-              <div className="d-flex flex-row flex-nowrap overflow-auto">
-                <Form.Check
-                  inline
-                  type="radio"
-                  name="adaptiveness"
-                  onChange={(e) => handleResponse('adaptiveness', e.target.value)}
-                  id="response-ada-strongagree"
-                  label="Strongly Agree"
-                  value="Strongly Agree"
-                  checked={responses.adaptiveness === 'Strongly Agree'}
-                  className="text-muted me-3 custom-radio"
-                />
-                <Form.Check
-                  inline
-                  type="radio"
-                  name="adaptiveness"
-                  onChange={(e) => handleResponse('adaptiveness', e.target.value)}
-                  id="response-ada-agree"
-                  label="Agree"
-                  value="Agree"
-                  checked={responses.adaptiveness === 'Agree'}
-                  className="text-muted me-3 custom-radio"
-                />
-                <Form.Check
-                  inline
-                  type="radio"
-                  name="adaptiveness"
-                  onChange={(e) => handleResponse('adaptiveness', e.target.value)}
-                  id="response-ada-neutral"
-                  label="Neutral"
-                  value="Neutral"
-                  checked={responses.adaptiveness === 'Neutral'}
-                  className="text-muted me-3 custom-radio"
-                />
-                <Form.Check
-                  inline
-                  type="radio"
-                  name="adaptiveness"
-                  onChange={(e) => handleResponse('adaptiveness', e.target.value)}
-                  id="response-ada-disagree"
-                  label="Disagree"
-                  value="Disagree"
-                  checked={responses.adaptiveness === 'Disagree'}
-                  className="text-muted me-3 custom-radio"
-                />
-                <Form.Check
-                  inline
-                  type="radio"
-                  name="adaptiveness"
-                  onChange={(e) => handleResponse('adaptiveness', e.target.value)}
-                  id="response-ada-strongdisagree"
-                  label="Strongly Disagree"
-                  value="Strongly Disagree"
-                  checked={responses.adaptiveness === 'Strongly Disagree'}
-                  className="text-muted custom-radio"
-                />
-              </div>
-            </Form.Group>
-
-            <Form.Group controlId="innovative" className="mb-4">
-              <Form.Label className="fw-normal text-dark">
-                You work well by building off of what already exists.
-              </Form.Label>
-              <div className="d-flex flex-row flex-nowrap overflow-auto">
-                <Form.Check
-                  inline
-                  type="radio"
-                  name="innovative"
-                  onChange={(e) => handleResponse('innovative', e.target.value)}
-                  id="response-ino-strongagree"
-                  label="Strongly Agree"
-                  value="Strongly Agree"
-                  checked={responses.innovative === 'Strongly Agree'}
-                  className="text-muted me-3 custom-radio"
-                />
-                <Form.Check
-                  inline
-                  type="radio"
-                  name="innovative"
-                  onChange={(e) => handleResponse('innovative', e.target.value)}
-                  id="response-ino-agree"
-                  label="Agree"
-                  value="Agree"
-                  checked={responses.innovative === 'Agree'}
-                  className="text-muted me-3 custom-radio"
-                />
-                <Form.Check
-                  inline
-                  type="radio"
-                  name="innovative"
-                  onChange={(e) => handleResponse('innovative', e.target.value)}
-                  id="response-ino-neutral"
-                  label="Neutral"
-                  value="Neutral"
-                  checked={responses.innovative === 'Neutral'}
-                  className="text-muted me-3 custom-radio"
-                />
-                <Form.Check
-                  inline
-                  type="radio"
-                  name="innovative"
-                  onChange={(e) => handleResponse('innovative', e.target.value)}
-                  id="response-ino-disagree"
-                  label="Disagree"
-                  value="Disagree"
-                  checked={responses.innovative === 'Disagree'}
-                  className="text-muted me-3 custom-radio"
-                />
-                <Form.Check
-                  inline
-                  type="radio"
-                  name="innovative"
-                  onChange={(e) => handleResponse('innovative', e.target.value)}
-                  id="response-ino-strongdisagree"
-                  label="Strongly Disagree"
-                  value="Strongly Disagree"
-                  checked={responses.innovative === 'Strongly Disagree'}
-                  className="text-muted custom-radio"
-                />
-              </div>
-            </Form.Group>
-
-            <Form.Group controlId="patience" className="mb-4">
-              <Form.Label className="fw-normal text-dark">
-                You are fine with waiting for other people.
-              </Form.Label>
-              <div className="d-flex flex-row flex-nowrap overflow-auto">
-                <Form.Check
-                  inline
-                  type="radio"
-                  name="patience"
-                  onChange={(e) => handleResponse('patience', e.target.value)}
-                  id="response-pat-strongagree"
-                  label="Strongly Agree"
-                  value="Strongly Agree"
-                  checked={responses.patience === 'Strongly Agree'}
-                  className="text-muted me-3 custom-radio"
-                />
-                <Form.Check
-                  inline
-                  type="radio"
-                  name="patience"
-                  onChange={(e) => handleResponse('patience', e.target.value)}
-                  id="response-pat-agree"
-                  label="Agree"
-                  value="Agree"
-                  checked={responses.patience === 'Agree'}
-                  className="text-muted me-3 custom-radio"
-                />
-                <Form.Check
-                  inline
-                  type="radio"
-                  name="patience"
-                  onChange={(e) => handleResponse('patience', e.target.value)}
-                  id="response-pat-neutral"
-                  label="Neutral"
-                  value="Neutral"
-                  checked={responses.patience === 'Neutral'}
-                  className="text-muted me-3 custom-radio"
-                />
-                <Form.Check
-                  inline
-                  type="radio"
-                  name="patience"
-                  onChange={(e) => handleResponse('patience', e.target.value)}
-                  id="response-pat-disagree"
-                  label="Disagree"
-                  value="Disagree"
-                  checked={responses.patience === 'Disagree'}
-                  className="text-muted me-3 custom-radio"
-                />
-                <Form.Check
-                  inline
-                  type="radio"
-                  name="patience"
-                  onChange={(e) => handleResponse('patience', e.target.value)}
-                  id="response-pat-strongdisagree"
-                  label="Strongly Disagree"
-                  value="Strongly Disagree"
-                  checked={responses.patience === 'Strongly Disagree'}
-                  className="text-muted custom-radio"
-                />
-              </div>
-            </Form.Group>
-
-            <Form.Group controlId="logicalVsEmotional" className="mb-4">
-              <Form.Label className="fw-normal text-dark">
-                You would rather make the right decision, even if it risks losing a friend.
-              </Form.Label>
-              <div className="d-flex flex-row flex-nowrap overflow-auto">
-                <Form.Check
-                  inline
-                  type="radio"
-                  name="logicalVsEmotional"
-                  onChange={(e) => handleResponse('logicalVsEmotional', e.target.value)}
-                  id="response-lve-strongagree"
-                  label="Strongly Agree"
-                  value="Strongly Agree"
-                  checked={responses.logicalVsEmotional === 'Strongly Agree'}
-                  className="text-muted me-3 custom-radio"
-                />
-                <Form.Check
-                  inline
-                  type="radio"
-                  name="logicalVsEmotional"
-                  onChange={(e) => handleResponse('logicalVsEmotional', e.target.value)}
-                  id="response-lve-agree"
-                  label="Agree"
-                  value="Agree"
-                  checked={responses.logicalVsEmotional === 'Agree'}
-                  className="text-muted me-3 custom-radio"
-                />
-                <Form.Check
-                  inline
-                  type="radio"
-                  name="logicalVsEmotional"
-                  onChange={(e) => handleResponse('logicalVsEmotional', e.target.value)}
-                  id="response-lve-neutral"
-                  label="Neutral"
-                  value="Neutral"
-                  checked={responses.logicalVsEmotional === 'Neutral'}
-                  className="text-muted me-3 custom-radio"
-                />
-                <Form.Check
-                  inline
-                  type="radio"
-                  name="logicalVsEmotional"
-                  onChange={(e) => handleResponse('logicalVsEmotional', e.target.value)}
-                  id="response-lve-disagree"
-                  label="Disagree"
-                  value="Disagree"
-                  checked={responses.logicalVsEmotional === 'Disagree'}
-                  className="text-muted me-3 custom-radio"
-                />
-                <Form.Check
-                  inline
-                  type="radio"
-                  name="logicalVsEmotional"
-                  onChange={(e) => handleResponse('logicalVsEmotional', e.target.value)}
-                  id="response-lve-strongdisagree"
-                  label="Strongly Disagree"
-                  value="Strongly Disagree"
-                  checked={responses.logicalVsEmotional === 'Strongly Disagree'}
-                  className="text-muted custom-radio"
-                />
-              </div>
-            </Form.Group>
-
-            {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
-            {answeredQuestions === totalQuestions && (
-              <Button variant="primary" onClick={handleGetAnswer} disabled={loading} className="mb-3">
-                {loading ? (
-                  <>
-                    <Spinner
-                      as="span"
-                      animation="border"
-                      size="sm"
-                      role="status"
-                      aria-hidden="true"
-                    />{' '}
-                    Getting Answer...
-                  </>
-                ) : (
-                  'Get Answer'
-                )}
-              </Button>
-            )}
-            <div className="mt-3">
-              <Button variant="secondary" onClick={() => setCurrPage(0)}>
-                Go to Home
-              </Button>
+      <Dialog
+        open={openDialog}
+        TransitionComponent={Transition}
+        keepMounted
+        onClose={() => setOpenDialog(false)}
+      >
+        <DialogTitle>{"Review Your Answers"}</DialogTitle>
+        <DialogContent dividers>
+          {questions.map((question) => (
+            <div key={question.id} style={{ marginBottom: '10px' }}>
+              <Typography variant="subtitle1" sx={{ fontWeight: 'bold' }}>
+                {question.text}
+              </Typography>
+              <Typography variant="body1">
+                Your answer: {responses[question.id]}
+              </Typography>
             </div>
-          </Form>
-        </Col>
-      </Row>
+          ))}
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setOpenDialog(false)} color="secondary">
+            Edit Answers
+          </Button>
+          <Button onClick={handleSubmit} disabled={loading} variant="contained" color="primary">
+            {loading ? 'Geting Answers...' : 'Submit'}
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      {errorMessage && (
+        <Alert severity="error" sx={{ marginTop: '20px' }}>
+          {errorMessage}
+        </Alert>
+      )}
+
+      <div style={{ marginTop: '40px' }}>
+        <Button variant="outlined" onClick={() => setCurrPage(0)}>
+          Go to Home
+        </Button>
+      </div>
     </Container>
   );
 }
