@@ -95,15 +95,19 @@ h1 {
   background-color: #B8EBD0; 
 }
 
-.inspired-by {
-  text-align: right;
+.home-footer {
+  position: fixed;
+  display: flex;
+  text-align: center;
   font-style: italic;
-  margin-top: 20px;
+  bottom: 0;
   color: #B3B3B3;
-  font-size: 0.9rem;
+  font-size: 3rem;
+  width: 100%;
+  height: 7.5vh;
 }
 
-.inspired-by span {
+.footer span {
   font-weight: bold;
   color: #2B3A67;
 }
