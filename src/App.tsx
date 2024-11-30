@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import { HomePage } from './Home';
 import BasicPage from './Basic';
@@ -7,16 +7,11 @@ import ResultPage from './Result';
 import { Button, Form, Alert, Spinner } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-
-//local storage and API Key: key should be entered in by the user and will be stored in local storage (NOT session storage)
-
-
-const saveKeyData = "MYKEY";
 function App() {
   const [key, setKey] = useState<string>("");
   const [currPage, setPage] = useState<number>(0);
   const [apiResponse, setApiResponse] = useState<string>('');
-  const [completedQuiz, setCompletedQuiz] = useState<'basic' | 'detailed' | null>(null);
+  const [,setCompletedQuiz] = useState<'basic' | 'detailed' | null>(null);
   const [isApiKeyValid, setIsApiKeyValid] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
@@ -26,7 +21,6 @@ function App() {
     setIsLoading(true);
     setErrorMessage('');
     try {
-      localStorage.setItem(saveKeyData, key);
       const isValid = await validateApiKey(key);
       if (isValid) {
         setIsApiKeyValid(true);
@@ -34,7 +28,6 @@ function App() {
       } else {
         setIsApiKeyValid(false);
         setErrorMessage('Invalid API Key.');
-        localStorage.removeItem(saveKeyData);
       }
     } catch (error) {
       console.error('Error validating API Key:', error);
@@ -62,20 +55,6 @@ function App() {
       return false;
     }
   }
-
-  useEffect(() => {
-    const storedKey = localStorage.getItem(saveKeyData);
-    if (storedKey) {
-      setKey(storedKey);
-      validateApiKey(storedKey).then((isValid) => {
-        setIsApiKeyValid(isValid);
-        if (!isValid) {
-          setErrorMessage('Stored API Key is invalid.');
-          localStorage.removeItem(saveKeyData);
-        }
-      });
-    }
-  }, []);
 
   return (
     <div className="App">
@@ -112,10 +91,10 @@ function App() {
       )}
       {isApiKeyValid && (
         <>
-          {currPage === 0 && <HomePage setCurrPage={setPage} />}
-          {currPage === 1 && <BasicPage setCurrPage={setPage} setApiResponse={setApiResponse} setCompletedQuiz={setCompletedQuiz} />}
-          {currPage === 2 && <DetailedPage setCurrPage={setPage} setApiResponse={setApiResponse} setCompletedQuiz={setCompletedQuiz} />}
-          {currPage === 3 && <ResultPage setCurrPage={setPage} apiResponse={apiResponse} completedQuiz={completedQuiz!} />}
+          {currPage === 0 && <HomePage setCurrPage={setPage} setIsApiKeyValid={setIsApiKeyValid} />}
+          {currPage === 1 && <BasicPage setCurrPage={setPage} setApiResponse={setApiResponse} setCompletedQuiz={setCompletedQuiz} apiKey={key} />}
+          {currPage === 2 && <DetailedPage setCurrPage={setPage} setApiResponse={setApiResponse} setCompletedQuiz={setCompletedQuiz} apiKey={key} />}
+          {currPage === 3 && <ResultPage setCurrPage={setPage} apiResponse={apiResponse} completedQuiz={'basic'} />}
         </>
       )}
     </div>
@@ -123,4 +102,3 @@ function App() {
 }
 
 export default App;
-

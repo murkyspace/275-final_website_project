@@ -76,3 +76,4 @@ const extractSections = (apiResponse: string) => {
 };
 
 export default ResultPage;
+
