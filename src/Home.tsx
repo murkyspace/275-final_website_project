@@ -2,12 +2,10 @@ import React from 'react';
 import { HomeInterface } from './HomeInt';
 import './Home.css'; 
 
-
-export function HomePage({ setCurrPage }: HomeInterface) {
+export function HomePage({ setCurrPage, setIsApiKeyValid }: HomeInterface) {
     return (
         <div className="HomeBackground" style={{ backgroundSize:"cover", backgroundPosition:"center", color: "#000000", padding: "20px", minHeight: "100vh" }}>
-            <div className="container text-center" style={{ }}>
-                
+            <div className="container text-center">
                 <h1 style={{ fontSize: "2.5rem", fontWeight: "bold", marginBottom: "20px" }}>Pathfinder</h1>
                 <div className="row">
                     <div className="quiz_selection_widget">
@@ -23,9 +21,7 @@ export function HomePage({ setCurrPage }: HomeInterface) {
                                 </div>
                                 <p>In this quiz, you will be given a few questions where you will answer based on agreement or disagreement, 
                                     then we will assess your answers and suggest a career based on what might fit the best.</p>
-                                
                             </div>
-                        
                             <div className="choice-card">
                                 <h2>The Long Drive</h2>
                                 <div className="nav-buttons" style={{ display: "flex", justifyContent: "center", gap: "10px", marginBottom: "40px" }}>
@@ -51,17 +47,20 @@ export function HomePage({ setCurrPage }: HomeInterface) {
                     </div>
                 </div>
 
+                <div style={{ marginTop: '20px' }}>
+                    <button onClick={() => setIsApiKeyValid(false)} style={{ backgroundColor: "#FF6B6B", color: "#FFFFFF", borderRadius: "20px", padding: "10px 20px", border: "none", fontSize: "1rem" }}>
+                        Change API Key
+                    </button>
+                </div>
+
                 <br></br>
                 <br></br>
                 <footer className="home-footer" style={{ textAlign: "center", fontStyle: "italic", marginTop: "20px", backgroundColor: "#8D5A97", fontWeight: "bold"}}>
-                    Website by: ZHIHUA,CONNOR,RAY
+                    Website by: ZHIHUA, CONNOR, RAY
                 </footer>
-                
             </div>
-            
         </div>
     );
 }
 
 export default HomePage;
-

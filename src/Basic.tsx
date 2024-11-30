@@ -23,18 +23,31 @@ import {
 import { TransitionProps } from '@mui/material/transitions';
 import { BasicInterface } from './BasicInt';
 import { styled } from '@mui/material/styles';
+import './Detailed.css';
 
-const ColorButton = styled(Button)(({ theme }) => ({
+const HomeButton = styled(Button)({
+  backgroundColor: 'purple',
   color: '#fff',
-  backgroundColor: '#1976d2',
   '&:hover': {
-    backgroundColor: '#115293',
+    backgroundColor: 'grey',
   },
-  '&:disabled': {
-    backgroundColor: '#B0BEC5',
-    color: '#ECEFF1',
+});
+
+const NavButton = styled(Button)(({ disabled }) => ({
+  backgroundColor: disabled ? 'lightgrey' : 'royalblue',
+  color: '#fff',
+  '&:hover': {
+    backgroundColor: disabled ? 'lightgrey' : 'royalblue',
   },
 }));
+
+const SubmitButton = styled(Button)({
+  backgroundColor: '#28a745',
+  color: '#fff',
+  '&:hover': {
+    backgroundColor: '#218838',
+  },
+});
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & { children: React.ReactElement },
@@ -43,7 +56,7 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-function BasicPage({ setCurrPage, setApiResponse, setCompletedQuiz }: BasicInterface) {
+function BasicPage({ setCurrPage, setApiResponse, setCompletedQuiz, apiKey }: BasicInterface) {
   const questions = [
     {
       id: 'organized',
@@ -122,8 +135,6 @@ function BasicPage({ setCurrPage, setApiResponse, setCompletedQuiz }: BasicInter
     const prompt = generatePrompt(responses);
     setLoading(true);
 
-    const apiKey = localStorage.getItem('MYKEY') || '';
-
     if (!apiKey) {
       alert('API key not found');
       setLoading(false);
@@ -199,37 +210,13 @@ function BasicPage({ setCurrPage, setApiResponse, setCompletedQuiz }: BasicInter
         Personality Assessment
       </Typography>
 
-      <Box
-        sx={{
-          position: 'relative',
-          display: 'inline-flex',
-          width: '100%',
-          marginBottom: '16px',
-        }}
-      >
-        <LinearProgress
-          variant="determinate"
-          value={progress}
-          sx={{ height: '10px', borderRadius: '5px', width: '100%' }}
-          color="primary" 
-        />
-        <Box
-          sx={{
-            top: 0,
-            left: 0,
-            bottom: 0,
-            right: 0,
-            position: 'absolute',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <Typography variant="body1" sx={{ fontWeight: 'bold', fontSize: '1rem' }}>
-            {progress}%
-          </Typography>
-        </Box>
+      <Box className="detailed-page-progress-bar">
+        <Typography variant="body2" color="textSecondary" align="center" gutterBottom>
+          Progress: {progress}%
+        </Typography>
+        <LinearProgress variant="determinate" value={progress} />
       </Box>
+
       <Stepper activeStep={currentStep} alternativeLabel sx={{ backgroundColor: 'transparent' }}>
         {questions.map((_, index) => (
           <Step key={index}>
@@ -268,29 +255,29 @@ function BasicPage({ setCurrPage, setApiResponse, setCompletedQuiz }: BasicInter
         </FormControl>
         {currentStep === totalSteps - 1 ? (
           <Box sx={{ marginTop: '30px' }}>
-            <ColorButton
+            <NavButton
               onClick={handleBack}
               sx={{ marginRight: '16px' }}
               disabled={currentStep === 0}
             >
               Back
-            </ColorButton>
-            <ColorButton variant="contained" onClick={handleReview}>
+            </NavButton>
+            <SubmitButton onClick={handleReview}>
               Review & Submit
-            </ColorButton>
+            </SubmitButton>
           </Box>
         ) : (
           <Box sx={{ marginTop: '30px' }}>
-            <ColorButton
+            <NavButton
               onClick={handleBack}
               sx={{ marginRight: '16px' }}
               disabled={currentStep === 0}
             >
               Back
-            </ColorButton>
-            <ColorButton variant="contained" onClick={handleNext}>
+            </NavButton>
+            <NavButton onClick={handleNext}>
               Next
-            </ColorButton>
+            </NavButton>
           </Box>
         )}
       </div>
@@ -319,7 +306,7 @@ function BasicPage({ setCurrPage, setApiResponse, setCompletedQuiz }: BasicInter
             Edit Answers
           </Button>
           <Button onClick={handleSubmit} disabled={loading} variant="contained" color="primary">
-            {loading ? 'Geting Answers...' : 'Submit'}
+            {loading ? 'Getting Answers...' : 'Submit'}
           </Button>
         </DialogActions>
       </Dialog>
@@ -331,9 +318,9 @@ function BasicPage({ setCurrPage, setApiResponse, setCompletedQuiz }: BasicInter
       )}
 
       <div style={{ marginTop: '40px' }}>
-        <Button variant="outlined" onClick={() => setCurrPage(0)}>
+        <HomeButton variant="contained" onClick={() => setCurrPage(0)}>
           Go to Home
-        </Button>
+        </HomeButton>
       </div>
     </Container>
   );

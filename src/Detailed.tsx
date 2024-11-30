@@ -27,7 +27,7 @@ const steps = [
   'How do you want to allocate your time and energy in your work-life balance?',
 ];
 
-const DetailedPage: React.FC<DetailedInterface> = ({ setCurrPage, setApiResponse, setCompletedQuiz }) => {
+const DetailedPage: React.FC<DetailedInterface> = ({ setCurrPage, setApiResponse, setCompletedQuiz, apiKey }) => {
   const [activeStep, setActiveStep] = useState<number>(0);
   const [responses, setResponses] = useState<Record<string, string>>({
     tasksEnjoyed: '',
@@ -81,8 +81,6 @@ const DetailedPage: React.FC<DetailedInterface> = ({ setCurrPage, setApiResponse
 
     const prompt = generatePrompt(responses);
     setLoading(true);
-
-    const apiKey = localStorage.getItem('MYKEY') || '';
 
     if (!apiKey) {
       alert('API key not found.');
