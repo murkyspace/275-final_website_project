@@ -154,7 +154,7 @@ function BasicPage({ setCurrPage, setApiResponse, setCompletedQuiz, apiKey }: Ba
             { role: 'system', content: 'You are a helpful assistant.' },
             { role: 'user', content: prompt },
           ],
-          max_tokens: 1000,
+          max_tokens: 2000,
         }),
       });
 
