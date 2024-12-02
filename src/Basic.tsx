@@ -168,7 +168,7 @@ function BasicPage({ setCurrPage, setApiResponse, setCompletedQuiz, apiKey }: Ba
         console.error('Error:', data);
         setErrorMessage(`Error: ${data.error.message}`);
       }
-    } catch (error: any) {
+    } catch (error) {
       console.error('Error:', error);
       setErrorMessage('An error occurred');
     }
@@ -176,7 +176,7 @@ function BasicPage({ setCurrPage, setApiResponse, setCompletedQuiz, apiKey }: Ba
     setLoading(false);
   };
 
-  const generatePrompt = (responses: any) => {
+  const generatePrompt = (responses: {[key: string]: string}) => {
     return `
       As a professional career advisor, analyze the following user responses and generate a comprehensive career report.
       The report should be structured with the following sections: Overview, Personality, Consulting, Data Analysis, Non-profit.

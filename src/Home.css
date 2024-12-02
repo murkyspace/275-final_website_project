@@ -103,7 +103,7 @@ h1 {
 }
 
 .change-api-key {
-  background-color: #FF6B6B;
+  background-color: #f99d1b;
   color: #FFFFFF;
   border-radius: 20px;
   padding: 10px 20px;
@@ -113,7 +113,7 @@ h1 {
 }
 
 .change-api-key:hover {
-  background-color: #FF4D4D;
+  background-color: #e29a25;
 }
 
 .home-footer {
