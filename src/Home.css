@@ -1,11 +1,7 @@
-
 body {
   margin: 0;
   font-family: 'Arial', sans-serif;
-  
   color: #000000;
-  background-image: "logo.svg";
-
 }
 
 .container {
@@ -18,11 +14,16 @@ body {
 }
 
 .HomeBackground {
-  background-image:url("Lab Background.png");
-  background-size:"cover";
-  background-position:"center";
-  background:"100vh";
-  width:"100vw";
+  background-image: url("Lab Background.png");
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+  width: 100%;
+}
+
+#logo {
+  height: 200px;
+  margin-bottom: 20px;
 }
 
 h1 {
@@ -36,14 +37,14 @@ h1 {
   background-color: #fff3c9;
   border-radius: 25px;
   box-shadow: 0 2.98256px 7.4564px 5px #0000001a;
-  margin-block: 5vh;
-  min-height: 30vh;
-  min-width: 125vh;
-  padding: 5vh 5vw;
-  width: 80%;
-  outline-offset: 5px;
-  outline-color: #E19926;
-  border-radius: 25px;
+  margin: 0 auto;
+  min-height: 35vh;
+  max-width: 1000px;
+  padding: 3vh 3vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
 }
 
 .text-content {
@@ -62,9 +63,7 @@ h1 {
   flex-direction: column;
   height: 50vh;
   justify-content: center;
-  margin-top: 5%;
   padding: 1vh;
-  transition: .5s;
   width: 50vh;
   max-width: 40vh;
 }
@@ -73,33 +72,48 @@ h1 {
   background-color: #fff3c9;
   border-radius: 25px;
   box-shadow: 0 2.98256px 7.4564px 5px #0000001a;
-  margin-block: 5vh;
-  min-height: 25vh;
-  max-width: 25vh;
-  padding: 5vh 5vw;
-  width: 50%;
-
+  margin: 20px auto;
+  width: 90%;
+  max-width: 600px;
+  padding: 2vh 2vw;
+  text-align: center;
 }
 
 .nav-buttons button {
-  background-color: #7278b8;
+  background-color: #64a1c8;
   color: #2B3A67;
+  border-radius: 20px;
+  padding: 10px 30px;
+  border: none;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin: 10px;
+}
+
+.nav-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.nav-buttons button:hover {
+  background-color: #7278b8;
+}
+
+.change-api-key {
+  background-color: #FF6B6B;
+  color: #FFFFFF;
   border-radius: 20px;
   padding: 10px 20px;
   border: none;
   font-size: 1rem;
-  font-weight: bold;
   cursor: pointer;
-  transition: background-color 0.3s;
-  margin: 0 5px;
 }
 
-.nav-buttons button:nth-child(2) {
-  background-color: #7278b8;
-}
-
-.nav-buttons button:hover {
-  background-color: #7278b8; 
+.change-api-key:hover {
+  background-color: #FF4D4D;
 }
 
 .home-footer {
