@@ -101,7 +101,7 @@ const DetailedPage: React.FC<DetailedInterface> = ({ setCurrPage, setApiResponse
             { role: 'system', content: 'You are a helpful career advisor.' },
             { role: 'user', content: prompt },
           ],
-          max_tokens: 1000,
+          max_tokens: 2000,
         }),
       });
 
@@ -114,7 +114,7 @@ const DetailedPage: React.FC<DetailedInterface> = ({ setCurrPage, setApiResponse
       } else {
         setErrorMessage(`Error: ${data.error.message}`);
       }
-    } catch (error: any) {
+    } catch (error) {
       setErrorMessage('An error occurred while fetching the answer.');
     }
 
