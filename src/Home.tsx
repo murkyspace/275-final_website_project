@@ -39,7 +39,12 @@ export function HomePage({ setCurrPage, setIsApiKeyValid }: HomeInterface) {
                 <div>
                     <button onClick={() => setIsApiKeyValid(false)} className="change-api-key">Change API Key</button>
                 </div>
-                                
+
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
                 <footer className="home-footer" style={{ textAlign: "center", fontStyle: "italic", marginTop: "20px", backgroundColor: "#575a8d", fontWeight: "bold"}}>
                     Website by: Zhihua Sun, Connor Chipoletti, Ray Fischer
                 </footer>
