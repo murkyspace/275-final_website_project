@@ -1,20 +1,22 @@
 import React from 'react';
 import { HomeInterface } from './HomeInt';
 import './Home.css'; 
+import logo from './Lab Logo.png';
 
-export function HomePage({ setCurrPage, setIsApiKeyValid }: HomeInterface) {
+export function HomePage({ setCurrPage , setIsApiKeyValid}: HomeInterface) {
     return (
         <div className="HomeBackground" style={{ backgroundSize:"cover", backgroundPosition:"center", color: "#000000", padding: "20px", minHeight: "100vh" }}>
-            <div className="container text-center">
-                <h1 style={{ fontSize: "2.5rem", fontWeight: "bold", marginBottom: "20px" }}>Pathfinder</h1>
+            <div className="container text-center" style={{ }}>
+                <img src = {logo} alt  = "logo" id = "logo" style={{ height: 400}}/>
+                <h1 style={{ fontSize: "2.5rem", fontWeight: "bold", marginBottom: "20px" }}>Welcome to Career Labs!</h1>
                 <div className="row">
                     <div className="quiz_selection_widget">
                         <h1>Choose a Quiz!</h1>
                         <div className="text-content">
                             <div className="choice-card">
-                                <h2>A Quick Stop</h2>
+                                <h2>A Quick Test</h2>
                                 <div className="nav-buttons" style={{ display: "flex", justifyContent: "center", gap: "10px", marginBottom: "40px" }}>
-                                    <button onClick={() => setCurrPage(1)} style={{ backgroundColor: "#B8EBD0", color: "#2B3A67", borderRadius: "20px", 
+                                    <button onClick={() => setCurrPage(1)} style={{ backgroundColor: "#64a1c8", color: "#2B3A67", borderRadius: "20px", 
                                         padding: "10px 20px", border: "none", fontSize: "1rem" }}>
                                         Short Quiz
                                     </button>
@@ -23,9 +25,9 @@ export function HomePage({ setCurrPage, setIsApiKeyValid }: HomeInterface) {
                                     then we will assess your answers and suggest a career based on what might fit the best.</p>
                             </div>
                             <div className="choice-card">
-                                <h2>The Long Drive</h2>
+                                <h2>The Long Test</h2>
                                 <div className="nav-buttons" style={{ display: "flex", justifyContent: "center", gap: "10px", marginBottom: "40px" }}>
-                                    <button onClick={() => setCurrPage(2)} style={{ backgroundColor: "#B8EBD0", color: "#2B3A67", borderRadius: "20px", 
+                                    <button onClick={() => setCurrPage(2)} style={{ backgroundColor: "#64a1c8", color: "#2B3A67", borderRadius: "20px", 
                                         padding: "10px 20px", border: "none", fontSize: "1rem" }}>
                                         Long quiz
                                     </button>
@@ -38,7 +40,7 @@ export function HomePage({ setCurrPage, setIsApiKeyValid }: HomeInterface) {
                     <div className="Results-choice-card">
                         <h2>Check Your Results</h2>
                         <div className="nav-buttons" style={{ display: "flex", justifyContent: "center", gap: "10px", marginBottom: "40px" }}>
-                            <button onClick={() => setCurrPage(3)} style={{ backgroundColor: "#63C7B2", color: "#2B3A67", borderRadius: "20px", padding: "10px 20px", border: "none", fontSize: "1rem" }}>
+                            <button onClick={() => setCurrPage(3)} style={{ backgroundColor: "#64a1c8", color: "#2B3A67", borderRadius: "20px", padding: "10px 20px", border: "none", fontSize: "1rem" }}>
                                 Result 
                             </button>
                         </div>
@@ -55,8 +57,9 @@ export function HomePage({ setCurrPage, setIsApiKeyValid }: HomeInterface) {
 
                 <br></br>
                 <br></br>
-                <footer className="home-footer" style={{ textAlign: "center", fontStyle: "italic", marginTop: "20px", backgroundColor: "#8D5A97", fontWeight: "bold"}}>
-                    Website by: ZHIHUA, CONNOR, RAY
+                
+                <footer className="home-footer" style={{ textAlign: "center", fontStyle: "italic", marginTop: "20px", backgroundColor: "#575a8d", fontWeight: "bold"}}>
+                    Website by: Zhihua Sun, Connor Chipoletti, Ray Fischer
                 </footer>
             </div>
         </div>

@@ -18,7 +18,11 @@ body {
 }
 
 .HomeBackground {
-  background-color: #A4A5AE;
+  background-image:url("Lab Background.png");
+  background-size:"cover";
+  background-position:"center";
+  background:"100vh";
+  width:"100vw";
 }
 
 h1 {
@@ -29,7 +33,7 @@ h1 {
 }
 
 .quiz_selection_widget {
-  background-color: #B0C7BD;
+  background-color: #fff3c9;
   border-radius: 25px;
   box-shadow: 0 2.98256px 7.4564px 5px #0000001a;
   margin-block: 5vh;
@@ -37,6 +41,9 @@ h1 {
   min-width: 125vh;
   padding: 5vh 5vw;
   width: 80%;
+  outline-offset: 5px;
+  outline-color: #E19926;
+  border-radius: 25px;
 }
 
 .text-content {
@@ -63,7 +70,7 @@ h1 {
 }
 
 .Results-choice-card {
-  background-color: #B0C7BD;
+  background-color: #fff3c9;
   border-radius: 25px;
   box-shadow: 0 2.98256px 7.4564px 5px #0000001a;
   margin-block: 5vh;
@@ -75,7 +82,7 @@ h1 {
 }
 
 .nav-buttons button {
-  background-color: #B8EBD0;
+  background-color: #7278b8;
   color: #2B3A67;
   border-radius: 20px;
   padding: 10px 20px;
@@ -88,11 +95,11 @@ h1 {
 }
 
 .nav-buttons button:nth-child(2) {
-  background-color: #63C7B2;
+  background-color: #7278b8;
 }
 
 .nav-buttons button:hover {
-  background-color: #B8EBD0; 
+  background-color: #7278b8; 
 }
 
 .home-footer {
@@ -109,5 +116,5 @@ h1 {
 
 .footer span {
   font-weight: bold;
-  color: #2B3A67;
+  color: #575a8d;
 }
