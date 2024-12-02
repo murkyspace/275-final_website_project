@@ -3,7 +3,7 @@ import { HomeInterface } from './HomeInt';
 import './Home.css'; 
 import logo from './Lab Logo.png';
 
-export function HomePage({ setCurrPage }: HomeInterface) {
+export function HomePage({ setCurrPage , setIsApiKeyValid}: HomeInterface) {
     return (
         <div className="HomeBackground" style={{ backgroundSize:"cover", backgroundPosition:"center", color: "#000000", padding: "20px", minHeight: "100vh" }}>
             <div className="container text-center" style={{ }}>
@@ -23,9 +23,7 @@ export function HomePage({ setCurrPage }: HomeInterface) {
                                 </div>
                                 <p>In this quiz, you will be given a few questions where you will answer based on agreement or disagreement, 
                                     then we will assess your answers and suggest a career based on what might fit the best.</p>
-                                
                             </div>
-                        
                             <div className="choice-card">
                                 <h2>The Long Test</h2>
                                 <div className="nav-buttons" style={{ display: "flex", justifyContent: "center", gap: "10px", marginBottom: "40px" }}>
@@ -51,18 +49,21 @@ export function HomePage({ setCurrPage }: HomeInterface) {
                     </div>
                 </div>
 
+                <div style={{ marginTop: '20px' }}>
+                    <button onClick={() => setIsApiKeyValid(false)} style={{ backgroundColor: "#FF6B6B", color: "#FFFFFF", borderRadius: "20px", padding: "10px 20px", border: "none", fontSize: "1rem" }}>
+                        Change API Key
+                    </button>
+                </div>
+
                 <br></br>
                 <br></br>
                 
                 <footer className="home-footer" style={{ textAlign: "center", fontStyle: "italic", marginTop: "20px", backgroundColor: "#575a8d", fontWeight: "bold"}}>
                     Website by: Zhihua Sun, Connor Chipoletti, Ray Fischer
                 </footer>
-                
             </div>
-            
         </div>
     );
 }
 
 export default HomePage;
-
