@@ -183,6 +183,7 @@ function BasicPage({ setCurrPage, setApiResponse, setCompletedQuiz }: BasicInter
   );
 
   return (
+    <div className="HomeBackground" style={{ backgroundSize:"cover", backgroundPosition:"center", color: "#000000", padding: "20px", minHeight: "100vh" }}>
     <Container
       maxWidth="md"
       sx={{
@@ -336,6 +337,7 @@ function BasicPage({ setCurrPage, setApiResponse, setCompletedQuiz }: BasicInter
         </Button>
       </div>
     </Container>
+    </div>
   );
 }
 
