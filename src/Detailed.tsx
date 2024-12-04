@@ -101,7 +101,7 @@ const DetailedPage: React.FC<DetailedInterface> = ({ setCurrPage, setApiResponse
             { role: 'system', content: 'You are a helpful career advisor.' },
             { role: 'user', content: prompt },
           ],
-          max_tokens: 2000,
+          max_tokens: 3000,
         }),
       });
 
