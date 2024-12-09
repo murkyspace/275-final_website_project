@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'; 
 import {
   Container,
   Stepper,
@@ -19,6 +19,7 @@ import {
   Slide,
   Alert,
   Box,
+  CircularProgress,
 } from '@mui/material';
 import { TransitionProps } from '@mui/material/transitions';
 import { BasicInterface } from './BasicInt';
@@ -176,16 +177,14 @@ function BasicPage({ setCurrPage, setApiResponse, setCompletedQuiz, apiKey }: Ba
     setLoading(false);
   };
 
-  const generatePrompt = (responses: {[key: string]: string}) => {
-    return `
-      As a professional career advisor, analyze the following user responses and generate a comprehensive career report.
-      The report should be structured with the following sections: Overview, Personality, Consulting, Data Analysis, Non-profit.
-      Each section should provide personalized insights and recommendations based on the user's responses.
-      **Important:** Output **only** the JSON object and **no additional text**.
-      Please format the response as a JSON object with the keys: "Overview", "Personality", "Consulting", "Data Analysis", "Non-profit".
-      User Responses:
-      ${JSON.stringify(responses, null, 2)}
-    `;
+  const generatePrompt = (responses: { [key: string]: string }) => {
+    return `As a professional career advisor, analyze the following user responses and generate a comprehensive career report.
+The report should be structured with the following sections: Overview, Personality, Consulting, Data Analysis, Non-profit.
+Each section should provide personalized insights and recommendations based on the user's responses.
+**Important:** Output **only** the JSON object and **no additional text**.
+Please format the response as a JSON object with the keys: "Overview", "Personality", "Consulting", "Data Analysis", "Non-profit".
+User Responses:
+${JSON.stringify(responses, null, 2)}`;
   };
 
   const currentQuestion = questions[currentStep];
@@ -193,137 +192,148 @@ function BasicPage({ setCurrPage, setApiResponse, setCompletedQuiz, apiKey }: Ba
     ((currentStep + (responses[currentQuestion.id] ? 1 : 0)) / totalSteps) * 100,
   );
 
+  if (loading) {
+    return (
+      <div className="HomeBackground" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundSize:"cover", backgroundPosition:"center", color: "#000000", padding: "20px", minHeight: "100vh" }}>
+        <CircularProgress />
+        <Typography variant="h6" sx={{ marginTop: '20px' }}>
+          Getting Answer
+        </Typography>
+      </div>
+    );
+  }
+
   return (
     <div className="HomeBackground" style={{ backgroundSize:"cover", backgroundPosition:"center", color: "#000000", padding: "20px", minHeight: "100vh" }}>
-    <Container
-      maxWidth="md"
-      sx={{
-        marginTop: '32px',
-        animation: 'fadeIn 1s ease-in-out',
-        textAlign: 'center',
-      }}
-    >
-      <Typography
-        variant="h4"
-        gutterBottom
-        sx={{ color: '#3f51b5', fontWeight: 'bold', fontSize: '2.5rem' }}
+      <Container
+        maxWidth="md"
+        sx={{
+          marginTop: '32px',
+          animation: 'fadeIn 1s ease-in-out',
+          textAlign: 'center',
+        }}
       >
-        Personality Assessment
-      </Typography>
-
-      <Box className="detailed-page-progress-bar">
-        <Typography variant="body2" color="textSecondary" align="center" gutterBottom>
-          Progress: {progress}%
+        <Typography
+          variant="h4"
+          gutterBottom
+          sx={{ color: '#3f51b5', fontWeight: 'bold', fontSize: '2.5rem' }}
+        >
+          Personality Assessment
         </Typography>
-        <LinearProgress variant="determinate" value={progress} />
-      </Box>
 
-      <Stepper activeStep={currentStep} alternativeLabel sx={{ backgroundColor: 'transparent' }}>
-        {questions.map((_, index) => (
-          <Step key={index}>
-            <StepLabel></StepLabel>
-          </Step>
-        ))}
-      </Stepper>
+        <Box className="detailed-page-progress-bar">
+          <Typography variant="body2" color="textSecondary" align="center" gutterBottom>
+            Progress: {progress}%
+          </Typography>
+          <LinearProgress variant="determinate" value={progress} />
+        </Box>
 
-      <div>
-        <Typography sx={{ fontSize: '1.5rem', fontWeight: 500, color: '#1a237e', marginTop: '20px' }}>
-          {currentQuestion.text}
-        </Typography>
-        <FormControl component="fieldset" error={!!errorMessage} sx={{ marginTop: '20px' }}>
-          <RadioGroup
-            aria-label={currentQuestion.id}
-            name={currentQuestion.id}
-            value={responses[currentQuestion.id] || ''}
-            onChange={handleResponse}
-            sx={{ flexDirection: 'column', alignItems: 'center' }}
-          >
-            {['Strongly Agree', 'Agree', 'Neutral', 'Disagree', 'Strongly Disagree'].map((option) => (
-              <FormControlLabel
-                key={option}
-                value={option}
-                control={<Radio color="primary" />}
-                label={
-                  <Typography sx={{ fontSize: '1.2rem' }}>
-                    {option}
-                  </Typography>
-                }
-                sx={{ marginBottom: '8px' }}
-              />
-            ))}
-          </RadioGroup>
-          <FormHelperText>{errorMessage}</FormHelperText>
-        </FormControl>
-        {currentStep === totalSteps - 1 ? (
-          <Box sx={{ marginTop: '30px' }}>
-            <NavButton
-              onClick={handleBack}
-              sx={{ marginRight: '16px' }}
-              disabled={currentStep === 0}
-            >
-              Back
-            </NavButton>
-            <SubmitButton onClick={handleReview}>
-              Review & Submit
-            </SubmitButton>
-          </Box>
-        ) : (
-          <Box sx={{ marginTop: '30px' }}>
-            <NavButton
-              onClick={handleBack}
-              sx={{ marginRight: '16px' }}
-              disabled={currentStep === 0}
-            >
-              Back
-            </NavButton>
-            <NavButton onClick={handleNext}>
-              Next
-            </NavButton>
-          </Box>
-        )}
-      </div>
-
-      <Dialog
-        open={openDialog}
-        TransitionComponent={Transition}
-        keepMounted
-        onClose={() => setOpenDialog(false)}
-      >
-        <DialogTitle>{"Review Your Answers"}</DialogTitle>
-        <DialogContent dividers>
-          {questions.map((question) => (
-            <div key={question.id} style={{ marginBottom: '10px' }}>
-              <Typography variant="subtitle1" sx={{ fontWeight: 'bold' }}>
-                {question.text}
-              </Typography>
-              <Typography variant="body1">
-                Your answer: {responses[question.id]}
-              </Typography>
-            </div>
+        <Stepper activeStep={currentStep} alternativeLabel sx={{ backgroundColor: 'transparent' }}>
+          {questions.map((_, index) => (
+            <Step key={index}>
+              <StepLabel></StepLabel>
+            </Step>
           ))}
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setOpenDialog(false)} color="secondary">
-            Edit Answers
-          </Button>
-          <Button onClick={handleSubmit} disabled={loading} variant="contained" color="primary">
-            {loading ? 'Getting Answers...' : 'Submit'}
-          </Button>
-        </DialogActions>
-      </Dialog>
+        </Stepper>
 
-      {errorMessage && (
-        <Alert severity="error" sx={{ marginTop: '20px' }}>
-          {errorMessage}
-        </Alert>
-      )}
+        <div>
+          <Typography sx={{ fontSize: '1.5rem', fontWeight: 500, color: '#1a237e', marginTop: '20px' }}>
+            {currentQuestion.text}
+          </Typography>
+          <FormControl component="fieldset" error={!!errorMessage} sx={{ marginTop: '20px' }}>
+            <RadioGroup
+              aria-label={currentQuestion.id}
+              name={currentQuestion.id}
+              value={responses[currentQuestion.id] || ''}
+              onChange={handleResponse}
+              sx={{ flexDirection: 'column', alignItems: 'center' }}
+            >
+              {['Strongly Agree', 'Agree', 'Neutral', 'Disagree', 'Strongly Disagree'].map((option) => (
+                <FormControlLabel
+                  key={option}
+                  value={option}
+                  control={<Radio color="primary" />}
+                  label={
+                    <Typography sx={{ fontSize: '1.2rem' }}>
+                      {option}
+                    </Typography>
+                  }
+                  sx={{ marginBottom: '8px' }}
+                />
+              ))}
+            </RadioGroup>
+            <FormHelperText>{errorMessage}</FormHelperText>
+          </FormControl>
+          {currentStep === totalSteps - 1 ? (
+            <Box sx={{ marginTop: '30px' }}>
+              <NavButton
+                onClick={handleBack}
+                sx={{ marginRight: '16px' }}
+                disabled={currentStep === 0}
+              >
+                Back
+              </NavButton>
+              <SubmitButton onClick={handleReview}>
+                Review & Submit
+              </SubmitButton>
+            </Box>
+          ) : (
+            <Box sx={{ marginTop: '30px' }}>
+              <NavButton
+                onClick={handleBack}
+                sx={{ marginRight: '16px' }}
+                disabled={currentStep === 0}
+              >
+                Back
+              </NavButton>
+              <NavButton onClick={handleNext}>
+                Next
+              </NavButton>
+            </Box>
+          )}
+        </div>
 
-      <div style={{ marginTop: '40px' }}>
-        <HomeButton variant="contained" onClick={() => setCurrPage(0)}>
-          Go to Home
-        </HomeButton>
-      </div>
-    </Container>
+        <Dialog
+          open={openDialog}
+          TransitionComponent={Transition}
+          keepMounted
+          onClose={() => setOpenDialog(false)}
+        >
+          <DialogTitle>{"Review Your Answers"}</DialogTitle>
+          <DialogContent dividers>
+            {questions.map((question) => (
+              <div key={question.id} style={{ marginBottom: '10px' }}>
+                <Typography variant="subtitle1" sx={{ fontWeight: 'bold' }}>
+                  {question.text}
+                </Typography>
+                <Typography variant="body1">
+                  Your answer: {responses[question.id]}
+                </Typography>
+              </div>
+            ))}
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => setOpenDialog(false)} color="secondary">
+              Edit Answers
+            </Button>
+            <Button onClick={handleSubmit} disabled={loading} variant="contained" color="primary">
+              {loading ? 'GETTING ANSWER...' : 'Submit'}
+            </Button>
+          </DialogActions>
+        </Dialog>
+
+        {errorMessage && (
+          <Alert severity="error" sx={{ marginTop: '20px' }}>
+            {errorMessage}
+          </Alert>
+        )}
+
+        <div style={{ marginTop: '40px' }}>
+          <HomeButton variant="contained" onClick={() => setCurrPage(0)}>
+            Go to Home
+          </HomeButton>
+        </div>
+      </Container>
     </div>
   );
 }
