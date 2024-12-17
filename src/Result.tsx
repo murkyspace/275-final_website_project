@@ -40,12 +40,12 @@ const ResultPage: React.FC<ResultInterface> = ({ setCurrPage, apiResponse }) => 
   );
 };
 
-const extractSections = (apiResponse: string) => {
+const extractSections = (apiResponse: string): { [key: string]: string } => {
   try {
     const jsonStart = apiResponse.indexOf('{');
     const jsonEnd = apiResponse.lastIndexOf('}') + 1;
     const jsonString = apiResponse.substring(jsonStart, jsonEnd);
-    const data = JSON.parse(jsonString) as Record<string, any>;
+    const data: Record<string, { text?: string } | string> = JSON.parse(jsonString);
 
     const flattenedData: { [key: string]: string } = {};
     for (const [key, value] of Object.entries(data)) {
